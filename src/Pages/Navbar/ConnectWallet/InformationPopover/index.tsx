@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { VStack, Flex, HStack, Image, Text, Divider, Button } from '@chakra-ui/react'
-import { MsgExecuteContract, WasmAPI, Coin } from '@terra-money/terra.js'
+
 import {
   PopoverContent,
 } from '@chakra-ui/react'
@@ -10,7 +10,6 @@ import Satellite from '../../../../assets/Satellite.png'
 import Line from '../../../../assets/Line.svg'
 import { shortenAddress, floorNormalize } from '../../../../Util';
 import { useStore, useWallet } from '../../../../store';
-import { VUST, VLUNA } from '../../../../constants';
 
 interface Props {
   isOpen: boolean,
@@ -23,8 +22,8 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
   const [vluna, setVluna] = useState(0);
 
   const wallet = useWallet();
-  // const ustBalance = useNearBalance();
-  // const lunaBalance = useNearBalance();
+  // const ustBalance = useBalance();
+  // const lunaBalance = useBalance();
 
   useEffect( () => {
     const fetch = async () => {

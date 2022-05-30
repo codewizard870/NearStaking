@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { HStack, Stack, Flex, Text, Image, Link } from '@chakra-ui/react'
-import { useStore, useNearPrice, useNearDeposited } from '../../../../store';
+import { useStore, usePrice, useNearDeposited } from '../../../../store';
 import { floor, floorNormalize } from '../../../../Util';
 import AnimationNumber from '../../../Components/AnimationNumber';
 
@@ -23,7 +23,7 @@ const TotalLocked: FunctionComponent = (props) => {
       >
         TOTAL VALUE LOCKED
       </Text>
-      <HStack spacing={'10px'} alignItems={'baseline'}>
+      <HStack spacing={'10px'} alignItems={'baseline'} mt='10px'>
         <Text
           fontSize={'35px'}
           fontWeight={'800'}

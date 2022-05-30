@@ -1,29 +1,41 @@
+import { BigNumber } from "bignumber.js"
 import { COINTYPE } from "./store";
 
 export let net = "testnet";
 
-export const POOL_MAIN = "terra1cn6mggfxa3jp6dgteuerj2nx05xmrav6985r3f";
-export const POOL_TEST = "terra1yl8ad8n2uqz3560akwqs2k7zc0zn9dg9z9tjuv";
-export const POOL = net == 'mainnet'? POOL_MAIN: POOL_TEST;
+export const TOKEN_ADDRESSES_TESTNET = [
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+];
+export const TOKEN_ADDRESSES_MAINNET = [
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+  "ft.alenzertest.testnet",
+];
+export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_ADDRESSES_MAINNET;
+export const DECIMALS= [6, 6, 18, 18, 8, 18, 24];
 
-export const VUST_MAIN = "terra1cfpye9qfwgxq2qewng0atk30jtufjt90h4zp6g";
-export const VUST_TEST = "terra1hx9v3xu7kc7fuleqxzsags5pezwn8x5wmjxm5p";
-export const VUST = net == 'mainnet'? VUST_MAIN : VUST_TEST;
-
-export const VLUNA_MAIN = "terra1ldzv0yhxpeszkm9wup7g20y7q8m9txkw35wqn5";
-export const VLUNA_TEST = "terra1swr7jq37664wgqn48qtnlfgexg77dglm9ytxgg";
-export const VLUNA = net == 'mainnet'? VLUNA_MAIN : VLUNA_TEST;
-
-export const MOTHER_WALLET = "terra1qvyj7tqs35hckd395rglc7lsyf2acuhgdcmj77";
 export const REQUEST_ENDPOINT = "https://stakingplatformalenzer.herokuapp.com/";
 
 
 export const aprInfo = [0, 0, 0, 0, 0, 0, 0];
-export const balanceInfo = [0, 0, 0, 0, 0, 0, 0];
+export const balanceInfo: BigNumber[] = [
+  new BigNumber(0), new BigNumber(0), new BigNumber(0), 
+  new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
 export const priceInfo = [0, 0, 0, 0, 0, 0, 0];
+export const totalRewards = [0, 0, 0, 0, 0, 0, 0];
 
 export const farmInfo = {
-  wallet: '',
+  account: '',
   amount: '0'
 }
 
@@ -31,12 +43,12 @@ export const userInfo = {
   amount: "0",
   deposit_time: "0",
   reward_amount: "0",
-  wallet: ""
+  account: ""
 }
 export const userInfos = [userInfo, userInfo, userInfo, userInfo, userInfo, userInfo, userInfo ]
 
 export const potInfo = {
-  wallet: "",
+  account: "",
   near_amount: "0",
   qualified_near_amount: "0",
 }
@@ -106,6 +118,7 @@ export const errorOption: any = {
 export const StableCoins=[
   {
     name: 'USDC',
+    id: 'usd-coin',
     description: 'USD Coin',
     avatar: 'Usdc.svg',
     apr: 14.87,
@@ -116,6 +129,7 @@ export const StableCoins=[
   },
   {
     name: 'USDT',
+    id: 'tether',
     description: 'USD Tether',
     avatar: 'Usdt.svg',
     apr: 14.87,
@@ -126,6 +140,7 @@ export const StableCoins=[
   },
   {
     name: 'DAI',
+    id: 'dai',
     description: 'Dai',
     avatar: 'Dai.svg',
     apr: 14.87,
@@ -136,6 +151,7 @@ export const StableCoins=[
   },
   {
     name: 'USN',
+    id: 'usn',
     description: 'USD NEAR',
     avatar: 'Usn.svg',
     apr: 14.87,
@@ -146,6 +162,7 @@ export const StableCoins=[
   },
   {
     name: 'wBTC',
+    id: 'wrapped-bitcoin',
     description: 'Wrapped Bitcoin',
     avatar: 'Wbtc.svg',
     apr: 9.87,
@@ -156,6 +173,7 @@ export const StableCoins=[
   },
   {
     name: 'ETH',
+    id: 'ethereum',
     description: 'Ethereum',
     avatar: 'Eth.png',
     apr: 9.87,
@@ -166,6 +184,7 @@ export const StableCoins=[
   },
   {
     name: 'wNEAR',
+    id: 'wrapped-near',
     description: 'Wrapped Near',
     avatar: 'Wnear.svg',
     apr: 9.87,

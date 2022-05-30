@@ -1,4 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
+import { BigNumber } from "bignumber.js"
 import {
   VStack,
   HStack,
@@ -13,28 +14,27 @@ import {
   SliderMark
 } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
-import { MdCode, MdArrowDropDownCircle } from "react-icons/md";
+import { MdCode } from "react-icons/md";
 
 import Indicator from './Indicator';
-import {  useNearBalance, useStore } from '../../../store'
+import { useBalance, useStore } from '../../../store'
 
 interface Props {
   amount: string,
   setAmount: Dispatch<SetStateAction<string>>,
 }
-const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
-  const ustBalance = useNearBalance();
-  const lunaBalance = useNearBalance();
-  const {state, dispatch} = useStore();
+const SliderWish: FunctionComponent<Props> = ({ amount, setAmount }) => {
+  const balance = useBalance();
+  const { state, dispatch } = useStore();
 
   const [sliderValue, setSliderValue] = useState(0);
-  
-  useEffect(() => {
-    let balance = state.coinType == 'USDC' ? ustBalance : lunaBalance;
 
-    if(parseFloat(amount) > 0)
-    {
-      let percent = Math.floor(parseFloat(amount) * 100 / balance);
+  useEffect(() => {
+    if (parseFloat(amount) > 0) {
+      let percent_big = new BigNumber(amount);
+      percent_big.multipliedBy(100).dividedBy(balance);
+
+      let percent = percent_big.toNumber();
       if (percent > 100) percent = 100;
       setSliderValue(percent);
     }
@@ -45,8 +45,8 @@ const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
 
   const onChangeSlider = (value: number) => {
     setSliderValue(value);
-    let balance = state.coinType == 'USDC' ? ustBalance : lunaBalance;
-    setAmount(Math.floor(balance * value / 100).toString());
+    let amount = balance;
+    setAmount(amount.multipliedBy(value).dividedBy(100).toFixed());
   }
   return (
     <Flex
@@ -75,7 +75,7 @@ const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
         max={100}
         focusThumbOnChange={false}
         onChange={(value) => onChangeSlider(value)}
-        value={sliderValue} 
+        value={sliderValue}
       >
         <Indicator value={25} />
         <Indicator value={50} />

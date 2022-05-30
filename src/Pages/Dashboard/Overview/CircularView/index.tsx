@@ -1,11 +1,11 @@
 import React, { FunctionComponent } from 'react';
 import { HStack, Stack, Flex, Text, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 
-import { useStore, useNearPrice} from '../../../../store';
+import { useStore, usePrice} from '../../../../store';
 import { floorNormalize, floor } from '../../../../Util';
 const CircularView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const rate = useNearPrice();
+  const rate = usePrice();
 
   const history = state.amountHistory;
   const last = history.length - 1;

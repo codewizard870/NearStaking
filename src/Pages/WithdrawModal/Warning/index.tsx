@@ -8,30 +8,30 @@ import {
   ModalContent,
   ModalCloseButton,
 } from '@chakra-ui/react'
-import {toast} from 'react-toastify'
-import {MdWarningAmber, MdInfoOutline} from 'react-icons/md'
+import { toast } from 'react-toastify'
+import { MdWarningAmber, MdInfoOutline } from 'react-icons/md'
 
 import { useStore, useWallet, ActionKind } from '../../../store';
-import {estimateSend, fetchData, sleep} from '../../../Util';
-import { successOption, errorOption, REQUEST_ENDPOINT, VUST, VLUNA, MOTHER_WALLET } from '../../../constants';
+import { fetchData, sleep } from '../../../Util';
+import { successOption, errorOption, REQUEST_ENDPOINT } from '../../../constants';
 import CustomCheckbox from './CustomCheckbox';
 
-interface Props{
+interface Props {
   isOpen: boolean,
   onClose: () => void,
   onCloseParent: () => void,
   amount: string,
 }
-const WarningModal: FunctionComponent<Props> = ({isOpen, onClose, amount, onCloseParent}) => {
+const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onCloseParent }) => {
   const [checked, setChecked] = useState(false);
-  const {state, dispatch} = useStore();
+  const { state, dispatch } = useStore();
   const wallet = useWallet();
   const coinType = state.coinType;
 
   const withdraw = async () => {
     // if(checked == false || wallet == undefined)
     //   return;
-      
+
     // let val = Math.floor(parseFloat(amount) * 10 ** 6);
     // let withdraw_msg = new MsgExecuteContract(
     //   wallet?.walletAddress,
@@ -107,13 +107,13 @@ const WarningModal: FunctionComponent<Props> = ({isOpen, onClose, amount, onClos
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent 
+      <ModalContent
         background={'#212121'}
         rounded={'25px'}
-        w={{sm:'80%', md: '562px', lg:'562px'}}
-        minW={{sm:'80%', md: '562px', lg:'562px'}}
+        w={{ sm: '80%', md: '562px', lg: '562px' }}
+        minW={{ sm: '80%', md: '562px', lg: '562px' }}
         h={'413px'}
-        px={{sm:'10px', md: '47px', lg: '47px'}}
+        px={{ sm: '10px', md: '47px', lg: '47px' }}
         py={'39px'}
       >
         <HStack
@@ -129,7 +129,7 @@ const WarningModal: FunctionComponent<Props> = ({isOpen, onClose, amount, onClos
           >
             WITHDRAW WARNING
           </Text>
-          <MdWarningAmber size={20}/>
+          <MdWarningAmber size={20} />
         </HStack>
         <VStack
           mt={'46px'}
@@ -154,14 +154,14 @@ const WarningModal: FunctionComponent<Props> = ({isOpen, onClose, amount, onClos
               fontWeight={'700'}
               lineHeight={'13px'}
             >
-              Learn more about your benefits 
+              Learn more about your benefits
             </Text>
             <MdInfoOutline />
           </HStack>
         </VStack>
         <Divider mt={'47px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
-        <Stack mt={'34px'} 
-          direction={{sm: 'column', md: 'row', lg:'row'}}
+        <Stack mt={'34px'}
+          direction={{ sm: 'column', md: 'row', lg: 'row' }}
           spacing={'35px'}
         >
           <HStack>
@@ -170,16 +170,16 @@ const WarningModal: FunctionComponent<Props> = ({isOpen, onClose, amount, onClos
               fontSize={'9px'}
               fontWeight={'400'}
               lineHeight={'11px'}
-              color={'#CEC0C0'} 
-              w={{sm: '100%', md:'118px', lg:'118px'}}
+              color={'#CEC0C0'}
+              w={{ sm: '100%', md: '118px', lg: '118px' }}
             >
               Please check the box if you understand that you are losing your benefits
             </Text>
           </HStack>
-          <Button 
-            w={'100%'} 
-            h={'45px'} 
-            background={'#493C3C'} 
+          <Button
+            w={'100%'}
+            h={'45px'}
+            background={'#493C3C'}
             rounded={'25px'}
             onClick={() => withdraw()}
           >

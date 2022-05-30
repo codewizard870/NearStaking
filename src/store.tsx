@@ -1,7 +1,8 @@
 import React, { createContext, useContext, useReducer } from 'react'
+import { BigNumber } from "bignumber.js"
 
-import { floor, floorNormalize, getCoinId } from './Util'
-import { amountHistory, userInfo, farmInfo, potInfo, balanceInfo, aprInfo, priceInfo, userInfos } from './constants'
+import { floor, floorNormalize, getCoinId,  } from './Util'
+import { amountHistory, userInfo, farmInfo, potInfo, balanceInfo, aprInfo, priceInfo, userInfos, DECIMALS, totalRewards } from './constants'
 import {getConfig} from "./config";
 
 export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR';
@@ -19,8 +20,8 @@ export interface AppContextInterface {
   connected: Boolean,
   near: any,
   wallet: any | undefined,
-  balance: number[],
-  tab: "dashboard" | "mypage" | "earn" | "utility",
+  balance: BigNumber[],
+  tab: "dashboard" | "mypage" | "earn" | "utility" | "bridge",
   openDepositModal: (() => void) | undefined,
   openWithdrawModal: (() => void) | undefined,
   openWaitingModal: (() => void) | undefined,
@@ -35,7 +36,7 @@ export interface AppContextInterface {
   farmPrice: number,
   farmInfo: any,
   farmStartTime: number,
-  totalRewardsNear: number,
+  totalRewards: number[],
   txhash: string | undefined,
   qualified: boolean,
   potInfo: any,
@@ -64,7 +65,7 @@ const initialState: AppContextInterface = {
   farmPrice: 25,
   farmInfo: farmInfo,
   farmStartTime: Date.now() / 1000,
-  totalRewardsNear: 0,
+  totalRewards: totalRewards,
   txhash: undefined,
   qualified: false,
   potInfo: potInfo,
@@ -93,7 +94,7 @@ export enum ActionKind{
   setFarmPrice,
   setFarmInfo,
   setFarmStartTime,
-  setTotalRewardsNear,
+  setTotalRewards,
   setTxhash,
   setQualified,
   setPotInfo
@@ -151,8 +152,8 @@ export const reducer = (state: AppContextInterface,  action: Action ) => {
       return {...state, farmInfo: action.payload}
     case ActionKind.setFarmStartTime:
       return {...state, farmStartTime: action.payload}
-    case ActionKind.setTotalRewardsNear:
-      return {...state, totalRewardsNear: action.payload}
+    case ActionKind.setTotalRewards:
+      return {...state, totalRewards: action.payload}
     case ActionKind.setTxhash:
       return {...state, txhash: action.payload}
     case ActionKind.setQualified:
@@ -190,15 +191,10 @@ export const useWallet = () => {
   const {state, dispatch} = useStore();
   return state.wallet;
 }
+
 export const useNear = () => {
   const {state, dispatch} = useStore();
   return state.near;
-}
-
-export const useNearBalance = () => {
-  const {state, dispatch} = useStore();
-  let balance = state.balance[0];
-  return floorNormalize(balance);
 }
 
 export const useNearDeposited = () => {
@@ -207,16 +203,29 @@ export const useNearDeposited = () => {
   return floorNormalize(balance);
 }
 
-export const useNearApr = () => {
+export const useApr = () => {
   const {state, dispatch} = useStore();
-  const apr = state.apr[0];
+  const apr = state.apr[getCoinId(state.coinType)];
   return apr;
 }
-export const useNearPrice = () => {
+
+export const usePrice = () => {
   const {state, dispatch} = useStore();
-  const price = state.price[0];
+  const price = state.price[getCoinId(state.coinType)];
   return price;
 }
+
+export const useBalance = () => {
+  const {state, dispatch} = useStore();
+  const balance = state.balance[getCoinId(state.coinType)];
+  return balance;
+}
+export const useDecimal = () => {
+  const {state, dispatch} = useStore();
+  const decimal = DECIMALS[getCoinId(state.coinType)];
+  return decimal;
+}
+
 export const OpenDepositModal = (state:AppContextInterface , dispatch: React.Dispatch<any>, type: COINTYPE) => {
   dispatch({type: ActionKind.setCoinType, payload: type});
 

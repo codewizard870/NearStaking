@@ -6,14 +6,14 @@ import {
   OpenDepositModal, 
   OpenWithdrawModal, 
   useStore, 
-  useNearPrice
+  usePrice
 } from '../../../store';
 import AnimationNumber from '../../Components/AnimationNumber';
 import { floorNormalize } from '../../../Util';
 
 const Total: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
-  const rate = useNearPrice();
+  const rate = usePrice();
 
   const ustDeposited = 0;
   const lunaDeposited = 0;

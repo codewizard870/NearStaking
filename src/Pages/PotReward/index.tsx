@@ -1,9 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
-import { MsgExecuteContract, WasmAPI, Coin, LCDClient, Fee } from '@terra-money/terra.js'
 
 import { floorNormalize } from '../../Util';
-import { POOL } from '../../constants';
 import { useStore } from '../../store';
 import {
   Table,

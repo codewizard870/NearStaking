@@ -8,7 +8,7 @@ import Footer from "./Pages/Footer";
 import DepositModal from './Pages/DepositModal'
 import WithdrawModal from './Pages/WithdrawModal'
 import WaitingModal from './Pages/WaitingModal';
-import { fetchData, checkNetwork } from './Util';
+import { fetchData } from './Util';
 
 const Layout = () => {
 

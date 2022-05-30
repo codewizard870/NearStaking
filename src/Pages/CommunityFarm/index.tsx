@@ -3,7 +3,6 @@ import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
 import { MsgExecuteContract, WasmAPI, Coin, LCDClient, Fee } from '@terra-money/terra.js'
 import { ConnectedWallet } from '@terra-money/wallet-provider'
 
-import { POOL } from '../../constants';
 import { useStore} from '../../store';
 import {
   Table,

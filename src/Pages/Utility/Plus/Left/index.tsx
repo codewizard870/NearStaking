@@ -4,13 +4,13 @@ import AnimationNumber from '../../../Components/AnimationNumber';
 import { MdInfoOutline } from 'react-icons/md';
 import Warning from '../../../../assets/Warning.svg'
 import { floorNormalize } from '../../../../Util';
-import { OpenDepositModal, useStore, useNearPrice } from '../../../../store';
+import { OpenDepositModal, useStore, usePrice } from '../../../../store';
 
 const Left: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
   const ustAmount = state.potInfo.qualified_ust_amount;
   const lunaAmount = state.potInfo.qualified_luna_amount;
-  const rate = useNearPrice();
+  const rate = usePrice();
   const amount = floorNormalize(parseFloat(ustAmount) + parseFloat(lunaAmount) * rate);
 
   return (

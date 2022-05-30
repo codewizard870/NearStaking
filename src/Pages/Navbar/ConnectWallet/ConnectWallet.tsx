@@ -4,7 +4,7 @@ import { Popover, PopoverTrigger } from '@chakra-ui/react'
 
 import "regenerator-runtime/runtime";
 import * as nearAPI from "near-api-js"
-import {getConfig} from "../../../config"
+import {getConfig, CONTRACT_NAME} from "../../../config"
 
 import { toast } from 'react-toastify';
 import { MdOutlineAccountBalanceWallet } from 'react-icons/md'
@@ -12,13 +12,11 @@ import { MdOutlineAccountBalanceWallet } from 'react-icons/md'
 import Wallet from './../../../assets/Wallet.svg';
 import InformationPopover from './InformationPopover';
 import ConnectWalletModal from './ConnectWalletModal';
-import { VUST, VLUNA } from '../../../constants';
-import { useStore, ActionKind, useNearBalance } from '../../../store';
+import { useStore, ActionKind } from '../../../store';
 import { shortenAddress, floorNormalize, floor } from '../../../Util';
 
 declare let window: any;
 const nearConfig = getConfig("testnet");
-const contractId = "dev-1653290629414-32294702545396";
 
 const ConnectWallet: FunctionComponent = () => {
   const { state, dispatch } = useStore();
@@ -80,7 +78,7 @@ const ConnectWallet: FunctionComponent = () => {
 
       wallet.requestSignIn(
         // The contract name that would be authorized to be called by the user's account.
-        contractId,
+        CONTRACT_NAME,
         // This is the app name. It can be anything.
         'Who was the last person to say "Hi!"?',
         // We can also provide URLs to redirect on success and failure.
@@ -102,7 +100,7 @@ const ConnectWallet: FunctionComponent = () => {
       // The method names on the contract that should be allowed to be called. Pass null for no method names and '' or [] for any method names.
       // const res = await window.near.requestSignIn({ contractId, methodNames: ['sayHi', 'ad'] })
       // const res = await window.near.requestSignIn({ contractId, methodNames: null })
-      const res = await window.near.requestSignIn({ contractId, methodNames: [] })
+      const res = await window.near.requestSignIn({ CONTRACT_NAME, methodNames: [] })
       // const res = await window.near.requestSignIn({ contractId, amount: '10000000000000000000000' })
       console.log('signin res: ', res);
       if (!res.error) {

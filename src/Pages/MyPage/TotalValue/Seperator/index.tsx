@@ -7,14 +7,14 @@ import YellowPanel from './../../../../assets/YellowPanel.svg'
 import PinkPanel from './../../../../assets/PinkPanel.svg'
 import BluePanel from './../../../../assets/BluePanel.svg'
 import AnimationNumber from '../../../Components/AnimationNumber';
-import { useNearBalance, useNearDeposited, useStore, useNearPrice } from '../../../../store';
+import { useBalance, useNearDeposited, useStore, usePrice } from '../../../../store';
 import { floor, floorNormalize } from '../../../../Util';
 
 const Seperator: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
-  const rate = useNearPrice();
+  const rate = usePrice();
 
-  const ustBalance = useNearBalance();
+  const ustBalance = useBalance();
   const ustDeposited = 0;
   const lunaDeposited = 0;
   return (
@@ -43,7 +43,7 @@ const Seperator: FunctionComponent = (props) => {
         fontStyle={'italic'}
         color='#CEBFBF'
       >
-          $&nbsp;<AnimationNumber value={ustBalance} />
+          {/* $&nbsp;<AnimationNumber value={ustBalance} /> */}
       </Text>
       {/* --------------------------------- */}
       <HStack spacing={'10px'}>

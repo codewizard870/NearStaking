@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
 import { HStack, Stack, VStack, Flex, Text, Image, Link, Center, Divider } from '@chakra-ui/react'
 import {
-  useNearPrice
+  usePrice
 } from '../../../store';
 import { floor } from '../../../Util';
 import EarnChart from './EarnChart';
@@ -13,7 +13,7 @@ const How: FunctionComponent = (props) => {
   const [year, setYear] = useState(10);
   const [amount, setAmount] = useState('100');
 
-  // const rate = useNearPrice();
+  // const rate = usePrice();
   // const _amount = floor(denom == 'LUNA' ? parseFloat(amount) * rate : parseFloat(amount));
 
   // const apr = denom == 'LUNA' ? lunaApr : ustApr;

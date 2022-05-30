@@ -21,7 +21,7 @@ const DateTimeTab: FunctionComponent<Props> = ({setInterest}) => {
 
   // const ustDeposited = useNearDeposited();
   // const lunaDeposited = useNearDeposited();
-  // const exchangeRate = useNearPrice();
+  // const exchangeRate = usePrice();
   // const ustApr = useUSTApr();
   // const lunaApr = useApr();
 

@@ -3,14 +3,14 @@ import { HStack, VStack, Flex, Text, Image, Link, Tooltip } from '@chakra-ui/rea
 
 import BlackPanel from '../../../../assets/BlackPanel.svg'
 import YellowPanel from '../../../../assets/YellowPanel.svg'
-import { useStore, useNearPrice } from '../../../../store';
+import { useStore, usePrice } from '../../../../store';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import { floor, floorNormalize } from '../../../../Util';
 
 
 const ValueView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const rate = useNearPrice();
+  const rate = usePrice();
 
   const history = state.amountHistory;
   const last = history.length - 1;

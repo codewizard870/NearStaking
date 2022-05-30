@@ -14,24 +14,23 @@ import Terms from './Pages/Terms';
 declare let document: any;
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  var FontFaceObserver = require('fontfaceobserver');
+  const [loading, setLoading] = useState(false);
 
-  var font = new FontFaceObserver('SF-Pro-Text');
-
-  font.load().then(function () {
+  // var FontFaceObserver = require('fontfaceobserver');
+  // var font = new FontFaceObserver('SF-Pro-Text');
+  // font.load().then(function () {
   //   console.log('My Family has loaded');
   //   let time = new Date();
   //   console.log(time.toLocaleTimeString());
-  });
+  // });
   //   let res = document.fonts.check('SF-Pro-Text')
   // console.log(res)
 
-  document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
-    setTimeout(() => {
-      setLoading(false)
-    }, 3000)
-  };
+  // document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
+    // setTimeout(() => {
+      // setLoading(false)
+    // }, 3000)
+  // };
 
   return (
     <>

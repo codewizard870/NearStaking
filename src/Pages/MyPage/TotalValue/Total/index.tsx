@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Tooltip, Button } from '@chakra-ui/react'
 
 import { MdSwapHoriz } from 'react-icons/md'
-import { useNearBalance, useNearDeposited, useStore, useNearPrice } from '../../../../store';
+import { useBalance, useNearDeposited, useStore, usePrice } from '../../../../store';
 import Warning from "./../../../../assets/Warning.svg"
 import AnimationNumber from '../../../Components/AnimationNumber';
 import { useNavigate } from 'react-router-dom';
@@ -10,12 +10,13 @@ import { floorNormalize, floor } from '../../../../Util';
 
 const Total: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const ustBalance = useNearBalance();
-  const rate = useNearPrice();
+  const ustBalance = useBalance();
+  const rate = usePrice();
 
   const ustDeposited = 0;
   const lunaDeposited = 0;
-  const total = ustBalance + ustDeposited + lunaDeposited;
+  // const total = ustBalance + ustDeposited + lunaDeposited;
+  const total = 0;
 
   return (
     <HStack justify={"space-between"} w={'100%'} align={'baseline'}>

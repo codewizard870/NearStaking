@@ -30,6 +30,7 @@
     "@types/secp256k1": "^4.0.3",
     "@types/semver": "^7.3.9",
     "axios": "^0.26.1",
+    "bignumber.js": "^9.0.2",
     "buffer": "^6.0.3",
     "chart.js": "^3.7.1",
     "fontfaceobserver": "^2.3.0",

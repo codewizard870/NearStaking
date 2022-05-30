@@ -9,8 +9,8 @@ import {
 import { toast } from 'react-toastify';
 
 import { useStore } from '../../../../store';
-import { estimateSend, fetchData, sleep } from '../../../../Util';
-import { POOL, successOption } from '../../../../constants';
+import { fetchData, sleep } from '../../../../Util';
+import { successOption } from '../../../../constants';
 import NearWallet from "../../../../assets/NearWallet.svg";
 import SenderWallet from "../../../../assets/SenderWallet.svg";
 

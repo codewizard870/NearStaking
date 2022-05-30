@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Stack, Flex, HStack, Button, Text, Divider } from '@chakra-ui/react'
-import { Deposit, MsgExecuteContract, WasmAPI, Coin } from '@terra-money/terra.js'
+import * as nearAPI from "near-api-js"
 import {
   Modal,
   ModalOverlay,
@@ -14,79 +14,60 @@ import InputPanel from './InputPanel';
 import SliderWish from './SliderWish';
 import Info from './Info';
 import { useStore, useWallet, ActionKind } from '../../store';
-import {estimateSend, fetchData, sleep} from '../../Util';
-import {POOL, successOption} from '../../constants';
+import {  getCoinId } from '../../Util';
+import { successOption, TOKEN_ADDRESS, DECIMALS } from '../../constants';
+import {CONTRACT_NAME} from '../../config';
 
-interface Props{
+interface Props {
   isOpen: boolean,
   onClose: () => void,
 }
-const DepositModal: FunctionComponent<Props> = ({isOpen, onClose}) => {
+const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
   const [amount, setAmount] = useState('0');
   const wallet = useWallet();
-  const {state, dispatch} = useStore();
+  const { state, dispatch } = useStore();
   const coinType = state.coinType;
 
   const deposit = async () => {
-    // if(parseFloat(amount) <= 0  || !wallet?.walletAddress)
-    //   return;
-      
-    // let val = Math.floor(parseFloat(amount) * 10 ** 6);
-    // let msg;
-    // if(coinType === 'USDC')
-    //   msg = { deposit_ust: {qualified: state.qualified} }
-    // else
-    //   msg = { deposit_luna: {qualified: state.qualified} }
+    if(parseFloat(amount) <= 0)
+      return;
 
-    // let deposit_msg = new MsgExecuteContract(
-    //   wallet?.walletAddress,
-    //   POOL,
-    //   msg,
-    //   coinType === 'USDC'? {uusd: val} : {uluna: val}
-    // );
-    // let res = await estimateSend(wallet, lcd, [deposit_msg], "Success Deposit", "deposit");
-    // if(res){
-    //   dispatch({type: ActionKind.setTxhash, payload: res});
-    //   onClose();
-    //   if(state.openWaitingModal)
-    //     state.openWaitingModal();
+    const tokenAddress = TOKEN_ADDRESS[getCoinId(state.coinType)];
+    const contract: any = new nearAPI.Contract(
+      wallet.account(), // the account object that is connecting
+      tokenAddress,
+      {
+        viewMethods: ["ft_balance_of"],
+        changeMethods: ["ft_transfer_call"],
+      }
+    );
 
-    //   let count = 10;
-    //   let height = 0;
-    //   while (count > 0) {
-    //     await lcd.tx.txInfo(res)
-    //       // eslint-disable-next-line no-loop-func
-    //       .then((e) => {
-    //         if (e.height > 0) {
-    //           toast.dismiss();
-    //           toast("Success", successOption);
-    //           height = e.height;
-    //         }
-    //       })
-    //       .catch((e) => {})
+    const decimal = DECIMALS[getCoinId(state.coinType)];
+    let val = Math.floor(parseFloat(amount) * 10 ** decimal);
 
-    //     if (height > 0) break;
+    let pool_msg = {
+      coin: state.coinType,
+      qualified: state.qualified
+    };
 
-    //     await sleep(1000);
-    //     count--;
-    //   }
-      
-    //   if(state.closeWaitingModal)
-    //     state.closeWaitingModal();
-
-    //   fetchData(state, dispatch);
-    // }
+    let token_msg = {
+      receiver_id: CONTRACT_NAME,
+      amount: val.toString(),
+      msg: JSON.stringify(pool_msg)
+    }
+    
+    await contract.ft_transfer_call(token_msg, 300000000000000, 1);
   }
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
-      <ModalContent 
+      <ModalContent
         background={'#212121'}
         rounded={'25px'}
-        w={{sm:'100%', md: '562px', lg:'562px'}}
-        minW={{sm:'100%', md: '562px', lg:'562px'}}
+        w={{ sm: '100%', md: '562px', lg: '562px' }}
+        minW={{ sm: '100%', md: '562px', lg: '562px' }}
         h={'453px'}
-        px={{sm:'10px', md: '47px', lg: '47px'}}
+        px={{ sm: '10px', md: '47px', lg: '47px' }}
         py={'39px'}
       >
         <Flex
@@ -103,18 +84,18 @@ const DepositModal: FunctionComponent<Props> = ({isOpen, onClose}) => {
           >
             Deposit
           </Text>
-          <Title/>
+          <Title />
         </Flex>
-        <InputPanel amount={amount} setAmount={setAmount}/>
-        <SliderWish amount={amount} setAmount={setAmount}/>
+        <InputPanel amount={amount} setAmount={setAmount} />
+        <SliderWish amount={amount} setAmount={setAmount} />
         <Divider mt={'23px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
-        <Info amount={amount}/>
+        <Info amount={amount} />
         <Divider mt={'23px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
-        <Button 
-          w={'100%'} 
-          h={'45px'} 
-          mt={'26px'} 
-          background={'#493C3C'} 
+        <Button
+          w={'100%'}
+          h={'45px'}
+          mt={'26px'}
+          background={'#493C3C'}
           rounded={'25px'}
           onClick={() => deposit()}
         >
@@ -122,7 +103,7 @@ const DepositModal: FunctionComponent<Props> = ({isOpen, onClose}) => {
             fontSize={'13px'}
             fontWeight={'860'}
             lineHeight={'15px'}
-                     
+
           >
             Proceed
           </Text>

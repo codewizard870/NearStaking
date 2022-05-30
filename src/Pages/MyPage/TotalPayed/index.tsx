@@ -3,14 +3,14 @@ import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Tooltip, Button
 import Warning from "./../../../assets/Warning.svg"
 
 import AnimationNumber from '../../Components/AnimationNumber';
-import { OpenDepositModal, useStore, useNearPrice } from '../../../store';
+import { OpenDepositModal, useStore, usePrice } from '../../../store';
 import { floorNormalize, floor } from '../../../Util';
 
 const TotalPayed: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
   const ustRewards = 0;
   const lunaRewards = 0;
-  const exchangeRate = useNearPrice();
+  const exchangeRate = usePrice();
   const rewards = floorNormalize(ustRewards) + floorNormalize(lunaRewards * exchangeRate);
   const usd = floor(rewards);
 

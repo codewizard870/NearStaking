@@ -1,21 +1,25 @@
 import React, { FunctionComponent } from 'react';
 import { HStack, Stack, Flex, Text, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
-import { useNearBalance, useNearDeposited, useStore, useNearPrice } from '../../../../store';
+import { useBalance, useNearDeposited, useStore, usePrice } from '../../../../store';
 import { floor, floorNormalize } from '../../../../Util';
 
 const CircularView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const rate = useNearPrice();
+  const rate = usePrice();
 
-  const ustBalance = useNearBalance();
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
-  const total = ustBalance + ustDeposited + lunaDeposited;
+  // const ustBalance = useBalance();
+  // const ustDeposited = 0;
+  // const lunaDeposited = 0;
+  // const total = ustBalance + ustDeposited + lunaDeposited;
 
-  const init = !state.connected;
-  const percent1 = init? 75: Math.floor(ustBalance * 100 / total);
-  const percent2 = init? 75: Math.floor(ustDeposited * 100 / total);
-  const percent3 = init? 75: Math.floor(lunaDeposited * 100 / total);
+  // const init = !state.connected;
+  // const percent1 = init? 75: Math.floor(ustBalance * 100 / total);
+  // const percent2 = init? 75: Math.floor(ustDeposited * 100 / total);
+  // const percent3 = init? 75: Math.floor(lunaDeposited * 100 / total);
+
+  const percent1 = 75
+  const percent2 = 75
+  const percent3 = 75
 
   return (
     <Flex align={'center'} minWidth={'220px'} h={'220px'} justify='center' transform={'rotate(-90deg)'} mr={'36px'}>

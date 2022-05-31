@@ -29,10 +29,10 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
   const coinType = state.coinType;
 
   const withdraw = async () => {
-    // if(checked == false || wallet == undefined)
-    //   return;
+    if(checked == false || wallet == undefined)
+      return;
 
-    // let val = Math.floor(parseFloat(amount) * 10 ** 6);
+    let val = Math.floor(parseFloat(amount) * 10 ** 6);
     // let withdraw_msg = new MsgExecuteContract(
     //   wallet?.walletAddress,
     //   coinType == 'USDC' ? VUST : VLUNA,
@@ -50,12 +50,12 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
     // let res = await estimateSend(wallet, lcd, [withdraw_msg], "Success request withdraw", "request withdraw");
     // if(res)
     // {
-    //   dispatch({type: ActionKind.setTxhash, payload: res});
+      // dispatch({type: ActionKind.setTxhash, payload: res});
 
-    //   onClose();
-    //   onCloseParent();
-    //   if(state.openWaitingModal)
-    //     state.openWaitingModal();
+      onClose();
+      onCloseParent();
+      if(state.openWaitingModal)
+        state.openWaitingModal();
 
     //   let count = 10;
     //   let height = 0;
@@ -77,30 +77,31 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
     //     count--;
     //   }
 
-    //   var formData = new FormData()
-    //   formData.append('wallet', wallet.walletAddress.toString());
-    //   formData.append('coinType', coinType)
-    //   formData.append('amount', val.toString())
-
-    //   await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, {timeout: 60 * 60 * 1000})
-    //   .then((res) => {
-    //     toast("Withdraw success", successOption)
-    //     if(state.closeWaitingModal)
-    //       state.closeWaitingModal();
-    //     fetchData(state, dispatch)
-    //   })
-    //   .catch(function (error) {
-    //     if (error.response) {
-    //       toast(error.response.data.data.message, errorOption)
-    //     } else if (error.request) {
-    //       toast(error.request, errorOption);
-    //       fetchData(state, dispatch)
-    //     } else {
-    //       toast(error.message, errorOption);
-    //     }
-    //     if(state.closeWaitingModal)
-    //       state.closeWaitingModal();
-    //   });
+      var formData = new FormData()
+      let account = wallet.getAccountId();
+      formData.append('account', account);
+      formData.append('coinType', coinType)
+      formData.append('amount', val.toString())
+console.log("post withdraw")
+      await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, {timeout: 60 * 60 * 1000})
+      .then((res) => {
+        toast("Withdraw success", successOption)
+        if(state.closeWaitingModal)
+          state.closeWaitingModal();
+        fetchData(state, dispatch)
+      })
+      .catch(function (error) {
+        if (error.response) {
+          toast(error.response.data.data.message, errorOption)
+        } else if (error.request) {
+          toast(error.request, errorOption);
+          fetchData(state, dispatch)
+        } else {
+          toast(error.message, errorOption);
+        }
+        if(state.closeWaitingModal)
+          state.closeWaitingModal();
+      });
     // }
   }
 

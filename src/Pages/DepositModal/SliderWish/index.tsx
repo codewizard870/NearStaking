@@ -31,8 +31,7 @@ const SliderWish: FunctionComponent<Props> = ({ amount, setAmount }) => {
 
   useEffect(() => {
     if (parseFloat(amount) > 0) {
-      let percent_big = new BigNumber(amount);
-      percent_big.multipliedBy(100).dividedBy(balance);
+      let percent_big = new BigNumber(amount).multipliedBy(100).dividedBy(balance);
 
       let percent = percent_big.toNumber();
       if (percent > 100) percent = 100;

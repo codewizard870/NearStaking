@@ -17,7 +17,7 @@ import { MdCode } from "react-icons/md";
 
 import { floorNormalize, floor } from '../../../Util';
 import Indicator from './Indicator';
-import {  useStore } from '../../../store'
+import {  useStore, useDeposited } from '../../../store'
 
 interface Props {
   amount: string,
@@ -25,16 +25,14 @@ interface Props {
 }
 const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
   const {state, dispatch} = useStore();
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
+  const deposited = useDeposited();
 
   const [sliderValue, setSliderValue] = useState(0);
   
   useEffect(() => {
-    let balance = state.coinType == 'USDC' ? ustDeposited : lunaDeposited;
+    let balance = deposited.toNumber();
 
-    if(parseFloat(amount) > 0)
-    {
+    if(parseFloat(amount) > 0){
       let percent = Math.floor(parseFloat(amount) * 100 / balance);
       if (percent > 100) percent = 100;
       setSliderValue(percent);
@@ -46,7 +44,7 @@ const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
 
   const onChangeSlider = (value: number) => {
     setSliderValue(value);
-    let balance = state.coinType == 'USDC' ? ustDeposited : lunaDeposited;
+    let balance = deposited.toNumber();
     setAmount(floor(balance * value / 100).toString());
   }
   return (

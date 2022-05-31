@@ -1,24 +1,31 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Tooltip, Button } from '@chakra-ui/react'
-import Warning from "./../../../assets/Warning.svg"
+import { BigNumber } from 'bignumber.js';
 
+import Warning from "./../../../assets/Warning.svg";
+import { StableCoins, DECIMALS } from '../../../constants';
 import AnimationNumber from '../../Components/AnimationNumber';
 import { OpenDepositModal, useStore, usePrice } from '../../../store';
 import { floorNormalize, floor } from '../../../Util';
 
 const TotalPayed: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const ustRewards = 0;
-  const lunaRewards = 0;
-  const exchangeRate = usePrice();
-  const rewards = floorNormalize(ustRewards) + floorNormalize(lunaRewards * exchangeRate);
-  const usd = floor(rewards);
 
-  const depositTime_max = 0;
-  const depositTime_min = 0;
-  const depositTime = depositTime_min === 0 ? depositTime_max : depositTime_min
-  const period = depositTime > 0 ? Date.now() - depositTime * 1000 : 0;
-  const day = Math.floor((period > 0 ? period : 0) / 1000 / 60 / 60 / 24);
+  let coins = StableCoins.filter((coin) => coin.upcoming == false);
+  let total = new BigNumber(0);
+
+  let depositTime_max = 0;
+  for (let i = 0; i < coins.length; i++) {
+    let amount = new BigNumber(state.userInfos[i].reward_amount);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+    total = total.plus(amount);
+
+    if (depositTime_max == 0 || depositTime_max < state.userInfos[i].deposit_time)
+      depositTime_max = state.userInfos[i].deposit_time;
+  }
+
+  const period = depositTime_max > 0 ? Date.now() * 10**6 - depositTime_max : 0;
+  const day = Math.floor((period > 0 ? period : 0) /10**9 / 60 / 60 / 24);
 
   return (
     <Flex
@@ -50,7 +57,7 @@ const TotalPayed: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'34px'}
         >
-          <AnimationNumber value={rewards} />
+          <AnimationNumber value={total.toNumber()} />
         </Text>
         <Text
           fontSize={'20px'}
@@ -67,7 +74,7 @@ const TotalPayed: FunctionComponent = (props) => {
         fontStyle={'italic'}
         color='#CEBFBF'
       >
-        USD $<AnimationNumber value={usd} />
+        USD $<AnimationNumber value={total.toNumber()} />
       </Text>
       <HStack mt={'31px'} spacing={'20px'} align={'baseline'}>
         <Text
@@ -109,7 +116,7 @@ const TotalPayed: FunctionComponent = (props) => {
         background={'#493C3C'}
         rounded={'25px'}
         onClick={() => {
-          if(state.connected && state.openDepositModal)
+          if (state.connected && state.openDepositModal)
             state.openDepositModal()
           else if (!state.connected && state.openConnectWalletModal)
             state.openConnectWalletModal()
@@ -120,7 +127,7 @@ const TotalPayed: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'15px'}
         >
-          {!state.connected && 
+          {!state.connected &&
             "Connect Wallet"
           }
           {state.connected &&

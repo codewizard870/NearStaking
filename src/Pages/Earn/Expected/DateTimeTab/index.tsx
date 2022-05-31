@@ -1,7 +1,11 @@
 import React, { FunctionComponent, useState } from 'react';
-import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Divider, Button } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
+import {BigNumber} from 'bignumber.js'
 
+import { DECIMALS } from '../../../../constants';
+import { useStore } from '../../../../store';
+import { getCoinId } from '../../../../Util';
 import Tab from './Tab';
 
 interface Props {
@@ -9,6 +13,7 @@ interface Props {
 }
 
 const DateTimeTab: FunctionComponent<Props> = ({setInterest}) => {
+  const {state, dispatch} = useStore();
   const [tab, setTab] = useState('year');
 
   let rate = 1;
@@ -19,16 +24,13 @@ const DateTimeTab: FunctionComponent<Props> = ({setInterest}) => {
     case 'day': rate = 1 / 365; break;
   }
 
-  // const ustDeposited = useNearDeposited();
-  // const lunaDeposited = useNearDeposited();
-  // const exchangeRate = usePrice();
-  // const ustApr = useUSTApr();
-  // const lunaApr = useApr();
+  let coinId = getCoinId('DAI');
+  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount);
+  amount = amount.multipliedBy(state.price[coinId]).dividedBy(10 ** DECIMALS[coinId]);
 
-  // const ustValue = ustDeposited * ustApr / 100 * rate;
-  // const lunaValue = lunaDeposited * exchangeRate * lunaApr / 100 * rate;
+  const apr = state.apr[coinId];
 
-  // setInterest(Math.floor(ustValue + lunaValue));
+  setInterest(amount.toNumber() * apr / 100 * rate);
 
   return (
     <Flex

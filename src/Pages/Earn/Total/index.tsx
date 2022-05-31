@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button, Tooltip } from '@chakra-ui/react'
+import {BigNumber} from 'bignumber.js';
 
+import { StableCoins, DECIMALS } from '../../../constants';
 import Warning from "./../../../assets/Warning.svg"
 import { 
   OpenDepositModal, 
@@ -9,15 +11,19 @@ import {
   usePrice
 } from '../../../store';
 import AnimationNumber from '../../Components/AnimationNumber';
-import { floorNormalize } from '../../../Util';
 
 const Total: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
-  const rate = usePrice();
 
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
-  const total = ustDeposited + lunaDeposited;
+  let coins = StableCoins.filter((coin) => coin.upcoming == false);
+  let total = new BigNumber(0);
+
+  for (let i = 0; i < coins.length; i++) {
+    let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+
+    total = total.plus(amount);
+  }
 
   return (
     <VStack 
@@ -55,7 +61,7 @@ const Total: FunctionComponent = (props) => {
             fontWeight={'860'}
             lineHeight={'36px'}
           >
-            <AnimationNumber value={total} />
+            <AnimationNumber value={total.toNumber()} />
           </Text>
           <Text
             fontSize={'20px'}

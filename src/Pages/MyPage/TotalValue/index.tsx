@@ -29,9 +29,6 @@ const TotalValue: FunctionComponent = (props) => {
       volatile = volatile.plus(amount);
   }
 
-  // total = stable.plus(volatile).plus(state.nearBalance * state.price[getCoinId("wNEAR")]);
-
-
   return (
     <VStack
       w={{ sm: '100%', md: '100%', lg: '696px' }}

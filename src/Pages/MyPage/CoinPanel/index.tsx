@@ -2,6 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button, Tooltip } from '@chakra-ui/react'
 import { Grid, GridItem } from '@chakra-ui/react'
 
+import {BigNumber} from 'bignumber.js';
+import { getCoinId } from '../../../Util';
+import { StableCoins, DECIMALS } from '../../../constants';
 import Warning from './../../../assets/Warning.svg'
 import AnimationNumber from '../../Components/AnimationNumber';
 import { OpenDepositModal, OpenWithdrawModal, useStore } from '../../../store';
@@ -17,6 +20,10 @@ interface Props {
 
 const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, upcoming }) => {
   const { state, dispatch } = useStore();
+
+  let coinId = getCoinId(name);
+  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount);
+  amount = amount.multipliedBy(state.price[coinId]).dividedBy(10 ** DECIMALS[coinId]);
 
   return (
     <VStack
@@ -65,7 +72,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               fontSize='13px'
               fontWeight={'400'}
             >
-              $ 937,345,00
+              $ <AnimationNumber value = {amount.toNumber()} />
             </Text>
           </VStack>
           <VStack align='baseline'>
@@ -82,7 +89,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               fontSize='13px'
               fontWeight={'400'}
             >
-              {apr}%
+              <AnimationNumber value={apr} />%
             </Text>
           </VStack>
         </HStack>

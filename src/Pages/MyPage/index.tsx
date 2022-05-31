@@ -49,6 +49,7 @@ const MyPage: FunctionComponent = (props) => {
           <CoinPanel
             name={item.name as COINTYPE}
             description={item.description}
+            stable={item.stable}
             avatar={item.avatar}
             apr={item.apr}
             upcoming={item.upcoming}

@@ -13,18 +13,18 @@ import { COINTYPE } from '../../../store'
 interface Props {
   name: COINTYPE,
   description: string,
+  stable: boolean,
   avatar: string,
   apr: number,
   upcoming: boolean
 }
 
-const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, upcoming }) => {
+const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, upcoming, stable }) => {
   const { state, dispatch } = useStore();
 
   let coinId = getCoinId(name);
-  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount);
-  amount = amount.multipliedBy(state.price[coinId]).dividedBy(10 ** DECIMALS[coinId]);
-
+  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount).dividedBy(10 ** DECIMALS[coinId]);
+  let usd = amount.multipliedBy(state.price[coinId]);
   return (
     <VStack
       minW={{ base: '100%', lg: '48%' }}
@@ -58,7 +58,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
           </Flex>
         </HStack>
         <HStack ml='126px' spacing='30px' w='100%'>
-          <VStack align='baseline'>
+          <VStack align='baseline' spacing='0px'>
             <HStack>
               <Text
                 fontSize='13px'
@@ -68,14 +68,34 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               </Text>
               <Image src={Warning} w={'13px'} />
             </HStack>
-            <Text
-              fontSize='13px'
-              fontWeight={'400'}
-            >
-              $ <AnimationNumber value = {amount.toNumber()} />
-            </Text>
+            {!stable &&
+              <>
+                <Text
+                  fontSize='13px'
+                  fontWeight={'400'}
+                >
+                  <AnimationNumber value = {amount.toNumber()} />
+                  &nbsp;{name}
+                </Text>
+                <Text
+                  fontSize='13px'
+                  fontWeight={'400'}
+                >
+                  $ <AnimationNumber value = {usd.toNumber()} />
+                  &nbsp;USD Value
+                </Text>
+              </>
+            }
+            {stable &&
+              <Text
+                fontSize='13px'
+                fontWeight={'400'}
+              >
+                $ <AnimationNumber value = {usd.toNumber()} />
+              </Text>
+            }
           </VStack>
-          <VStack align='baseline'>
+          <VStack align='baseline' spacing='0px'>
             <HStack>
               <Text
                 fontSize='13px'

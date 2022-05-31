@@ -41,6 +41,9 @@ const ConnectWallet: FunctionComponent = () => {
     async function fetchBalance() {
       if (state.walletType == 'near' && state.wallet) {
         const account = state.wallet.account();
+        let accountId = state.wallet.getAccountId();
+        setAddress(accountId);
+
         const balance = await account.getAccountBalance();
         const { utils } = nearAPI;
         const amountInNEAR = utils.format.formatNearAmount(balance.available);
@@ -63,6 +66,8 @@ const ConnectWallet: FunctionComponent = () => {
   }
 
   async function connectToNearWallet() {
+    window.localStorage.setItem("wallet", "near");
+
     dispatch({ type: ActionKind.setWalletType, payload: 'near' });
     onCloseConnectWallet();
 
@@ -88,13 +93,9 @@ const ConnectWallet: FunctionComponent = () => {
         // The current URL is used by default.
       );
     } else {
-
       dispatch({ type: ActionKind.setNear, payload: near});
       dispatch({ type: ActionKind.setConnected, payload: true });
       dispatch({ type: ActionKind.setWallet, payload: wallet });
-
-      let accountId = wallet.getAccountId();
-      setAddress(accountId);
     }
   }
 

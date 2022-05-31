@@ -42,7 +42,7 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
           lineHeight={'28px'}
           color={'white'}
         >
-          Waiting for Terra Station ...
+          Waiting for Response ...
         </Text>
         <Text
           mt={'20px'}

@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button } from '@chakra-ui/react'
 import { Grid, GridItem, Tooltip } from '@chakra-ui/react'
-import {BigNumber} from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 
 import {
   OpenDepositModal,
@@ -28,8 +28,8 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
   const coinId = getCoinId(name)
   const price = state.price;
 
-  const tvl_coin = new BigNumber(history[last].amount[coinId]).dividedBy(10 ** DECIMALS[coinId]);
-  const tvl_usd = tvl_coin.multipliedBy(price[coinId]);
+  const tvl_coin = last < 0 ? new BigNumber(0) : new BigNumber(history[last].amount[coinId]).dividedBy(10 ** DECIMALS[coinId]);
+  const tvl_usd = last < 0 ? new BigNumber(0) : tvl_coin.multipliedBy(price[coinId]);
 
   return (
     <>
@@ -108,9 +108,9 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
             background={'#493C3C'}
             rounded={'25px'}
             onClick={() => {
-              if(state.connected)
+              if (state.connected)
                 OpenDepositModal(state, dispatch, name)
-              else if(state.openConnectWalletModal != undefined)
+              else if (state.openConnectWalletModal != undefined)
                 state.openConnectWalletModal();
             }}
           >
@@ -135,9 +135,9 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
             rounded={'25px'}
             border={'solid 1px #CEBFBF'}
             onClick={() => {
-              if(state.connected)
+              if (state.connected)
                 OpenWithdrawModal(state, dispatch, name)
-              else if(state.openConnectWalletModal != undefined)
+              else if (state.openConnectWalletModal != undefined)
                 state.openConnectWalletModal();
             }}
           >

@@ -14,9 +14,9 @@ import InputPanel from './InputPanel';
 import SliderWish from './SliderWish';
 import Info from './Info';
 import { useStore, useWallet, ActionKind } from '../../store';
-import {  getCoinId } from '../../Util';
+import { getCoinId } from '../../Util';
 import { successOption, TOKEN_ADDRESS, DECIMALS } from '../../constants';
-import {CONTRACT_NAME} from '../../config';
+import { CONTRACT_NAME } from '../../config';
 
 interface Props {
   isOpen: boolean,
@@ -29,7 +29,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
   const coinType = state.coinType;
 
   const deposit = async () => {
-    if(parseFloat(amount) <= 0)
+    if (wallet == undefined || parseFloat(amount) <= 0)
       return;
 
     const tokenAddress = TOKEN_ADDRESS[getCoinId(state.coinType)];
@@ -55,7 +55,8 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
       amount: val.toString(),
       msg: JSON.stringify(pool_msg)
     }
-    
+
+    window.localStorage.setItem("action", "deposit")
     await contract.ft_transfer_call(token_msg, 300000000000000, 1);
   }
   return (

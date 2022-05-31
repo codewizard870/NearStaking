@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useState } from 'react';
 import { Stack, VStack, Flex, HStack, Button, Text, Divider, Image, Checkbox } from '@chakra-ui/react'
-import { Deposit, MsgExecuteContract, WasmAPI, Coin } from '@terra-money/terra.js'
+import * as nearAPI from "near-api-js"
 import axios from 'axios';
 import {
   Modal,
@@ -11,9 +11,10 @@ import {
 import { toast } from 'react-toastify'
 import { MdWarningAmber, MdInfoOutline } from 'react-icons/md'
 
+import {CONTRACT_NAME} from '../../../config'
 import { useStore, useWallet, ActionKind } from '../../../store';
-import { fetchData, sleep } from '../../../Util';
-import { successOption, errorOption, REQUEST_ENDPOINT } from '../../../constants';
+import { fetchData, sleep, getCoinId } from '../../../Util';
+import { successOption, errorOption, REQUEST_ENDPOINT, DECIMALS } from '../../../constants';
 import CustomCheckbox from './CustomCheckbox';
 
 interface Props {
@@ -29,80 +30,62 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
   const coinType = state.coinType;
 
   const withdraw = async () => {
-    if(checked == false || wallet == undefined)
+    if (checked == false || wallet == undefined || parseFloat(amount) <= 0)
       return;
 
-    let val = Math.floor(parseFloat(amount) * 10 ** 6);
-    // let withdraw_msg = new MsgExecuteContract(
-    //   wallet?.walletAddress,
-    //   coinType == 'USDC' ? VUST : VLUNA,
-    //   {
-    //     "increase_allowance": {
-    //         "spender": `${MOTHER_WALLET}`,
-    //         "amount": `${val}`,
-    //         "expires": {
-    //             "never": {}
-    //         }
+    const contract: any = new nearAPI.Contract(
+      wallet.account(), // the account object that is connecting
+      CONTRACT_NAME,
+      {
+        viewMethods: [],
+        changeMethods: ["withdraw_reserve"],
+      }
+    );
+
+    const decimal = DECIMALS[getCoinId(state.coinType)];
+    let val = Math.floor(parseFloat(amount) * 10 ** decimal);
+
+    let withdraw_msg = {
+      coin: coinType,
+      amount: val,
+    }
+
+    window.localStorage.setItem("action", "withdraw");
+    window.localStorage.setItem("coinType", coinType);
+    window.localStorage.setItem("amount", val.toString());
+    await contract.withdraw_reserve(withdraw_msg);
+
+    // onClose();
+    // onCloseParent();
+    // if (state.openWaitingModal)
+    //   state.openWaitingModal();
+
+    // var formData = new FormData()
+    // let account = wallet.getAccountId();
+    // formData.append('account', account);
+    // formData.append('coinType', coinType)
+    // formData.append('amount', val.toString())
+    // console.log("post withdraw")
+    // await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, { timeout: 60 * 60 * 1000 })
+    //   .then((res) => {
+    //     toast("Withdraw success", successOption)
+    //     if (state.closeWaitingModal)
+    //       state.closeWaitingModal();
+    //     fetchData(state, dispatch)
+    //   })
+    //   .catch(function (error) {
+    //     if (error.response) {
+    //       toast(error.response.data.data.message, errorOption)
+    //     } else if (error.request) {
+    //       toast(error.request, errorOption);
+    //       fetchData(state, dispatch)
+    //     } else {
+    //       toast(error.message, errorOption);
     //     }
-    //   },
-    //   {}
-    // );
-    // let res = await estimateSend(wallet, lcd, [withdraw_msg], "Success request withdraw", "request withdraw");
-    // if(res)
-    // {
-      // dispatch({type: ActionKind.setTxhash, payload: res});
+    //     if (state.closeWaitingModal)
+    //       state.closeWaitingModal();
+    //   });
 
-      onClose();
-      onCloseParent();
-      if(state.openWaitingModal)
-        state.openWaitingModal();
-
-    //   let count = 10;
-    //   let height = 0;
-    //   while (count > 0) {
-    //     await lcd.tx.txInfo(res)
-    //       // eslint-disable-next-line no-loop-func
-    //       .then((e) => {
-    //         if (e.height > 0) {
-    //           toast.dismiss();
-    //           toast("Success request withdraw", successOption);
-    //           height = e.height;
-    //         }
-    //       })
-    //       .catch((e) => {})
-
-    //     if (height > 0) break;
-
-    //     await sleep(1000);
-    //     count--;
-    //   }
-
-      var formData = new FormData()
-      let account = wallet.getAccountId();
-      formData.append('account', account);
-      formData.append('coinType', coinType)
-      formData.append('amount', val.toString())
-console.log("post withdraw")
-      await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, {timeout: 60 * 60 * 1000})
-      .then((res) => {
-        toast("Withdraw success", successOption)
-        if(state.closeWaitingModal)
-          state.closeWaitingModal();
-        fetchData(state, dispatch)
-      })
-      .catch(function (error) {
-        if (error.response) {
-          toast(error.response.data.data.message, errorOption)
-        } else if (error.request) {
-          toast(error.request, errorOption);
-          fetchData(state, dispatch)
-        } else {
-          toast(error.message, errorOption);
-        }
-        if(state.closeWaitingModal)
-          state.closeWaitingModal();
-      });
-    // }
   }
 
   return (

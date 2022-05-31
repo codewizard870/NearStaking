@@ -19,7 +19,7 @@ const TransactionHistory: FunctionComponent = (props) => {
     const fetchTransaction = async () => {
       try{
         const res = await axios.get(`https://backend-testnet-pr-1008.onrender.com/trpc/transactions-list-by-account-id?batch=1&input={"0":{"accountId":"${accountId}","limit":10}}`);
-
+console.log(res)
         if(res.data.length == 0) return;
         console.log(res.data[0].result.data);
         setList(res.data[0].result.data)
@@ -58,13 +58,15 @@ const TransactionHistory: FunctionComponent = (props) => {
           {list.length == 0  &&
             <>
               <Text 
-                fontSize='20px' 
+                fontSize='20px'
+                fontWeight='800'
                 lineHeight={'36px'}
               >
                 No transaction History
               </Text>
               <Text 
-                fontSize='13px' 
+                fontSize='13px'
+                fontWeight='800'
                 lineHeight={'13px'}
                 color='#CEBFBF'
               >

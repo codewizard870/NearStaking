@@ -15,6 +15,7 @@ import { StableCoins } from '../../constants';
 const MyPage: FunctionComponent = (props) => {
   const [depositTab, setDepositTab] = useState('all');
   const [coinList, setCoinList] = useState(StableCoins);
+  
   useEffect(() => {
     if (depositTab == 'stable')
       setCoinList(StableCoins.filter(coin => coin.stable == true));

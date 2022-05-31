@@ -2,17 +2,8 @@ import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button } from '@chakra-ui/react'
 import { Grid, GridItem, Tooltip } from '@chakra-ui/react'
 
-// import UsdcIcon from './../../../assets/Usdc.svg'
-// import UsdtIcon from './../../../assets/Usdt.svg'
-// import DaiIcon from './../../../assets/Dai.svg'
-// import UsnIcon from './../../../assets/Usn.svg'
-// import WbtcIcon from './../../../assets/Wbtc.svg'
-// import EthIcon from './../../../assets/Eth.png'
-// import WnearIcon from './../../../assets/Wnear.svg'
 
 import {
-  OpenDepositModal,
-  OpenWithdrawModal,
   useStore,
   usePrice,
   COINTYPE
@@ -113,8 +104,6 @@ const CoinPanel: FunctionComponent = (props) => {
             description={item.description}
             avatar={item.avatar}
             apr={item.apr}
-            tvl_coin={item.tvl_coin}
-            tvl_usd={item.tvl_usd}
           />
         ))}
       </Grid>

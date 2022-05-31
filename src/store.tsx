@@ -20,6 +20,7 @@ export interface AppContextInterface {
   connected: Boolean,
   near: any,
   wallet: any | undefined,
+  nearBalance: number,
   balance: BigNumber[],
   tab: "dashboard" | "mypage" | "earn" | "utility" | "bridge",
   openDepositModal: (() => void) | undefined,
@@ -49,6 +50,7 @@ const initialState: AppContextInterface = {
   connected: false,
   near: undefined,
   wallet: undefined,
+  nearBalance: 0,
   balance: balanceInfo,
   tab: 'dashboard',
   openDepositModal: undefined,
@@ -78,6 +80,7 @@ export enum ActionKind{
   setConnected,
   setNear,
   setWallet,
+  setNearBalance,
   setBalance,
   setTab,
   setOpenDepositModal,
@@ -120,6 +123,8 @@ export const reducer = (state: AppContextInterface,  action: Action ) => {
       return { ...state, near: action.payload }
     case ActionKind.setWallet:
       return { ...state, wallet: action.payload }
+    case ActionKind.setNearBalance:
+      return { ...state, nearBalance: action.payload }
     case ActionKind.setBalance:
       return { ...state, balance: action.payload }
     case ActionKind.setTab:
@@ -197,10 +202,10 @@ export const useNear = () => {
   return state.near;
 }
 
-export const useNearDeposited = () => {
+export const useDeposited = () => {
   const {state, dispatch} = useStore();
-  let balance = state.userInfos[0].amount;
-  return floorNormalize(balance);
+  let userInfo = state.userInfos[getCoinId(state.coinType)].amount;
+  return userInfo;
 }
 
 export const useApr = () => {

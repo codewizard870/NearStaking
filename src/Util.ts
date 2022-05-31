@@ -28,8 +28,8 @@ function calcUSD(amountHistory: any, price: number[]) {
 
     for(let j=0; j<coins.length; j++){
       let usd = new BigNumber(amountHistory[i].amount[j] + amountHistory[i].reward[j]);
-      usd.multipliedBy(price[j]).dividedBy(10**DECIMALS[j]);
-      totalUSD.plus(usd);
+      usd = usd.multipliedBy(price[j]).dividedBy(10**DECIMALS[j]);
+      totalUSD = totalUSD.plus(usd);
     }
     amountHistory[i].totalUSD = totalUSD.toNumber();
   }
@@ -60,17 +60,10 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
 
   dispatch({ type: ActionKind.setBalance, payload: balance });
 
-  let amountHistory = undefined,
-    apr = undefined,
-    userInfo = undefined,
-    farmPrice = undefined,
-    farmInfo = undefined,
-    farmStartTime = undefined,
-    total_rewards = undefined,
-    status: any = undefined
-
+  let status: any = undefined
   let price = priceInfo;
   let res: any;
+
   for(let i=0; i<coins.length; i++){
     try {
       res = await axios.get(
@@ -87,13 +80,12 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
     CONTRACT_NAME,
     {
       viewMethods: ["get_status"],
-      changeMethods: ["withdraw"],
+      changeMethods: [],
     }
   );
 
   status = await contract.get_status({ account: wallet.getAccountId() })
 console.log(status)
-
   if (status) {
     if (status.amount_history !== undefined)
       dispatch({ type: ActionKind.setAmountHistory, payload: calcUSD(status.amount_history, price) });
@@ -101,13 +93,15 @@ console.log(status)
     if (status.apr !== undefined)
       dispatch({ type: ActionKind.setApr, payload: status.apr });
 
-    if (status.userinfo !== undefined)
-      dispatch({ type: ActionKind.setUserInfos, payload: status.userinfo });
+    if (status.user_info !== undefined)
+      dispatch({ type: ActionKind.setUserInfos, payload: status.user_info });
 
     if (status.farm_price !== undefined)
       dispatch({ type: ActionKind.setFarmPrice, payload: parseInt(status.farm_price) });
+
     if (status.farm_info !== undefined)
       dispatch({ type: ActionKind.setFarmInfo, payload: status.farm_info });
+
     if (status.farm_starttime !== undefined)
       dispatch({ type: ActionKind.setFarmStartTime, payload: parseInt(status.farm_starttime) });
 

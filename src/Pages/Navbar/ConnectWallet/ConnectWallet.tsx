@@ -46,7 +46,10 @@ const ConnectWallet: FunctionComponent = () => {
         const amountInNEAR = utils.format.formatNearAmount(balance.available);
 
         setBank(true);
-        setBalance(floor(parseFloat(amountInNEAR)).toString());
+
+        const amount = floor(parseFloat(amountInNEAR));
+        setBalance(amount.toString());
+        dispatch({ type: ActionKind.setNearBalance, payload: amount});
       }
     }
 

@@ -1,9 +1,10 @@
 import React, { FunctionComponent, useEffect, useState, useMemo } from 'react';
 import { HStack, Stack, VStack, Flex, Text, Image, Link, Center, Divider } from '@chakra-ui/react'
 import {
-  usePrice
+  COINTYPE,
+  usePrice, useStore
 } from '../../../store';
-import { floor } from '../../../Util';
+import { floor, getCoinId } from '../../../Util';
 import EarnChart from './EarnChart';
 import Earn from './Earn';
 import Value from './Value';
@@ -13,33 +14,33 @@ const How: FunctionComponent = (props) => {
   const [year, setYear] = useState(10);
   const [amount, setAmount] = useState('100');
 
-  // const rate = usePrice();
-  // const _amount = floor(denom == 'LUNA' ? parseFloat(amount) * rate : parseFloat(amount));
+  const { state, dispatch } = useStore();
+  const coinId = getCoinId(denom as COINTYPE);
 
-  // const apr = denom == 'LUNA' ? lunaApr : ustApr;
+  const _amount = parseFloat(amount) * state.price[coinId];
+  const apr = state.apr[coinId]/100;
 
-  let total = 0;
-  // for (let i = 0; i < year; i++) {
-  //   total = floor(total * (1 + apr / 100));
-  // }
-  const interest = 0;
+  let total = _amount;
+  for (let i = 0; i < year; i++) {
+    total = floor(total * (1 + apr / 100));
+  }
+  const interest = total - _amount;
 
-  // const otherApr = 8;
-
+  const otherApr = 8;
   const data: any = [];
-  // let prev = _amount;
-  // let otherPrev = _amount;
-  // for (let i = 1; i <= 10; i++) {
-  //   const val = floor(prev * (1 + apr / 100)) * (1 + (Math.random() - 0.5) / 10);
-  //   const otherVal = floor(otherPrev * (1 + otherApr / 100)) * (1 + (Math.random() - 0.5) / 10);
-  //   data[i - 1] = {
-  //     time: i.toString(),
-  //     value1: val,
-  //     value2: otherVal
-  //   }
-  //   prev = val;
-  //   otherPrev = otherVal;
-  // }
+  let prev = _amount;
+  let otherPrev = _amount;
+  for (let i = 1; i <= 10; i++) {
+    const val = floor(prev * (1 + apr / 100)) * (1 + (Math.random() - 0.5) / 10);
+    const otherVal = floor(otherPrev * (1 + otherApr / 100)) * (1 + (Math.random() - 0.5) / 10);
+    data[i - 1] = {
+      time: i.toString(),
+      value1: val,
+      value2: otherVal
+    }
+    prev = val;
+    otherPrev = otherVal;
+  }
 
   return (
     <VStack
@@ -65,13 +66,13 @@ const How: FunctionComponent = (props) => {
         spacing={'51px'}
         w={'100%'}
       >
-        <Earn 
-          denom={denom} 
-          setDenom={setDenom} 
-          amount={amount} 
-          setAmount={setAmount} 
-          year={year} 
-          setYear={setYear} 
+        <Earn
+          denom={denom}
+          setDenom={setDenom}
+          amount={amount}
+          setAmount={setAmount}
+          year={year}
+          setYear={setYear}
         />
         <Center
           height={'304px'}

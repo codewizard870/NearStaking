@@ -27,11 +27,11 @@ export const DECIMALS= [6, 6, 18, 18, 8, 18, 24];
 export const REQUEST_ENDPOINT = "https://stakingplatformalenzer.herokuapp.com/";
 
 
-export const aprInfo = [0, 0, 0, 0, 0, 0, 0];
+export const aprInfo = [1487, 1487, 1487, 1487, 987, 987, 987];
 export const balanceInfo: BigNumber[] = [
   new BigNumber(0), new BigNumber(0), new BigNumber(0), 
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
-export const priceInfo = [0, 0, 0, 0, 0, 0, 0];
+export const priceInfo = [1, 1, 1, 1, 1, 1, 1];
 export const totalRewards = [0, 0, 0, 0, 0, 0, 0];
 
 export const farmInfo = {
@@ -55,13 +55,15 @@ export const potInfo = {
 export const amountHistory = [
   {
     time: 1641281704,
-    near_amount: 0,
-    totalUSD: 0,
+    amount: totalRewards,
+    reward: totalRewards,
+    totalUSD: 0.0001,
   },
   {
     time: 1641281704,
-    near_amount: 0,
-    totalUSD: 0,
+    amount: totalRewards,
+    reward: totalRewards,
+    totalUSD: 0.0001,
   },
 ];
 

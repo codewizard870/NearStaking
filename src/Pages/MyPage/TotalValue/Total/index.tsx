@@ -1,22 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Tooltip, Button } from '@chakra-ui/react'
+import {BigNumber} from 'bignumber.js';
 
 import { MdSwapHoriz } from 'react-icons/md'
-import { useBalance, useNearDeposited, useStore, usePrice } from '../../../../store';
+import { useBalance,  useStore, usePrice } from '../../../../store';
 import Warning from "./../../../../assets/Warning.svg"
 import AnimationNumber from '../../../Components/AnimationNumber';
-import { useNavigate } from 'react-router-dom';
-import { floorNormalize, floor } from '../../../../Util';
 
-const Total: FunctionComponent = (props) => {
+interface Props{
+  total: BigNumber
+}
+const Total: FunctionComponent<Props> = ({total}) => {
   const { state, dispatch } = useStore();
-  const ustBalance = useBalance();
-  const rate = usePrice();
-
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
-  // const total = ustBalance + ustDeposited + lunaDeposited;
-  const total = 0;
 
   return (
     <HStack justify={"space-between"} w={'100%'} align={'baseline'}>
@@ -44,7 +39,7 @@ const Total: FunctionComponent = (props) => {
             fontWeight={'860'}
             lineHeight={'36px'}
           >
-            <AnimationNumber value={total}/>
+            <AnimationNumber value={total.toNumber()}/>
           </Text>
           <Text
             fontSize={'20px'}

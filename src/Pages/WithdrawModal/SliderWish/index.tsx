@@ -17,7 +17,7 @@ import { MdCode } from "react-icons/md";
 
 import { floorNormalize, floor } from '../../../Util';
 import Indicator from './Indicator';
-import { useNearDeposited, useStore } from '../../../store'
+import {  useStore } from '../../../store'
 
 interface Props {
   amount: string,

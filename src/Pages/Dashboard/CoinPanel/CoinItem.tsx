@@ -1,26 +1,35 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button } from '@chakra-ui/react'
 import { Grid, GridItem, Tooltip } from '@chakra-ui/react'
+import {BigNumber} from 'bignumber.js'
 
 import {
   OpenDepositModal,
   OpenWithdrawModal,
   useStore,
-  COINTYPE
+  COINTYPE,
+  useDeposited
 } from '../../../store';
+import { DECIMALS } from '../../../constants';
 import AnimationNumber from '../../Components/AnimationNumber';
-import { floor, floorNormalize } from '../../../Util';
+import { floor, floorNormalize, getCoinId } from '../../../Util';
 
 interface Props {
   name: COINTYPE,
   description: string,
   avatar: string,
   apr: number,
-  tvl_coin: number,
-  tvl_usd: number
 }
-const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr, tvl_coin, tvl_usd }) => {
+const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) => {
   const { state, dispatch } = useStore();
+
+  const history = state.amountHistory;
+  const last = history.length - 1;
+  const coinId = getCoinId(name)
+  const price = state.price;
+
+  const tvl_coin = new BigNumber(history[last].amount[coinId]).dividedBy(10 ** DECIMALS[coinId]);
+  const tvl_usd = tvl_coin.multipliedBy(price[coinId]);
 
   return (
     <>
@@ -73,14 +82,14 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr, tv
             fontWeight={'400'}
             lineHeight={'15.6px'}
           >
-            <AnimationNumber value={tvl_coin} /> {name}
+            <AnimationNumber value={tvl_coin.toNumber()} /> {name}
           </Text>
           <Text
             fontSize={'13px'}
             fontWeight={'400'}
             lineHeight={'15.6px'}
           >
-            <AnimationNumber value={tvl_usd} /> USD Value
+            <AnimationNumber value={tvl_usd.toNumber()} /> USD Value
           </Text>
         </VStack>
       </GridItem>

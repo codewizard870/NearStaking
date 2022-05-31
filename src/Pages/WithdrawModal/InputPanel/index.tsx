@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Input, Link, Center, Divider, Button, useBoolean } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
 import { floorNormalize } from '../../../Util';
-import { useNearDeposited, COINTYPE, useStore, ActionKind } from '../../../store'
+import {  COINTYPE, useStore, ActionKind } from '../../../store'
 
 interface Props {
   amount: string,

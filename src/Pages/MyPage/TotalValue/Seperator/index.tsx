@@ -6,17 +6,21 @@ import BlackPanel from './../../../../assets/BlackPanel.svg'
 import YellowPanel from './../../../../assets/YellowPanel.svg'
 import PinkPanel from './../../../../assets/PinkPanel.svg'
 import BluePanel from './../../../../assets/BluePanel.svg'
+
 import AnimationNumber from '../../../Components/AnimationNumber';
-import { useBalance, useNearDeposited, useStore, usePrice } from '../../../../store';
-import { floor, floorNormalize } from '../../../../Util';
+import { StableCoins, DECIMALS } from '../../../../constants';
+import { BigNumber } from 'bignumber.js';
+import { useBalance, useStore, usePrice } from '../../../../store';
+import { floor, floorNormalize, getCoinId } from '../../../../Util';
 
-const Seperator: FunctionComponent = (props) => {
-  const {state, dispatch} = useStore();
-  const rate = usePrice();
+interface Props{
+  total: BigNumber,
+  stable: BigNumber,
+  volatile: BigNumber,
+}
+const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
+  const { state, dispatch } = useStore();
 
-  const ustBalance = useBalance();
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
   return (
     <VStack align={'baseline'} w={'230px'} spacing={'4px'}>
       <HStack spacing={'10px'}>
@@ -26,15 +30,15 @@ const Seperator: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'24px'}
         >
-          Total Balance 
+          Total Balance
         </Text>
-        <Tooltip 
-          label="Total UST Wallet balance" 
-          background={'#C4C4C4'} 
-          color={'black'} hasArrow 
+        <Tooltip
+          label="Total UST Wallet balance"
+          background={'#C4C4C4'}
+          color={'black'} hasArrow
           placement='top-start'
-        > 
-          <Image src={Warning}/>
+        >
+          <Image src={Warning} />
         </Tooltip>
       </HStack>
       <Text
@@ -43,7 +47,7 @@ const Seperator: FunctionComponent = (props) => {
         fontStyle={'italic'}
         color='#CEBFBF'
       >
-          {/* $&nbsp;<AnimationNumber value={ustBalance} /> */}
+        $&nbsp;<AnimationNumber value={total.toNumber()} />
       </Text>
       {/* --------------------------------- */}
       <HStack spacing={'10px'}>
@@ -55,13 +59,13 @@ const Seperator: FunctionComponent = (props) => {
         >
           Stable Balance
         </Text>
-        <Tooltip 
-          label="Total of all UST/Luna deposits, including earnings " 
-          background={'#C4C4C4'} 
-          color={'black'} hasArrow 
+        <Tooltip
+          label="Total of all UST/Luna deposits, including earnings "
+          background={'#C4C4C4'}
+          color={'black'} hasArrow
           placement='top-start'
-        > 
-          <Image src={Warning}/>
+        >
+          <Image src={Warning} />
         </Tooltip>
       </HStack>
       <Text
@@ -70,7 +74,7 @@ const Seperator: FunctionComponent = (props) => {
         fontStyle={'italic'}
         color='#CEBFBF'
       >
-        $&nbsp;<AnimationNumber value={(ustDeposited + lunaDeposited)} />
+        $&nbsp;<AnimationNumber value={stable.toNumber()} />
       </Text>
       {/* --------------------------------- */}
       <HStack spacing={'10px'}>
@@ -83,13 +87,13 @@ const Seperator: FunctionComponent = (props) => {
         >
           Volatile Asset Balance
         </Text>
-        <Tooltip 
-          label="Your total UST deposit \n including earnings" 
-          background={'#C4C4C4'} 
-          color={'black'} hasArrow 
+        <Tooltip
+          label="Your total UST deposit \n including earnings"
+          background={'#C4C4C4'}
+          color={'black'} hasArrow
           placement='top-start'
-        > 
-          <Image src={Warning}/>
+        >
+          <Image src={Warning} />
         </Tooltip>
       </HStack>
       <Text
@@ -98,7 +102,7 @@ const Seperator: FunctionComponent = (props) => {
         fontStyle={'italic'}
         color='#CEBFBF'
       >
-        $&nbsp;<AnimationNumber value={lunaDeposited} />
+        $&nbsp;<AnimationNumber value={volatile.toNumber()} />
       </Text>
     </VStack>
   );

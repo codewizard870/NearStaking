@@ -24,12 +24,12 @@ export const TOKEN_ADDRESSES_MAINNET = [
 export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_ADDRESSES_MAINNET;
 export const DECIMALS= [6, 6, 18, 18, 8, 18, 24];
 
-export const REQUEST_ENDPOINT = "https://stakingplatformalenzer.herokuapp.com/";
+export const REQUEST_ENDPOINT = "https://octopus-app-gip32.ondigitalocean.app/";
 
 
 export const aprInfo = [1487, 1487, 1487, 1487, 987, 987, 987];
 export const balanceInfo: BigNumber[] = [
-  new BigNumber(0), new BigNumber(0), new BigNumber(0), 
+  new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0),
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
 export const priceInfo = [1, 1, 1, 1, 1, 1, 1];
 export const totalRewards = [0, 0, 0, 0, 0, 0, 0];
@@ -45,12 +45,12 @@ export const userInfo = {
   reward_amount: "0",
   account: ""
 }
-export const userInfos = [userInfo, userInfo, userInfo, userInfo, userInfo, userInfo, userInfo ]
+export const userInfos = [userInfo, userInfo, userInfo, userInfo, userInfo, userInfo, userInfo, userInfo ]
 
 export const potInfo = {
   account: "",
-  near_amount: "0",
-  qualified_near_amount: "0",
+  amount: "0",
+  qualified_amount: "0",
 }
 export const amountHistory = [
   {
@@ -64,34 +64,6 @@ export const amountHistory = [
     amount: totalRewards,
     reward: totalRewards,
     totalUSD: 0.0001,
-  },
-];
-
-
-export const aprHistoryNear = [
-  {
-    time: 1648939268,
-    apr: "3487",
-  },
-  {
-    time: 1648939268,
-    apr: "3487",
-  },
-  {
-    time: 1648939268,
-    apr: "3487",
-  },
-  {
-    time: 1648939268,
-    apr: "3487",
-  },
-  {
-    time: 1648939268,
-    apr: "3487",
-  },
-  {
-    time: 1648939268,
-    apr: "3487",
   },
 ];
 

@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Input, Link, Center, Divider, Button, useBoolean } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
 import { floorNormalize } from '../../../Util';
-import {  COINTYPE, useStore, ActionKind } from '../../../store'
+import {  COINTYPE, useStore, ActionKind, useDeposited } from '../../../store'
 
 interface Props {
   amount: string,
@@ -10,14 +10,10 @@ interface Props {
 }
 const InputPanel: FunctionComponent<Props> = (props) => {
   const { state, dispatch } = useStore();
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
-
+  const deposited = useDeposited();
+  
   const maxBalance = () => {
-    if (state.coinType === 'USDC')
-      props.setAmount(ustDeposited.toString());
-    else
-      props.setAmount(lunaDeposited.toString());
+    props.setAmount(deposited.toString());
   }
   return (
     <VStack w={'100%'} spacing={'6px'}>
@@ -69,7 +65,7 @@ const InputPanel: FunctionComponent<Props> = (props) => {
           cursor={'pointer'}
           onClick={() => maxBalance()}
         >
-          {`MAX balance  ${0} ${state.coinType}`}
+          {`MAX balance  ${deposited.toFixed()} ${state.coinType}`}
         </Text>
       </Flex>
     </VStack>

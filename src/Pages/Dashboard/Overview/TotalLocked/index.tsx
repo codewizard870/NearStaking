@@ -18,11 +18,11 @@ const TotalLocked: FunctionComponent = (props) => {
       <Text
         fontSize={'20px'}
         fontWeight={'800'}
-        lineHeight={'24px'}
+        lineHeight={'20px'}
       >
         TOTAL VALUE LOCKED
       </Text>
-      <HStack spacing={'10px'} alignItems={'baseline'} mt='10px'>
+      <HStack spacing={'10px'} alignItems={'baseline'} mt='5px'>
         <Text
           fontSize={'35px'}
           fontWeight={'800'}

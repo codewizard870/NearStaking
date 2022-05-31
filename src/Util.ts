@@ -6,7 +6,7 @@ import * as nearAPI from "near-api-js"
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { COINTYPE, useNear, useDecimal } from './store';
-import { successOption, errorOption, StableCoins, TOKEN_ADDRESS, DECIMALS, balanceInfo, priceInfo } from './constants';
+import { successOption, errorOption, StableCoins, TOKEN_ADDRESS, DECIMALS, balanceInfo, priceInfo, userInfo } from './constants';
 import { CONTRACT_NAME } from './config';
 
 export function shortenAddress(address: string | undefined) {
@@ -93,6 +93,7 @@ console.log(status)
     if (status.apr !== undefined)
       dispatch({ type: ActionKind.setApr, payload: status.apr });
 
+    status.user_info.push(userInfo); //NEARt
     if (status.user_info !== undefined)
       dispatch({ type: ActionKind.setUserInfos, payload: status.user_info });
 
@@ -245,7 +246,7 @@ export function getCoinParam(coin: COINTYPE) {
 }
 
 export const getCoinId = (coin: COINTYPE) => {
-  // export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR';
+  // export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR' | 'NEARt';
   switch (coin) {
     case 'USDC': return 0;
     case 'USDT': return 1;
@@ -254,6 +255,7 @@ export const getCoinId = (coin: COINTYPE) => {
     case 'wBTC': return 4;
     case 'ETH': return 5;
     case 'wNEAR': return 6;
+    case 'NEARt': return 7;
   }
   return 0;
 }

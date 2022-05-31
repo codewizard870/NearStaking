@@ -37,12 +37,12 @@ const Total: FunctionComponent = (props) => {
       py={{sm:'10px', md:'20px', lg:'56px'}}
       mt='53px'
     >
-      <VStack w={'100%'} align={'baseline'}>
+      <VStack w={'100%'} align={'baseline'} spacing='5px'>
         <HStack spacing={'10px'}>
           <Text
             fontSize={'20px'}
             fontWeight={'860'}
-            lineHeight={'24px'}
+            lineHeight={'20px'}
           >
             TOTAL BALANCE
           </Text>
@@ -59,7 +59,7 @@ const Total: FunctionComponent = (props) => {
           <Text
             fontSize={'35px'}
             fontWeight={'860'}
-            lineHeight={'36px'}
+            lineHeight={'35px'}
           >
             <AnimationNumber value={total.toNumber()} />
           </Text>

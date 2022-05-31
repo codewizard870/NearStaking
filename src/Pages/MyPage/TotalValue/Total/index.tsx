@@ -15,12 +15,12 @@ const Total: FunctionComponent<Props> = ({total}) => {
 
   return (
     <HStack justify={"space-between"} w={'100%'} align={'baseline'}>
-      <VStack align={'baseline'} w={'100%'}>
+      <VStack align={'baseline'} w={'100%'} spacing='5px'>
         <HStack align={'baseline'} w={'100%'}>
           <Text
             fontSize={'20px'}
             fontWeight={'860'}
-            lineHeight={'24px'}
+            lineHeight={'20px'}
           >
             TOTAL VALUE
           </Text>
@@ -37,7 +37,7 @@ const Total: FunctionComponent<Props> = ({total}) => {
           <Text
             fontSize={'35px'}
             fontWeight={'860'}
-            lineHeight={'36px'}
+            lineHeight={'35px'}
           >
             <AnimationNumber value={total.toNumber()}/>
           </Text>

@@ -5,7 +5,7 @@ import { floor, floorNormalize, getCoinId,  } from './Util'
 import { amountHistory, userInfo, farmInfo, potInfo, balanceInfo, aprInfo, priceInfo, userInfos, DECIMALS, totalRewards } from './constants'
 import {getConfig} from "./config";
 
-export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR';
+export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR' | 'NEARt';
 export type WALLETTYPE = 'near' | 'sender';
 
 interface Action {
@@ -204,8 +204,9 @@ export const useNear = () => {
 
 export const useDeposited = () => {
   const {state, dispatch} = useStore();
-  let userInfo = state.userInfos[getCoinId(state.coinType)].amount;
-  return userInfo;
+  let amount = new BigNumber(state.userInfos[getCoinId(state.coinType)].amount);
+  amount = amount.dividedBy(10**DECIMALS[getCoinId(state.coinType)]);
+  return amount;
 }
 
 export const useApr = () => {

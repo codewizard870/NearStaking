@@ -9,97 +9,27 @@ import axios from "axios"
 import { useWallet, } from '../../../store';
 import HistoryItem from './HistoryItem';
 
-export interface AccountHistory {
-  limit: number
-  next: number
-  list: AccountHistoryItem[]
-}
-
-export interface AccountHistoryItem {
-  txhash: string
-  timestamp: any
-  success: boolean
-  msgs?: TxMessage[]
-  collapsed?: number
-  fee: CoinData[]
-  memo?: string
-  raw_log?: string
-}
-
-export interface TxMessage {
-  msgType: string
-  canonicalMsg: string[]
-}
-
-export interface CoinData {
-  amount: string
-  denom: string
-}
-const nearConfig = getConfig("testnet");
-
 const TransactionHistory: FunctionComponent = (props) => {
   const wallet = useWallet();
+  const [list, setList] = useState([]);
   const accountId = wallet?.getAccountId();
 
   useEffect( ()=> {
+    if(!wallet) return;
     const fetchTransaction = async () => {
-//       try{
-//           const near = await nearAPI.connect(
-//             Object.assign(
-//               { deps: { keyStore: new nearAPI.keyStores.BrowserLocalStorageKeyStore() } },
-//               nearConfig)
-//           );
-//           const blockInfo = await near.connection.provider.block({
-//             finality: "final"
-//           });
+      try{
+        const res = await axios.get(`https://backend-testnet-pr-1008.onrender.com/trpc/transactions-list-by-account-id?batch=1&input={"0":{"accountId":"${accountId}","limit":10}}`);
 
-//           const blockArr = [];
-//           let blockHash = blockInfo.header.hash;
-//           let count = 10;
-//           do {
-//             const currentBlock = await near.connection.provider.block({
-//               blockId: blockHash
-//             });
-//             blockArr.push(currentBlock.header.hash);
-//             blockHash = currentBlock.header.prev_hash;
-//             count --;
-//           } while (count > 0);
-
-//           const blockDetails = await Promise.all(
-//             blockArr.map((blockId) =>
-//               near.connection.provider.block({
-//                 blockId,
-//               })
-//             )
-//           );
-        
-//           // returns an array of chunk hashes from block details
-//           const chunkHashArr = blockDetails.flatMap((block) =>
-//             block.chunks.map(({ chunk_hash }) => chunk_hash)
-//           );
-        
-//           //returns chunk details based from the array of hashes
-//           const chunkDetails = await Promise.all(
-//             chunkHashArr.map(chunk => near.connection.provider.chunk(chunk))
-//           );
-        
-//           // checks chunk details for transactions
-//           // if there are transactions in the chunk we
-//           // find ones associated with passed accountId
-//           // const transactions = chunkDetails.flatMap((chunk) =>
-//           //   (chunk.transactions || []).filter((tx: any) => tx.signer_id === accountId)
-//           // );
-//           const transactions = chunkDetails.flatMap((chunk) =>
-//             chunk.transactions
-//           );
-// console.log(transactions)
-//       }
-//       catch(e){
-//         console.log(e)
-//       }
+        if(res.data.length == 0) return;
+        console.log(res.data[0].result.data);
+        setList(res.data[0].result.data)
+      }
+      catch(e){
+        console.log(e)
+      }
     }
     fetchTransaction();
-  }, [] )
+  }, [wallet] )
 
   return (
     <VStack
@@ -125,9 +55,26 @@ const TransactionHistory: FunctionComponent = (props) => {
         py={{sm:'10px', md:'20px', lg:'76px'}}
       >
         <VStack w={'100%'}>
-          {/* {list.map((item, index) => (
+          {list.length == 0  &&
+            <>
+              <Text 
+                fontSize='20px' 
+                lineHeight={'36px'}
+              >
+                No transaction History
+              </Text>
+              <Text 
+                fontSize='13px' 
+                lineHeight={'13px'}
+                color='#CEBFBF'
+              >
+                Looks like you haven’t made any transactions yet.
+              </Text>
+            </>
+          }
+          {list.map((item, index) => (
             <HistoryItem item={item} key={index}/>
-          ))} */}
+          ))}
         </VStack>
       </VStack>
     </VStack>

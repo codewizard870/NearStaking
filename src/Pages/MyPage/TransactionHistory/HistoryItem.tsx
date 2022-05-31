@@ -2,10 +2,9 @@ import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button } from '@chakra-ui/react'
 
 import { MdNorthEast } from 'react-icons/md'
-import { AccountHistoryItem } from './index'
 
 interface Props {
-  item: AccountHistoryItem
+  item: any
 }
 const HistoryItem: FunctionComponent<Props> = ({ item }) => {
 
@@ -17,34 +16,29 @@ const HistoryItem: FunctionComponent<Props> = ({ item }) => {
         align={'center'}
       >
         <VStack align={'baseline'}>
-          {item?.msgs?.map((msg, index) => (
-            <Flex w={'100%'} direction={'column'} key={index} >
-              <Text
-                fontSize={'13px'}
-                fontWeight={'860'}
-                lineHeight={'15px'}
-              >
-                {msg.msgType}
-              </Text>
-              <HStack spacing={'10px'} >
-                <VStack align={'baseline'}>
-                  {msg.canonicalMsg.map((cmsg, index) => (
-                    <Text
-                      fontSize={'13px'}
-                      fontWeight={'860'}
-                      lineHeight={'15px'}
-                      key={index}
-                    >
-                      {cmsg.slice(0, 100)}
-                    </Text>
-                  ))}
-                </VStack>
-                <a href={`${item.txhash}`} target="_blank" rel="noreferrer">
-                  <MdNorthEast />
-                </a>
-              </HStack>
-            </Flex>
-          ))}
+          <Flex w={'100%'} direction={'column'}>
+            <Text
+              fontSize={'13px'}
+              fontWeight={'860'}
+              lineHeight={'15px'}
+            >
+              {item.actions[0].kind}
+            </Text>
+            <HStack spacing={'10px'} >
+              <VStack align={'baseline'}>
+                <Text
+                  fontSize={'13px'}
+                  fontWeight={'860'}
+                  lineHeight={'15px'}
+                >
+                  {JSON.stringify(item.actions[0].args).substring(0, 100)}
+                </Text>
+              </VStack>
+              <a href={`${item.blockHash}`} target="_blank" rel="noreferrer">
+                <MdNorthEast />
+              </a>
+            </HStack>
+          </Flex>
         </VStack>
         <Text
           fontSize={'10px'}
@@ -52,7 +46,7 @@ const HistoryItem: FunctionComponent<Props> = ({ item }) => {
           lineHeight={'12px'}
         >
           {
-            new Date(item.timestamp).toLocaleString()
+            new Date(item.blockTimestamp).toLocaleString()
           }
         </Text>
       </Flex>

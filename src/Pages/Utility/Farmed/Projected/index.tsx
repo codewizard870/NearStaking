@@ -1,22 +1,28 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Center, Divider, Button } from '@chakra-ui/react'
+import { BigNumber } from 'bignumber.js'
 
+import { StableCoins, DECIMALS } from '../../../../constants';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import Warning from '../../../../assets/Warning.svg'
-import { OpenDepositModal, useStore,  usePrice } from '../../../../store';
+import { OpenDepositModal, useStore, usePrice, useDeposited } from '../../../../store';
 
 const Projected: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const ustDeposited = 0;
-  const lunaDeposited = 0;
-  const rate = usePrice();
 
-  const total = ustDeposited + lunaDeposited * rate;
-  const dayReward = total / 1000 * 24;
+  let coins = StableCoins.filter((coin) => coin.upcoming == false);
+  let total = new BigNumber(0);
 
-  const remain = 60 - Math.floor((Date.now() / 1000 - state.farmStartTime) / 60 / 60 / 24);
+  for (let i = 0; i < coins.length; i++) {
+    let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
 
-  const expected = Math.floor(dayReward * remain);
+    total = total.plus(amount);
+  }
+
+  const dayReward = total.dividedBy(1000).multipliedBy(24);
+  const remain = 60 - Math.floor((Date.now() - state.farmStartTime) / 1000 / 60 / 60 / 24);
+  const expected = Math.floor(dayReward.toNumber() * remain);
 
   return (
     <VStack w={'100%'} color={'#CEBFBF'} spacing={'12px'}>

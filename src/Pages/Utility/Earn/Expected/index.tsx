@@ -1,17 +1,18 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Divider, Button } from '@chakra-ui/react'
 import AnimationNumber from '../../../Components/AnimationNumber';
-import {  useStore } from '../../../../store';
+import { useStore } from '../../../../store';
 
-interface Props{
+interface Props {
   amount: string,
 }
-const Expected: FunctionComponent<Props> = ({amount}) => {
-  const {state, dispatch} = useStore();
+const Expected: FunctionComponent<Props> = ({ amount }) => {
+  const { state, dispatch } = useStore();
   const total = parseInt(amount);
-  const dayReward = total/1000*24;
-  
-  const remain = 60 - Math.floor((Date.now() / 1000 - state.farmStartTime) / 60 / 60 / 24);
+  const dayReward = total / 1000 * 24;
+
+  let remain = 60 - Math.floor((Date.now() - state.farmStartTime) / 1000 / 60 / 60 / 24);
+  remain = remain > 0 ? remain : 60;
   const expected = Math.floor(dayReward * remain);
   const expectedUSD = Math.floor(expected * 1.25);
 
@@ -30,7 +31,7 @@ const Expected: FunctionComponent<Props> = ({amount}) => {
         fontWeight={'860'}
         lineHeight={'20px'}
       >
-        Your expected NearT Allocation 
+        Your expected NearT Allocation
       </Text>
       <Text
         mt={'40px'}

@@ -24,7 +24,7 @@ export const TOKEN_ADDRESSES_MAINNET = [
 export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_ADDRESSES_MAINNET;
 export const DECIMALS= [6, 6, 18, 18, 8, 18, 24];
 
-export const REQUEST_ENDPOINT = "https://octopus-app-gip32.ondigitalocean.app/";
+export const REQUEST_ENDPOINT = "https://seashell-app-cmf7v.ondigitalocean.app/";
 
 
 export const aprInfo = [1487, 1487, 1487, 1487, 987, 987, 987];

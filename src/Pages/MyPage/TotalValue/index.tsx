@@ -18,11 +18,10 @@ const TotalValue: FunctionComponent = (props) => {
   let total = new BigNumber(0);
 
   for (let i = 0; i < coins.length; i++) {
-    total = total.plus(state.balance[i].multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]));
-
     let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
     amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
 
+    total = total.plus(amount);
     if(coins[i].stable)
       stable = stable.plus(amount);
     else

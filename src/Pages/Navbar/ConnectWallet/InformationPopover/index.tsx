@@ -8,7 +8,7 @@ import { MdMail, MdCallMade, MdKeyboardArrowRight } from 'react-icons/md';
 
 import Line from '../../../../assets/Line.svg'
 import { shortenAddress, floorNormalize } from '../../../../Util';
-import { useStore, useWallet } from '../../../../store';
+import { ActionKind, useStore, useWallet } from '../../../../store';
 
 interface Props {
   isOpen: boolean,
@@ -17,9 +17,6 @@ interface Props {
 }
 const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connectTo }) => {
   const { state, dispatch } = useStore();
-  const [vust, setVust] = useState(0);
-  const [vluna, setVluna] = useState(0);
-
   const wallet = useWallet();
 
   return (
@@ -81,7 +78,7 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
             lineHeight={'20px'}
             color={'white'}
           >
-            {shortenAddress(wallet?.walletAddress)}
+            {shortenAddress(wallet?.getAccountId())}
           </Text>
           <Button w={'95px'} h={'21px'} color={'#F9D85E'} background={'#2e2525'} fontSize={'9px'}>
             COPY ADDRESS
@@ -98,7 +95,7 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
             justify={'center'}
             align='center'
           >
-            <a href={'https://bridge.terra.money/'} target={'blank'}>
+            <a href={'https://rainbowbridge.app/transfer'} target={'blank'}>
             <Text fontSize={'14px'} color={'white'}>
               RAINBOW BRIDGE
             </Text>
@@ -109,7 +106,7 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
               SEND
             </Text>
           </Button>
-          <a href={'https://terrasco.pe/bombay-12/address/' + wallet?.walletAddress} target={'blank'}>
+          <a href={'https://explorer.testnet.near.org/accounts/' + wallet?.getAccountId()} target={'blank'}>
           <HStack mt='10px' justify='center' align='center'>
             <Text>View on Near explorer</Text>
           </HStack>
@@ -125,7 +122,11 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
         rounded={'0 0 25px 25px'}
         _hover={{background:'#3f3434'}}
         cursor={'pointer'}
-        onClick={() => connectTo('disconnect')}
+        onClick={() => {
+          wallet.signOut();
+          dispatch({action: ActionKind.setConnected, payload: false});
+console.log("hre")
+        }}
       >
         <Text
           fontSize={'12px'}

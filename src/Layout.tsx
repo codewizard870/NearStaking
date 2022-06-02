@@ -15,6 +15,7 @@ import Footer from "./Pages/Footer";
 import DepositModal from './Pages/DepositModal'
 import WithdrawModal from './Pages/WithdrawModal'
 import WaitingModal from './Pages/WaitingModal';
+import FailedModal from './Pages/FailedModal';
 import { fetchData } from './Util';
 
 declare let window: any;
@@ -25,6 +26,7 @@ const Layout = () => {
   const { isOpen: isOpenDeposit, onOpen: onOpenDeposit, onClose: onCloseDeposit } = useDisclosure();
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw } = useDisclosure();
   const { isOpen: isOpenWaiting, onOpen: onOpenWaiting, onClose: onCloseWaiting } = useDisclosure();
+  const { isOpen: isOpenFailed, onOpen: onOpenFailed, onClose: onCloseFailed } = useDisclosure();
 
   const { state, dispatch } = useStore();
   const wallet = useWallet();
@@ -47,6 +49,8 @@ const Layout = () => {
     if(transactionHashes == null) 
       return;
 
+    dispatch({action: ActionKind.setTxhash, payload: transactionHashes});
+
     const near = await nearAPI.connect(
       Object.assign(
         { deps: { keyStore: new nearAPI.keyStores.BrowserLocalStorageKeyStore() } },
@@ -64,6 +68,7 @@ const Layout = () => {
 
     if(errorCode != null){
       toast(errorMessage, errorOption);
+      onOpenFailed();
       initialize();
       return;
     }
@@ -87,7 +92,6 @@ const Layout = () => {
       formData.append('coinType', coinType)
       formData.append('amount', amount)
 
-  console.log("post withdraw")
       await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, { timeout: 60 * 60 * 1000 })
         .then((res) => {
           toast("Withdraw success", successOption)
@@ -117,7 +121,8 @@ const Layout = () => {
     dispatch({ type: ActionKind.setOpenWithdrawModal, payload: onOpenWithdraw });
     dispatch({ type: ActionKind.setOpenWaitingModal, payload: onOpenWaiting });
     dispatch({ type: ActionKind.setCloseWaitingModal, payload: onCloseWaiting });
-  }, [dispatch, onOpenDeposit, onOpenWithdraw, onOpenWaiting, onCloseWaiting])
+    dispatch({ type: ActionKind.setOpenFailedModal, payload: onOpenFailed});
+  }, [dispatch, onOpenDeposit, onOpenWithdraw, onOpenWaiting, onCloseWaiting, onOpenFailed])
 
   useEffect(() => {
     const fetchAll = async () => {
@@ -126,6 +131,7 @@ const Layout = () => {
     // if (checkNetwork(wallet, state))
     if(near && wallet)
       fetchAll()
+
   }, [wallet, near])
 
   useEffect(() => {
@@ -154,6 +160,7 @@ const Layout = () => {
         <DepositModal isOpen={isOpenDeposit} onClose={onCloseDeposit} />
         <WithdrawModal isOpen={isOpenWithdraw} onClose={onCloseWithdraw} />
         <WaitingModal isOpen={isOpenWaiting} onClose={onCloseWaiting} />
+        <FailedModal isOpen={isOpenFailed} onClose={onCloseFailed} />
       </VStack>
     </Flex>
   )

@@ -17,10 +17,9 @@ interface Props {
   isOpen: boolean,
   onClose: () => void,
 }
-const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
+const FailedModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
   const { state, dispatch } = useStore();
   const txhash = state.txhash;
-
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -29,33 +28,42 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
         rounded={'25px'}
         w={{ base: '80%', md: '469px', lg: '469px' }}
         minW={{ sm: '80%', md: '469px', lg: '469px' }}
-        h={'314px'}
+        h={'455px'}
         px={{ sm: '10px', md: '45px', lg: '45px' }}
-        pt={{ base: '10px', lg: '59px'}}
-        pb={{base: '10px', lg:'39px'}}
+        pt={{ base: '10px', lg: '61px' }}
+        pb={{ base: '10px', lg: '36px' }}
         alignItems={'center'}
       >
-        <Image src={Neart} h='60px' />
         <Text
-          mt={'30px'}
+          fontSize='40px'
+          fontWeight={'400'}
+          lineHeight='48px'
+        >
+          ❌
+        </Text>
+        <Text
+          mt={'27px'}
           fontSize={'20px'}
           fontWeight={'860'}
           lineHeight={'24px'}
           color={'white'}
         >
-          Waiting for Near Wallet...
+          Transaction failed...
         </Text>
         <Text
-          mt={'20px'}
+          mt={'23px'}
           fontSize={'9px'}
           fontWeight={'400'}
           lineHeight={'11px'}
-          color={'#CEC0C0'}
+          color={'#CEBFBF'}
         >
-          Transaction broadcasted. There is no need to send another until it has been completed.
+          Transaction failed<br /><br />
+          The transaction requested has failed due to the following reason:<br /><br />
+          “...................................”<br /><br /><br />
+          For assistance, please report your Tx hash to the official Near Treasury Telegram Support Channel: https://t.me/neartreasury
         </Text>
-        <Divider mt={'23px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
-        <HStack mt={'23px'} w={'100%'} justify={'space-between'}>
+        <Divider mt={'20px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
+        <HStack mt={'20px'} w={'100%'} justify={'space-between'}>
           <Text
             fontSize={'9px'}
             fontWeight={'400'}
@@ -73,10 +81,22 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
             {shortenAddress(txhash)}
           </Text>
         </HStack>
+        <Button
+          w='80%'
+          h='45px'
+          bg='#493C3C'
+          fontSize='13px'
+          mt='40px'
+          color='white'
+          rounded='25px'
+          onClick={() => onClose()}
+        >
+          Proceed
+        </Button>
         <ModalCloseButton color={'#CEBFBF'} />
       </ModalContent>
     </Modal>
   );
 }
-export default WaitingModal;
+export default FailedModal;
 

@@ -26,6 +26,7 @@ export interface AppContextInterface {
   openDepositModal: (() => void) | undefined,
   openWithdrawModal: (() => void) | undefined,
   openWaitingModal: (() => void) | undefined,
+  openFailedModal: (() => void) | undefined,
   closeWaitingModal: (() => void) | undefined,
   openConnectWalletModal: (()=>void) | undefined,
   coinType: COINTYPE,
@@ -56,6 +57,7 @@ const initialState: AppContextInterface = {
   openDepositModal: undefined,
   openWithdrawModal: undefined,
   openWaitingModal: undefined,
+  openFailedModal: undefined,
   closeWaitingModal: undefined,
   openConnectWalletModal: undefined,
   coinType: 'USDC',
@@ -86,6 +88,7 @@ export enum ActionKind{
   setOpenDepositModal,
   setOpenWithdrawModal,
   setOpenWaitingModal,
+  setOpenFailedModal,
   setCloseWaitingModal,
   setOpenConnectWalletModal,
   setCoinType,
@@ -135,6 +138,8 @@ export const reducer = (state: AppContextInterface,  action: Action ) => {
       return { ...state, openWithdrawModal: action.payload}
     case ActionKind.setOpenWaitingModal:
       return { ...state, openWaitingModal: action.payload}
+    case ActionKind.setOpenFailedModal:
+      return { ...state, openFailedModal: action.payload}
     case ActionKind.setCloseWaitingModal:
       return { ...state, closeWaitingModal: action.payload}     
     case ActionKind.setOpenConnectWalletModal:

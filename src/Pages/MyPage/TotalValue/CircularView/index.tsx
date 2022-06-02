@@ -13,7 +13,7 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   const { state, dispatch } = useStore();
   const rate = usePrice();
 
-  const sum = total.plus(stable).plus(volatile);
+  const sum = total;
 
   const percent1 = sum.isEqualTo(0) ? 75: total.dividedBy(sum).multipliedBy(100).toNumber();
   const percent2 = sum.isEqualTo(0) ? 75: stable.dividedBy(sum).multipliedBy(100).toNumber();

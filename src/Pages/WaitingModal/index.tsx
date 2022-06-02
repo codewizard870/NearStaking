@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Stack, Flex, HStack, Button, Text, Divider, Spinner } from '@chakra-ui/react'
+import { Stack, Flex, HStack, Button, Text, Divider, Image } from '@chakra-ui/react'
 import { Deposit, MsgExecuteContract, WasmAPI, Coin } from '@terra-money/terra.js'
 import {
   Modal,
@@ -35,6 +35,7 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
         alignItems={'center'}
       >
         {/* <ReactLoading type={'bars'} color={'#F9D85E'} height={200} width={200} /> */}
+        <Image src='./Wnear.svg' w='37px' />
         <Text
           mt={'30px'}
           fontSize={'24px'}

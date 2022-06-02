@@ -5,6 +5,7 @@ import {
   Text, 
 } from '@chakra-ui/react'
 import { useStore, usePrice } from '../../../store';
+import {getCoinId} from '../../../Util';
 
 interface Props {
   amount: string 
@@ -15,7 +16,7 @@ const Info: FunctionComponent<Props> = ({amount}) => {
   const fee = 0.25;
 
   let _amount = parseFloat(amount) > 0? parseFloat(amount) : 0;
-  const value = state.coinType=='USDC' ? _amount + fee : _amount * rate + fee;
+  const value = _amount + fee * state.price[getCoinId('wNEAR')] / rate;
 
   return (
     <VStack

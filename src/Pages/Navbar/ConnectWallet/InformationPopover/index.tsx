@@ -6,7 +6,6 @@ import {
 } from '@chakra-ui/react'
 import { MdMail, MdCallMade, MdKeyboardArrowRight } from 'react-icons/md';
 
-import Satellite from '../../../../assets/Satellite.png'
 import Line from '../../../../assets/Line.svg'
 import { shortenAddress, floorNormalize } from '../../../../Util';
 import { useStore, useWallet } from '../../../../store';
@@ -22,40 +21,6 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
   const [vluna, setVluna] = useState(0);
 
   const wallet = useWallet();
-  // const ustBalance = useBalance();
-  // const lunaBalance = useBalance();
-
-  useEffect( () => {
-    const fetch = async () => {
-      // const api = new WasmAPI(lcd.apiRequester);
-      // let balance: any;
-      try {
-        // balance = await api.contractQuery(
-        //   VUST,
-        //   {
-        //     balance: {address: wallet?.walletAddress}
-        //   });
-        
-        // setVust(floorNormalize(parseInt(balance.balance)));
-      } catch (e) { 
-        console.log(e)
-      }
-
-      try {
-        // balance = await api.contractQuery(
-        //   VLUNA,
-        //   {
-        //     balance: {address: wallet?.walletAddress}
-        //   });
-        
-        // setVluna(floorNormalize(parseInt(balance.balance)));
-      } catch (e) { 
-        console.log(e)
-      }
-    }
-
-    fetch();
-  }, []);
 
   return (
     <PopoverContent
@@ -105,7 +70,7 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
             align={'center'} 
             background={'#212121'}
           >
-            <Image src={Satellite} w={'16px'} h={'16px'}/>
+            <Image src={'./Wnear.svg'} w={'16px'} h={'16px'}/>
           </Flex>
         </HStack>
         <VStack align={'baseline'} w={'100%'}>
@@ -122,75 +87,34 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
             COPY ADDRESS
           </Button>
         </VStack>
-        <VStack w={'100%'}  color={'#CEC0C0'} fontSize={'12px'}>
-          <Divider mt={'30px'} orientation='horizontal'/>
-          <Flex w={'100%'} justify={'space-between'}>
-            <Text> LUNA </Text>
-            {/* <Text> {lunaBalance} </Text> */}
+        <Flex direction='column' w={'100%'}  color={'#CEC0C0'} fontSize={'12px'}>
+          <Divider mt={'20px'} orientation='horizontal'/>
+          <Flex 
+            w={'100%'} 
+            h={'28px'} 
+            rounded={'25px'} 
+            background={'#F9D85E'}
+            mt='20px'
+            justify={'center'}
+            align='center'
+          >
+            <a href={'https://bridge.terra.money/'} target={'blank'}>
+            <Text fontSize={'14px'} color={'white'}>
+              RAINBOW BRIDGE
+            </Text>
+            </a>
           </Flex>
-          <Divider mt={'30px'} orientation='horizontal'/>
-          <Flex w={'100%'} justify={'space-between'}>
-            <HStack w={'100%'}>
-              <Text>UST</Text>
-              <Button 
-                w={'30px'} 
-                h={'15px'} 
-                background={'none'} 
-                p={'0px'}
-              >
-                <Text fontSize={'9px'} color={'#F9D85E'}>
-                  BUY 
-                </Text>
-                <MdCallMade color={'#F9D85E'} size={'9px'}/> 
-              </Button>
-            </HStack>
-            {/* <Text> {ustBalance} </Text> */}
-          </Flex>
-          <Divider mt={'30px'} orientation='horizontal'/>
-          <Flex w={'100%'} justify={'space-between'}>
-            <Text> xyzUST </Text>
-            <Text> {vust} </Text>
-          </Flex>
-          <Divider mt={'30px'} orientation='horizontal'/>
-          <Flex w={'100%'} justify={'space-between'}>
-            <Text> xyzLUNA </Text>
-            <Text> {vluna} </Text>
-          </Flex>
-          <HStack w={'100%'} h={'28px'} rounded={'25px'} spacing={'0px'} background={'#F9D85E'}  mt={'10px'}>
-            <Flex w={'141px'} minW={'141px'} justify={'center'}>
-              <a href={'https://bridge.terra.money/'} target={'blank'}>
-              <Text fontSize={'14px'} color={'white'}>
-                Terra Bridge
-              </Text>
-              </a>
-            </Flex>
-            <Divider orientation='vertical' borderColor={'#493C3C'}/>
-            <Flex w={'100%'} justify={'center'} align={'center'}>
-              <a href={'https://docs.anchorprotocol.com/user-guide/interchain-transfers'} target={'blank'}>
-              <Text fontSize={'12px'} color={'white'}>
-                Docs
-              </Text>
-              </a>
-              <a href={'https://docs.anchorprotocol.com/user-guide/interchain-transfers'} target={'blank'}>
-              <MdCallMade color={'white'} size={'12px'}/> 
-              </a>
-            </Flex>
-          </HStack>
           <Button w={'100%'} h={'28px'} rounded={'25px'} background={'#F9D85E'}  mt={'10px'}>
             <Text fontSize={'14px'} color={'white'}>
               SEND
             </Text>
           </Button>
-
           <a href={'https://terrasco.pe/bombay-12/address/' + wallet?.walletAddress} target={'blank'}>
-          <HStack>
-            <Text>View on Terra Finder</Text>
-            <Flex w={'16px'} background={'#2e2525'} justify={'center'} align={'center'} rounded={'50%'}>
-              <MdKeyboardArrowRight size={'11px'}/>
-            </Flex>
+          <HStack mt='10px' justify='center' align='center'>
+            <Text>View on Near explorer</Text>
           </HStack>
           </a>
-        </VStack>
+        </Flex>
       </Flex>
       <Flex
         w={'100%'}

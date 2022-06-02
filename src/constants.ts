@@ -5,12 +5,12 @@ export let net = "testnet";
 
 export const TOKEN_ADDRESSES_TESTNET = [
   "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
+  "other.alenzertest.testnet",
+  "other.alenzertest.testnet",
+  "other.alenzertest.testnet",
+  "other.alenzertest.testnet",
+  "other.alenzertest.testnet",
+  "wrap.testnet",
 ];
 export const TOKEN_ADDRESSES_MAINNET = [
   "ft.alenzertest.testnet",

@@ -1,4 +1,4 @@
-export const CONTRACT_NAME = 'staking.alenzertest.testnet'; /* TODO: fill this in! */
+export const CONTRACT_NAME = 'staking1.alenzertest.testnet'; 
 
 export function getConfig (env: any) {
   switch (env) {

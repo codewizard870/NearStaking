@@ -11,6 +11,7 @@ import {
 import { toast } from 'react-toastify'
 import { MdWarningAmber, MdInfoOutline } from 'react-icons/md'
 
+import BigNumber from 'bignumber.js';
 import {CONTRACT_NAME} from '../../../config'
 import { useStore, useWallet, ActionKind } from '../../../store';
 import { fetchData, sleep, getCoinId } from '../../../Util';
@@ -43,16 +44,16 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
     );
 
     const decimal = DECIMALS[getCoinId(state.coinType)];
-    let val = Math.floor(parseFloat(amount) * 10 ** decimal);
+    let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
 
     let withdraw_msg = {
       coin: coinType,
-      amount: val,
+      amount: val.toFixed(),
     }
 
     window.localStorage.setItem("action", "withdraw");
     window.localStorage.setItem("coinType", coinType);
-    window.localStorage.setItem("amount", val.toString());
+    window.localStorage.setItem("amount", val.toFixed());
     await contract.withdraw_reserve(withdraw_msg);
 
     // onClose();

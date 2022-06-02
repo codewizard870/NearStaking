@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react'
 import { toast } from 'react-toastify';
 
+import BigNumber from 'bignumber.js';
 import Title from './Title';
 import InputPanel from './InputPanel';
 import SliderWish from './SliderWish';
@@ -43,7 +44,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
     );
 
     const decimal = DECIMALS[getCoinId(state.coinType)];
-    let val = Math.floor(parseFloat(amount) * 10 ** decimal);
+    let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
 
     let pool_msg = {
       coin: state.coinType,
@@ -52,7 +53,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
 
     let token_msg = {
       receiver_id: CONTRACT_NAME,
-      amount: val.toString(),
+      amount: val.toFixed(),
       msg: JSON.stringify(pool_msg)
     }
 

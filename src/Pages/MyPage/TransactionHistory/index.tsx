@@ -18,7 +18,7 @@ const TransactionHistory: FunctionComponent = (props) => {
     if(!wallet) return;
     const fetchTransaction = async () => {
       try{
-        const res = await axios.get(`https://backend-testnet-pr-1008.onrender.com/trpc/transactions-list-by-account-id?batch=1&input={"0":{"accountId":"${accountId}","limit":10}}`);
+        const res = await axios.get(`https://backend-testnet-9jqg.onrender.com/trpc/transactions-list-by-account-id?batch=1&input={"0":{"accountId":"alenzer.testnet","limit":10}}`);
 console.log(res)
         if(res.data.length == 0) return;
         console.log(res.data[0].result.data);

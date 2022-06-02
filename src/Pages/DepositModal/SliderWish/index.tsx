@@ -1,12 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { BigNumber } from "bignumber.js"
 import {
-  VStack,
-  HStack,
-  Stack,
   Box,
   Flex,
-  Text, Input,
   Slider,
   SliderTrack,
   SliderThumb,
@@ -16,6 +12,7 @@ import {
 import { Dispatch, SetStateAction } from "react";
 import { MdCode } from "react-icons/md";
 
+import { floor } from '../../../Util';
 import Indicator from './Indicator';
 import { useBalance, useStore } from '../../../store'
 
@@ -33,7 +30,7 @@ const SliderWish: FunctionComponent<Props> = ({ amount, setAmount }) => {
     if (parseFloat(amount) > 0) {
       let percent_big = new BigNumber(amount).multipliedBy(100).dividedBy(balance);
 
-      let percent = percent_big.toNumber();
+      let percent = floor(percent_big.toNumber());
       if (percent > 100) percent = 100;
       setSliderValue(percent);
     }

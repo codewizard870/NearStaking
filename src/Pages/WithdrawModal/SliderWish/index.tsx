@@ -1,11 +1,7 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import {
-  VStack,
-  HStack,
-  Stack,
   Box,
   Flex,
-  Text, Input,
   Slider,
   SliderTrack,
   SliderThumb,
@@ -14,6 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
 import { MdCode } from "react-icons/md";
+import BigNumber from 'bignumber.js';
 
 import { floorNormalize, floor } from '../../../Util';
 import Indicator from './Indicator';
@@ -33,7 +30,9 @@ const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
     let balance = deposited.toNumber();
 
     if(parseFloat(amount) > 0){
-      let percent = Math.floor(parseFloat(amount) * 100 / balance);
+      let percent_big = new BigNumber(amount).multipliedBy(100).dividedBy(balance);
+
+      let percent = floor(percent_big.toNumber());
       if (percent > 100) percent = 100;
       setSliderValue(percent);
     }

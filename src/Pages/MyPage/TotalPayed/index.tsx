@@ -24,8 +24,8 @@ const TotalPayed: FunctionComponent = (props) => {
       depositTime_max = state.userInfos[i].deposit_time;
   }
 
-  const period = depositTime_max > 0 ? Date.now() * 10**6 - depositTime_max : 0;
-  const day = Math.floor((period > 0 ? period : 0) /10**9 / 60 / 60 / 24);
+  const period = depositTime_max > 0 ? Date.now() - depositTime_max : 0;
+  const day = Math.floor((period > 0 ? period : 0) /10**3 / 60 / 60 / 24);
 
   return (
     <Flex

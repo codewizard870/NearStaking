@@ -123,6 +123,7 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
         _hover={{background:'#3f3434'}}
         cursor={'pointer'}
         onClick={() => {
+          onClose();
           wallet.signOut();
           dispatch({action: ActionKind.setConnected, payload: false});
 console.log("hre")

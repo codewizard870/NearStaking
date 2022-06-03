@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
 import {BigNumber} from 'bignumber.js'
 
-import { DECIMALS } from '../../../../constants';
+import { DECIMALS, StableCoins } from '../../../../constants';
 import { useStore } from '../../../../store';
 import { getCoinId } from '../../../../Util';
 import Tab from './Tab';
@@ -24,13 +24,25 @@ const DateTimeTab: FunctionComponent<Props> = ({setInterest}) => {
     case 'day': rate = 1 / 365; break;
   }
 
-  let coinId = getCoinId('DAI');
-  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount);
-  amount = amount.multipliedBy(state.price[coinId]).dividedBy(10 ** DECIMALS[coinId]);
+  let coins = StableCoins.filter((coin) => coin.upcoming == false);
+  let stable = new BigNumber(0);
+  let volatile = new BigNumber(0);
+  let total = new BigNumber(0);
 
-  const apr = state.apr[coinId];
+  for (let i = 0; i < coins.length; i++) {
+    let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
 
-  setInterest(amount.toNumber() * apr / 100 * rate);
+    if(coins[i].stable)
+      stable = stable.plus(amount);
+    else
+      volatile = volatile.plus(amount);
+  }
+
+  const stableApr= 20, volatileApr=10;
+  const stableExpected = stable.multipliedBy(stableApr * rate / 100);
+  const volatileExpected = volatile.multipliedBy(volatileApr * rate / 100);
+  setInterest(stableExpected.toNumber() + volatileExpected.toNumber());
 
   return (
     <Flex

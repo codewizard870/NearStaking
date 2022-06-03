@@ -11,8 +11,6 @@ interface Props {
 }
 const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => {
   const { state, dispatch } = useStore();
-  const rate = usePrice();
-
   const sum = total;
 
   const percent1 = sum.isEqualTo(0) ? 75: total.dividedBy(sum).multipliedBy(100).toNumber();

@@ -31,7 +31,6 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
   const coinType = state.coinType;
 
   const withdraw = async () => {
-console.log(amount)
     if (checked == false || wallet == undefined || parseFloat(amount) <= 0)
       return;
 
@@ -51,7 +50,8 @@ console.log(amount)
       coin: coinType,
       amount: val.toFixed(),
     }
-
+console.log(withdraw_msg)
+console.log(contract)
     window.localStorage.setItem("action", "withdraw");
     window.localStorage.setItem("coinType", coinType);
     window.localStorage.setItem("amount", val.toFixed());

@@ -210,6 +210,7 @@ export const useNear = () => {
 export const useDeposited = () => {
   const {state, dispatch} = useStore();
   let amount = new BigNumber(state.userInfos[getCoinId(state.coinType)].amount);
+  amount = amount.plus(new BigNumber(state.userInfos[getCoinId(state.coinType)].reward_amount));
   amount = amount.dividedBy(10**DECIMALS[getCoinId(state.coinType)]);
   return amount;
 }

@@ -5,7 +5,7 @@ import { BigNumber } from 'bignumber.js'
 import { StableCoins, DECIMALS } from '../../../../constants';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import Warning from '../../../../assets/Warning.svg'
-import { OpenDepositModal, useStore, usePrice, useDeposited } from '../../../../store';
+import { useStore, } from '../../../../store';
 
 const Projected: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();

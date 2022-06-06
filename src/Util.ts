@@ -31,7 +31,7 @@ function calcUSD(amountHistory: any, price: number[]) {
       usd = usd.multipliedBy(price[j]).dividedBy(10**DECIMALS[j]);
       totalUSD = totalUSD.plus(usd);
     }
-    amountHistory[i].totalUSD = totalUSD.toNumber();
+    amountHistory[i].totalUSD = totalUSD;
   }
 
   return amountHistory;
@@ -119,108 +119,6 @@ console.log(status)
 export function sleep(ms: number) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-// export async function estimateSend(
-//   wallet: ConnectedWallet,
-//   lcd: LCDClient,
-//   msgs: MsgExecuteContract[],
-//   message: string,
-//   memo: string
-// ) {
-//   console.log(msgs);
-//   const obj = new Fee(10_000, { uusd: 4500 })
-
-//   let accountInfo: any | undefined = undefined;
-
-//   await lcd.auth.accountInfo(
-//     wallet.walletAddress
-//   )
-//     .then((e) => {
-//       accountInfo = e;
-//     })
-//     .catch((e) => {
-//       toast(e.message, errorOption)
-//       console.log(e.message);
-//     })
-//   console.log(accountInfo);
-//   if (!accountInfo)
-//     return undefined;
-
-//   let txOptions =
-//   {
-//     msgs: msgs,
-//     memo: memo,
-//     gasPrices: obj.gasPrices(),
-//     gasAdjustment: 1.7,
-//   };
-
-//   let rawFee: any | undefined = undefined;
-//   await lcd.tx.estimateFee(
-//     [
-//       {
-//         sequenceNumber: accountInfo.getSequenceNumber(),
-//         publicKey: accountInfo.getPublicKey(),
-//       },
-//     ],
-//     txOptions
-//   )
-//     .then((e) => {
-//       rawFee = e;
-//     })
-//     .catch((e) => {
-//       toast(e.message, errorOption)
-//       console.log(e.message);
-//     })
-
-//   if (!rawFee)
-//     return undefined;
-
-//   return await wallet
-//     .post({
-//       msgs: msgs,
-//       memo: memo,
-//       fee: rawFee,
-//       gasPrices: obj.gasPrices(),
-//       gasAdjustment: 1.7,
-//     })
-//     .then(async (e) => {
-//       if (e.success) {
-//         toast("Successs! Please wait", successOption);
-//         return e.result.txhash;
-//       } else {
-//         toast(e.result.raw_log, errorOption);
-//         console.log(e.result.raw_log);
-//         return undefined;
-//       }
-//     })
-//     .catch((e) => {
-//       toast(e.message, errorOption);
-//       console.log(e.message);
-//       return undefined;
-//     })
-// }
-
-// export function checkNetwork(wallet: ConnectedWallet | undefined, state: AppContextInterface) {
-  //----------verify connection--------------------------------
-  // if (wallet === undefined) {
-  //   toast("Please connect wallet first!", errorOption);
-  //   console.log("Please connect wallet first!");
-  //   return false;
-  // }
-  // else {
-  //   toast.dismiss();
-  // }
-
-  // if (state.net == 'mainnet' && wallet.network.name == 'testnet') {
-  //   toast("Please switch to mainnet!", errorOption);
-  //   return false;
-  // }
-  // if (state.net == 'testnet' && wallet.network.name == 'mainnet') {
-  //   toast("Please switch to Testnet!", errorOption);
-  //   return false;
-  // }
-  // return true;
-// }
 
 export function floorNormalize(amount: number) {
   return Math.floor(amount / 10 ** 4) / 100;

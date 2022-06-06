@@ -43,8 +43,8 @@ const SliderWish: FunctionComponent<Props> = ({  amount, setAmount }) => {
 
   const onChangeSlider = (value: number) => {
     setSliderValue(value);
-    let balance = deposited.toNumber();
-    setAmount(floor(balance * value / 100).toString());
+    let balance = deposited.multipliedBy(value).dividedBy(100);
+    setAmount(balance.toFixed());
   }
   return (
     <Flex

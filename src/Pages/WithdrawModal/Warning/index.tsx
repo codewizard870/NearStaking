@@ -31,6 +31,7 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
   const coinType = state.coinType;
 
   const withdraw = async () => {
+console.log(amount)
     if (checked == false || wallet == undefined || parseFloat(amount) <= 0)
       return;
 
@@ -44,7 +45,7 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
     );
 
     const decimal = DECIMALS[getCoinId(state.coinType)];
-    let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
+    let val = new BigNumber(amount).multipliedBy(10 ** decimal).integerValue();
 
     let withdraw_msg = {
       coin: coinType,

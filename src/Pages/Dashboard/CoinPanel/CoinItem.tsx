@@ -8,7 +8,6 @@ import {
   OpenWithdrawModal,
   useStore,
   COINTYPE,
-  useDeposited
 } from '../../../store';
 import { DECIMALS } from '../../../constants';
 import AnimationNumber from '../../Components/AnimationNumber';

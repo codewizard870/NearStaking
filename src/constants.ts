@@ -57,13 +57,13 @@ export const amountHistory = [
     time: 1641281704,
     amount: totalRewards,
     reward: totalRewards,
-    totalUSD: 0.0001,
+    totalUSD: new BigNumber(0.0001),
   },
   {
     time: 1641281704,
     amount: totalRewards,
     reward: totalRewards,
-    totalUSD: 0.0001,
+    totalUSD: new BigNumber(0.0001),
   },
 ];
 

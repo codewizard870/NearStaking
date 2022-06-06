@@ -27,7 +27,7 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
   const coinId = getCoinId(name)
   const price = state.price;
 
-  const tvl_coin = last < 0 ? new BigNumber(0) : new BigNumber(history[last].amount[coinId]).dividedBy(10 ** DECIMALS[coinId]);
+  const tvl_coin = last < 0 ? new BigNumber(0) : new BigNumber(history[last].amount[coinId] + history[last].reward[coinId]).dividedBy(10 ** DECIMALS[coinId]);
   const tvl_usd = last < 0 ? new BigNumber(0) : tvl_coin.multipliedBy(price[coinId]);
 
   return (

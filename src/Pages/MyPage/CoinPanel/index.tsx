@@ -66,7 +66,14 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               >
                 Saving Balance
               </Text>
-              <Image src={Warning} w={'13px'} />
+              <Tooltip 
+                label=" Total of your deposits including earnings" 
+                background={'#C4C4C4'} hasArrow 
+                placement='top-start' 
+                color={'black'}
+              > 
+                <Image src={Warning} w={'13px'} />
+              </Tooltip>
             </HStack>
             {!stable &&
               <>
@@ -103,7 +110,14 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               >
                 APY
               </Text>
-              <Image src={Warning} w={'13px'} />
+              <Tooltip 
+                label="Current annualized interest rate" 
+                background={'#C4C4C4'} hasArrow 
+                placement='top-start' 
+                color={'black'}
+              > 
+                <Image src={Warning} w={'13px'} />
+              </Tooltip>
             </HStack>
             <Text
               fontSize='13px'

@@ -101,11 +101,11 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
             </Text>
             </a>
           </Flex>
-          <Button w={'100%'} h={'28px'} rounded={'25px'} background={'#F9D85E'}  mt={'10px'}>
+          <a href={'https://www.ref.finance/'} target={'blank'}>
             <Text fontSize={'14px'} color={'white'}>
-              SEND
+              SWAP
             </Text>
-          </Button>
+          </a>
           <a href={'https://explorer.testnet.near.org/accounts/' + wallet?.getAccountId()} target={'blank'}>
           <HStack mt='10px' justify='center' align='center'>
             <Text>View on Near explorer</Text>

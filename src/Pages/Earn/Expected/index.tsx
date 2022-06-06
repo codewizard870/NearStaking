@@ -26,7 +26,7 @@ const Expected: FunctionComponent = (props) => {
           EXPECTED INTEREST BASED ON YOUR DEPOSIT
         </Text>
         <Tooltip 
-          label="Estimated interest based on your deposit for the selected period" 
+          label="Estimated interest calculated in USD based on your deposit for the selected period" 
           background={'#C4C4C4'} hasArrow 
           placement='top-start' 
           color={'black'}

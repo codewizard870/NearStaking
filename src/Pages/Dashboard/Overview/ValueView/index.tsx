@@ -38,7 +38,7 @@ const ValueView: FunctionComponent = (props) => {
         <HStack spacing={'10px'} alignItems={'center'}>
           <Image src={YellowPanel} w={'15px'} />
           <Tooltip
-            label="Total deposited LUNA & compounded interest Calculated in UST"
+            label="Total deposited Stable Coins & compounded interest"
             background={'#C4C4C4'}
             color={'black'} hasArrow
             placement='top-start'
@@ -67,7 +67,7 @@ const ValueView: FunctionComponent = (props) => {
         <HStack spacing={'10px'} alignItems={'center'}>
           <Image src={BlackPanel} w={'15px'} />
           <Tooltip
-            label="Total deposited UST & compounded interest"
+            label="Total deposited Volatile Assets & compounded interest"
             background={'#C4C4C4'} hasArrow
             placement='top-start'
             color={'black'}

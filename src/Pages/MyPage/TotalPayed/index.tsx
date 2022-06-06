@@ -38,7 +38,7 @@ const TotalPayed: FunctionComponent = (props) => {
       py={{ sm: '10px', md: '20px', lg: '60px' }}
     >
       <Tooltip
-        label="Total payed interest of your UST/Luna Deposits calculated in UST"
+        label="Your total payed interest of All deposits calculated in USD"
         background={'#C4C4C4'}
         color={'black'} hasArrow
         placement='top-start'

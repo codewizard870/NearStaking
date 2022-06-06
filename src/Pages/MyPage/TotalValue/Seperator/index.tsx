@@ -33,7 +33,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
           Total Balance
         </Text>
         <Tooltip
-          label="Total UST Wallet balance"
+          label="Total value of All deposits and payed interest"
           background={'#C4C4C4'}
           color={'black'} hasArrow
           placement='top-start'
@@ -60,7 +60,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
           Stable Balance
         </Text>
         <Tooltip
-          label="Total of all UST/Luna deposits, including earnings "
+          label="Your total Stable Coin balance including earnings"
           background={'#C4C4C4'}
           color={'black'} hasArrow
           placement='top-start'
@@ -88,7 +88,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
           Volatile Asset Balance
         </Text>
         <Tooltip
-          label="Your total UST deposit \n including earnings"
+          label="Your total Volatile asset balance including earnings"
           background={'#C4C4C4'}
           color={'black'} hasArrow
           placement='top-start'

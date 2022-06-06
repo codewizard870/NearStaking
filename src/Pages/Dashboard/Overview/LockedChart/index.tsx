@@ -116,7 +116,7 @@ const LockedChart: FunctionComponent<Props> = () => {
         datasets: [
           {
             data: data.map(({ totalUSD }) =>
-            totalUSD,
+            totalUSD.toNumber(),
             ),
             borderColor: "#F9D85E",
             borderWidth: 2,

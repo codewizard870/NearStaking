@@ -25,7 +25,7 @@ const Total: FunctionComponent<Props> = ({total}) => {
             TOTAL VALUE
           </Text>
           <Tooltip
-            label="Total value of UST/Luna deposits, payed interest, and UST Wallet Balance"
+            label="Total value of All deposits and payed interest"
             background={'#C4C4C4'}
             color={'black'} hasArrow
             placement='top-start'
@@ -50,7 +50,7 @@ const Total: FunctionComponent<Props> = ({total}) => {
           </Text>
         </HStack>
       </VStack>
-      <a href="https://app.terraswap.io/swap?to=&type=swap&from=uluna" target={'_blank'} rel="noreferrer">
+      <a href="https://app.ref.finance/" target={'_blank'} rel="noreferrer">
         <Button w={'92px'} h={'25px'} background={'none'} rounded={'25px'} borderColor={'white'} variant='outline'>
           <MdSwapHoriz  color='#CEBFBF'/>
           <Text

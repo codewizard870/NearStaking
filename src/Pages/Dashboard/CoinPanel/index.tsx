@@ -50,7 +50,7 @@ const CoinPanel: FunctionComponent = (props) => {
         <GridItem w='100%' h='45px'>
           <Flex w={'100%'} h={'100%'} align={'center'} justify={'center'}>
             <Tooltip
-              label="Current annualized deposit rate"
+              label="The APY is stable & fixed by the team"
               background={'#C4C4C4'} hasArrow
               placement='top-start'
               color={'black'}
@@ -68,7 +68,7 @@ const CoinPanel: FunctionComponent = (props) => {
         <GridItem w='100%' h='45px'>
           <Flex w={'100%'} h={'100%'} align={'center'} justify={'center'}>
             <Tooltip
-              label="Total of all LUNA deposits including earnings "
+              label="TVL = the sum of All deposited assets & compounded interest of all users"
               background={'#C4C4C4'} hasArrow
               placement='top-start'
               color={'black'}

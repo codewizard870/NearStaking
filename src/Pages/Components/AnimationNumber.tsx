@@ -27,11 +27,16 @@ const AnimationNumber: FunctionComponent<Props> = ({ value }) => {
   const tmpValue = value > Number.MAX_VALUE ? Number.MAX_VALUE : value;
   const bigValue = new BigNumber(value);
   const rest = getRest(value) < 10 ? ".0" + getRest(value).toString() : "." + getRest(value).toString();
+  
+  // BigNumber.config({ ROUNDING_MODE: 0 })
+  // BigNumber.set({ ROUNDING_MODE: BigNumber.ROUND_UP })
+  // BigNumber.config({ DECIMAL_PLACES: 5 })
+  // BigNumber.ROUND_FLOOR
   return (
     <span>
       {loading && <CountUp start={prev} end={Math.floor(tmpValue)} separator=',' />}
       {loading && getRest(value) > 0 ? `${rest}` : "" }
-      {!loading && bigValue.toFixed()}
+      {!loading && bigValue.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFixed()}
     </span>
   )
 }

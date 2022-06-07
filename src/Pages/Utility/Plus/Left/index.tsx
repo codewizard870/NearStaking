@@ -16,12 +16,7 @@ const Left: FunctionComponent = (props) => {
 
   for (let i = 0; i < coins.length; i++) {
     let amount = new BigNumber(state.potInfo[i].qualified_amount);
-console.log(coins[i].name)
-console.log(amount.toFixed())
     amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
-console.log(DECIMALS[i])
-console.log(state.price[i])
-console.log(amount.toFixed())
     total = total.plus(amount);
   }
 

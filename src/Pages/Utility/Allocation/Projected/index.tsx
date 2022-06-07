@@ -22,7 +22,11 @@ const Projected: FunctionComponent = (props) => {
 
   const dayReward = total.dividedBy(1000).multipliedBy(24);
   const remain = 60 - Math.floor((Date.now() - state.farmStartTime) / 1000 / 60 / 60 / 24);
-  const expected = Math.floor(dayReward.toNumber() * remain *  1.25);
+
+  const farmInfo = state.farmInfo;
+  const cur_amount = farmInfo.amount;
+
+  const expected = Math.floor((dayReward.toNumber() * remain + cur_amount) *  1.25);
 
   return (
     <VStack w={'100%'} color={'#CEBFBF'} spacing={'20px'}>

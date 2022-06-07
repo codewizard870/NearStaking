@@ -3,6 +3,7 @@ import React, { FunctionComponent, createRef, useEffect, useState } from 'react'
 import Chart from 'chart.js/auto'
 import './Chart.css'
 
+import {BigNumber} from 'bignumber.js';
 import { useStore } from '../../../../store';
 import { getDateString } from '../../../../Util';
 import Indicator from './../../../../assets/Indicator.svg'
@@ -63,9 +64,8 @@ const LockedChart: FunctionComponent<Props> = () => {
                 try {
                   const i = tooltip.dataPoints[0].dataIndex;
                   const item = data[i];
-
                   div1.innerHTML = `${getDateString(item.time)}`;
-                  div2.innerHTML = `$${item.totalUSD.toLocaleString()}`;
+                  div2.innerHTML = `${item.totalUSD.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFormat()}`;
 
                   let style="border-radius: 50%; background-color: #493C3C; width: 20px; height: 20px; position: absolute; ";
                   style += `top: ${chart.scales.y.height-10}px;`;

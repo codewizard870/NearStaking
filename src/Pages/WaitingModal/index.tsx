@@ -22,7 +22,7 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
   const txhash = state.txhash;
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} isCentered>
       <ModalOverlay />
       <ModalContent
         background={'#212121'}

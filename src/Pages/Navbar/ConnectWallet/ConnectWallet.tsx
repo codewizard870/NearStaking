@@ -55,7 +55,7 @@ const ConnectWallet: FunctionComponent = () => {
         dispatch({ type: ActionKind.setNearBalance, payload: amount});
       }
     }
-
+console.log(state.connected)
     if (state.connected && state.wallet) {
       fetchBalance()
     }
@@ -119,6 +119,7 @@ const ConnectWallet: FunctionComponent = () => {
       console.log('error: ', error)
     }
   }
+
   return (
     <>
       {!state.connected &&
@@ -142,7 +143,7 @@ const ConnectWallet: FunctionComponent = () => {
         </Button>
       }
       {state.connected &&
-        <Popover>
+        <Popover isOpen={isOpenInfomation} onClose={onCloseInfomation}>
           <PopoverTrigger>
             <Button
               fontSize={'15px'}

@@ -101,11 +101,21 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
             </Text>
             </a>
           </Flex>
-          <a href={'https://www.ref.finance/'} target={'blank'}>
-            <Text fontSize={'14px'} color={'white'}>
-              SWAP
-            </Text>
-          </a>
+          <Flex 
+            w={'100%'} 
+            h={'28px'} 
+            rounded={'25px'} 
+            background={'#F9D85E'}
+            mt='20px'
+            justify={'center'}
+            align='center'
+          >
+            <a href={'https://www.ref.finance/'} target={'blank'}>
+              <Text fontSize={'14px'} color={'white'}>
+                SWAP
+              </Text>
+            </a>
+          </Flex>
           <a href={'https://explorer.testnet.near.org/accounts/' + wallet?.getAccountId()} target={'blank'}>
           <HStack mt='10px' justify='center' align='center'>
             <Text>View on Near explorer</Text>
@@ -124,9 +134,8 @@ const InformationPopover: FunctionComponent<Props> = ({ isOpen, onClose, connect
         cursor={'pointer'}
         onClick={() => {
           onClose();
-          wallet.signOut();
-          dispatch({action: ActionKind.setConnected, payload: false});
-console.log("hre")
+          // wallet.signOut();
+          dispatch({ type: ActionKind.setConnected, payload: false });
         }}
       >
         <Text

@@ -1,17 +1,29 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Center, Divider, Button } from '@chakra-ui/react'
+import {BigNumber} from 'bignumber.js';
+
 import AnimationNumber from '../../../Components/AnimationNumber';
 import { MdInfoOutline } from 'react-icons/md';
 import Warning from '../../../../assets/Warning.svg'
-import { floorNormalize } from '../../../../Util';
+import { StableCoins, DECIMALS } from '../../../../constants';
 import { OpenDepositModal, useStore, usePrice } from '../../../../store';
 
 const Left: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
-  const ustAmount = state.potInfo.qualified_ust_amount;
-  const lunaAmount = state.potInfo.qualified_luna_amount;
-  const rate = usePrice();
-  const amount = floorNormalize(parseFloat(ustAmount) + parseFloat(lunaAmount) * rate);
+
+  let coins = StableCoins.filter((coin) => coin.upcoming == false);
+  let total = new BigNumber(0);
+
+  for (let i = 0; i < coins.length; i++) {
+    let amount = new BigNumber(state.potInfo[i].qualified_amount);
+console.log(coins[i].name)
+console.log(amount.toFixed())
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+console.log(DECIMALS[i])
+console.log(state.price[i])
+console.log(amount.toFixed())
+    total = total.plus(amount);
+  }
 
   return (
     <Flex w={'100%'} direction="column">
@@ -50,7 +62,7 @@ const Left: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'36px'}
         >
-          <AnimationNumber value={amount} />
+          <AnimationNumber value={total.toNumber()} />
         </Text>
         <Text
           fontSize={'25px'}

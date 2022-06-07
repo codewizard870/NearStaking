@@ -78,7 +78,6 @@ const PotReward: FunctionComponent = (props) => {
               <Td>{item[0].account}</Td>
               {item.map((coin: any) => (
                 <>
-                  {console.log(coin)}
                   <Td>{coin.big_amount.toFormat()}</Td>
                   <Td>{coin.big_qualified_amount.toFormat()}</Td>
                 </>

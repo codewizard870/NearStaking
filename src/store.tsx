@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useReducer } from 'react'
 import { BigNumber } from "bignumber.js"
 
-import { floor, floorNormalize, getCoinId,  } from './Util'
-import { amountHistory, userInfo, farmInfo, potInfo, balanceInfo, aprInfo, priceInfo, userInfos, DECIMALS, totalRewards } from './constants'
-import {getConfig} from "./config";
+import { getCoinId,  } from './Util'
+import { amountHistory, userInfo, farmInfo, potInfos, balanceInfo, aprInfo, priceInfo, userInfos, DECIMALS, totalRewards } from './constants'
 
 export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR' | 'NEARt';
 export type WALLETTYPE = 'near' | 'sender';
@@ -72,7 +71,7 @@ const initialState: AppContextInterface = {
   totalRewards: totalRewards,
   txhash: undefined,
   qualified: false,
-  potInfo: potInfo,
+  potInfo: potInfos,
 }
 
 export enum ActionKind{

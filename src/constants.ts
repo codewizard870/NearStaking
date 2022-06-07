@@ -52,6 +52,8 @@ export const potInfo = {
   amount: "0",
   qualified_amount: "0",
 }
+export const potInfos = [potInfo, potInfo, potInfo, potInfo, potInfo, potInfo, potInfo, potInfo ]
+
 export const amountHistory = [
   {
     time: 1641281704,

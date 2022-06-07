@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Outlet, Link } from "react-router-dom";
 import { VStack, Flex, useDisclosure, useEventListenerMap } from '@chakra-ui/react';
 import * as nearAPI from "near-api-js";
@@ -31,6 +31,7 @@ const Layout = () => {
   const { state, dispatch } = useStore();
   const wallet = useWallet();
   const near = useNear();
+  const [force, setForce] = useState(false);
 
   const initialize = () => {
     window.localStorage.removeItem('action');
@@ -95,9 +96,9 @@ const Layout = () => {
       await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, { timeout: 60 * 60 * 1000 })
         .then((res) => {
           toast("Withdraw success", successOption)
-          
+
           onCloseWaiting();
-          fetchData(state, dispatch)
+          setForce(!force);
         })
         .catch(function (error) {
           if (error.response) {
@@ -132,7 +133,7 @@ const Layout = () => {
     if(near && wallet)
       fetchAll()
 
-  }, [wallet, near])
+  }, [wallet, near, force])
 
   useEffect(() => {
     setTimeout(()=> {

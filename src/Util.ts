@@ -40,7 +40,7 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
   dispatch({ type: ActionKind.setLoading, payload: true });
 
   const wallet = state.wallet;
-
+console.log(wallet)
   let balance = balanceInfo;
   let coins = StableCoins.filter((coin) => coin.upcoming == false);
   for (let i = 0; i < coins.length; i++) {

@@ -38,24 +38,27 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
       wallet.account(), // the account object that is connecting
       CONTRACT_NAME,
       {
-        viewMethods: [],
+        viewMethods: ["view_status"],
         changeMethods: ["withdraw_reserve"],
       }
     );
 
     const decimal = DECIMALS[getCoinId(state.coinType)];
-    let val = new BigNumber(amount).multipliedBy(10 ** decimal).integerValue();
+    let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
 
     let withdraw_msg = {
       coin: coinType,
       amount: val.toFixed(),
     }
+
 console.log(withdraw_msg)
 console.log(contract)
     window.localStorage.setItem("action", "withdraw");
     window.localStorage.setItem("coinType", coinType);
     window.localStorage.setItem("amount", val.toFixed());
-    await contract.withdraw_reserve(withdraw_msg);
+    let res = await contract.withdraw_reserve(withdraw_msg, 300000000000000, 1);
+
+console.log(res)
 
     // onClose();
     // onCloseParent();

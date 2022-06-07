@@ -7,16 +7,15 @@ import {
   ModalContent,
   ModalCloseButton,
 } from '@chakra-ui/react'
-import { toast } from 'react-toastify';
 
 import BigNumber from 'bignumber.js';
 import Title from './Title';
 import InputPanel from './InputPanel';
 import SliderWish from './SliderWish';
 import Info from './Info';
-import { useStore, useWallet, ActionKind } from '../../store';
+import { useStore, useWallet } from '../../store';
 import { getCoinId } from '../../Util';
-import { successOption, TOKEN_ADDRESS, DECIMALS } from '../../constants';
+import { TOKEN_ADDRESS, DECIMALS } from '../../constants';
 import { CONTRACT_NAME } from '../../config';
 
 interface Props {
@@ -33,7 +32,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
     if (wallet == undefined || parseFloat(amount) <= 0)
       return;
 
-    const tokenAddress = TOKEN_ADDRESS[getCoinId(state.coinType)];
+    const tokenAddress = TOKEN_ADDRESS[getCoinId(coinType)];
     const contract: any = new nearAPI.Contract(
       wallet.account(), // the account object that is connecting
       tokenAddress,
@@ -43,11 +42,11 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
       }
     );
 
-    const decimal = DECIMALS[getCoinId(state.coinType)];
+    const decimal = DECIMALS[getCoinId(coinType)];
     let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
 
     let pool_msg = {
-      coin: state.coinType,
+      coin: coinType,
       qualified: state.qualified
     };
 

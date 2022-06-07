@@ -4,12 +4,12 @@ import { VStack, Flex, useDisclosure, useEventListenerMap } from '@chakra-ui/rea
 import * as nearAPI from "near-api-js";
 import axios from 'axios';
 
-import { useWallet,  useStore,  ActionKind, useNear } from './store';
+import { useWallet, useStore, ActionKind, useNear } from './store';
 import { REQUEST_ENDPOINT } from './constants';
 import { toast } from 'react-toastify';
 
 import { successOption, errorOption } from './constants';
-import {getConfig} from "./config";
+import { getConfig } from "./config";
 import Navbar from './Pages/Navbar'
 import Footer from "./Pages/Footer";
 import DepositModal from './Pages/DepositModal'
@@ -47,10 +47,10 @@ const Layout = () => {
       errorMessage = urlParams.get("errorMessage");
     }
 
-    if(transactionHashes == null) 
+    if (transactionHashes == null)
       return;
 
-    dispatch({action: ActionKind.setTxhash, payload: transactionHashes});
+    dispatch({ type: ActionKind.setTxhash, payload: transactionHashes });
 
     const near = await nearAPI.connect(
       Object.assign(
@@ -61,27 +61,24 @@ const Layout = () => {
     const wallet = new nearAPI.WalletAccount(near, null);
     let signed = wallet.isSignedIn();
 
-    if( !signed) return;
+    if (!signed) return;
 
-    dispatch({ type: ActionKind.setNear, payload: near});
+    dispatch({ type: ActionKind.setNear, payload: near });
     dispatch({ type: ActionKind.setConnected, payload: true });
     dispatch({ type: ActionKind.setWallet, payload: wallet });
 
-    if(errorCode != null){
+    if (errorCode != null) {
       toast(errorMessage, errorOption);
       onOpenFailed();
       initialize();
       return;
     }
-    // const currentBlock = await near.connection.provider.block({
-    //   blockId: blockHash
-    // });
-    
+
     let action = window.localStorage.getItem("action");
-    if(action == "deposit"){
+    if (action == "deposit") {
       toast("deposit success", successOption);
     }
-    else if(action == 'withdraw'){
+    else if (action == 'withdraw') {
       onOpenWaiting();
 
       let coinType = window.localStorage.getItem('coinType');
@@ -109,7 +106,7 @@ const Layout = () => {
           } else {
             toast(error.message, errorOption);
           }
-          
+
           onCloseWaiting();
         });
     }
@@ -122,7 +119,7 @@ const Layout = () => {
     dispatch({ type: ActionKind.setOpenWithdrawModal, payload: onOpenWithdraw });
     dispatch({ type: ActionKind.setOpenWaitingModal, payload: onOpenWaiting });
     dispatch({ type: ActionKind.setCloseWaitingModal, payload: onCloseWaiting });
-    dispatch({ type: ActionKind.setOpenFailedModal, payload: onOpenFailed});
+    dispatch({ type: ActionKind.setOpenFailedModal, payload: onOpenFailed });
   }, [dispatch, onOpenDeposit, onOpenWithdraw, onOpenWaiting, onCloseWaiting, onOpenFailed])
 
   useEffect(() => {
@@ -130,13 +127,13 @@ const Layout = () => {
       fetchData(state, dispatch)
     }
     // if (checkNetwork(wallet, state))
-    if(near && wallet)
+    if (near && wallet)
       fetchAll()
 
   }, [wallet, near, force])
 
   useEffect(() => {
-    setTimeout(()=> {
+    setTimeout(() => {
       checkTransaction()
     }, 1000);
   }, [])
@@ -153,7 +150,7 @@ const Layout = () => {
         spacing={'10px'}
         color={'white'}
         maxWidth={'1440px'}
-        w = {'100%'}
+        w={'100%'}
       >
         <Navbar />
         <Outlet />

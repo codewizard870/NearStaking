@@ -34,7 +34,7 @@ const HistoryItem: FunctionComponent<Props> = ({ item }) => {
                   {JSON.stringify(item.actions[0].args).substring(0, 100)}
                 </Text>
               </VStack>
-              <a href={`${item.blockHash}`} target="_blank" rel="noreferrer">
+              <a href={`https://explorer.testnet.near.org/blocks/${item.blockHash}`} target="_blank" rel="noreferrer">
                 <MdNorthEast />
               </a>
             </HStack>

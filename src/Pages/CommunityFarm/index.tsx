@@ -1,9 +1,9 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
-import { MsgExecuteContract, WasmAPI, Coin, LCDClient, Fee } from '@terra-money/terra.js'
-import { ConnectedWallet } from '@terra-money/wallet-provider'
+import * as nearAPI from "near-api-js"
 
-import { useStore} from '../../store';
+import { CONTRACT_NAME } from '../../config'
+import { useStore, useWallet } from '../../store';
 import {
   Table,
   Thead,
@@ -17,30 +17,31 @@ import {
 } from '@chakra-ui/react'
 
 const CommunityFarm: FunctionComponent = (props) => {
-  const {state, dispatch} = useStore();
+  const { state, dispatch } = useStore();
   const [farmInfo, setFarmInfo] = useState<any[]>();
+  const wallet = useWallet();
 
-  useEffect( () => {
+  useEffect(() => {
     const fetchData = async () => {
-      // try {
-      //   let res: any[] = await api.contractQuery(
-      //     POOL,
-      //     {
-      //       get_all_farm_info: { }
-      //     });
-        
-      //   setFarmInfo(res);
-      // } catch (e) {
-      //   console.log(e)
-      // }
+      if (!wallet) return;
+      const contract: any = new nearAPI.Contract(
+        wallet.account(), // the account object that is connecting
+        CONTRACT_NAME,
+        {
+          viewMethods: ["get_farm_info"],
+          changeMethods: ["withdraw_reserve"],
+        }
+      );
+      let res = await contract.get_farm_info();
+      setFarmInfo(res);
     }
     fetchData();
-  }, [])
+  }, [wallet])
 
   return (
-    <VStack 
-      mt={'15px'} 
-      px={{sm:'10px', md:'20px', lg:'110px'}}
+    <VStack
+      mt={'15px'}
+      px={{ sm: '10px', md: '20px', lg: '110px' }}
       w={'100%'}
       spacing={'53px'}
       textColor={'black'}
@@ -57,9 +58,9 @@ const CommunityFarm: FunctionComponent = (props) => {
           <Tbody>
             {farmInfo?.map((item, index) => (
               <Tr>
-              <Td>{item.wallet}</Td>
-              <Td>{item.amount}</Td>
-            </Tr>
+                <Td>{item.account}</Td>
+                <Td>{item.amount}</Td>
+              </Tr>
             ))}
           </Tbody>
         </Table>

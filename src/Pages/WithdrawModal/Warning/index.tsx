@@ -51,14 +51,11 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
       amount: val.toFixed(),
     }
 
-console.log(withdraw_msg)
-console.log(contract)
     window.localStorage.setItem("action", "withdraw");
     window.localStorage.setItem("coinType", coinType);
     window.localStorage.setItem("amount", val.toFixed());
-    let res = await contract.withdraw_reserve(withdraw_msg, 300000000000000, 1);
+    await contract.withdraw_reserve(withdraw_msg, 300000000000000, 1);
 
-console.log(res)
 
     // onClose();
     // onCloseParent();

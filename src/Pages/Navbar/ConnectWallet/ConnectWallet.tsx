@@ -55,7 +55,7 @@ const ConnectWallet: FunctionComponent = () => {
         dispatch({ type: ActionKind.setNearBalance, payload: amount});
       }
     }
-console.log(state.connected)
+
     if (state.connected && state.wallet) {
       fetchBalance()
     }
@@ -104,7 +104,7 @@ console.log(state.connected)
       // The method names on the contract that should be allowed to be called. Pass null for no method names and '' or [] for any method names.
       // const res = await window.near.requestSignIn({ contractId, methodNames: ['sayHi', 'ad'] })
       // const res = await window.near.requestSignIn({ contractId, methodNames: null })
-      const res = await window.near.requestSignIn({ CONTRACT_NAME, methodNames: [] })
+      const res = await window.near.requestSignIn({ contractId: CONTRACT_NAME, methodNames: [] })
       // const res = await window.near.requestSignIn({ contractId, amount: '10000000000000000000000' })
       console.log('signin res: ', res);
       if (!res.error) {

@@ -1,8 +1,12 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
+import { Stack, VStack, Flex, Button } from '@chakra-ui/react';
+import * as nearAPI from "near-api-js";
+import {BigNumber} from 'bignumber.js';
 
+import { StableCoins, DECIMALS } from '../../constants';
+import { CONTRACT_NAME } from '../../config'
 import { floorNormalize } from '../../Util';
-import { useStore } from '../../store';
+import { useStore, useWallet } from '../../store';
 import {
   Table,
   Thead,
@@ -18,23 +22,33 @@ import {
 const PotReward: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
   const [potInfo, setPotInfo] = useState<any[]>();
+  const wallet = useWallet();
 
   useEffect( () => {
     const fetchData = async () => {
-    //   try {
-    //     let res: any[] = await api.contractQuery(
-    //       POOL,
-    //       {
-    //         get_all_pot_info: { }
-    //       });
-        
-    //     setPotInfo(res);
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
+      if (!wallet) return;
+      const contract: any = new nearAPI.Contract(
+        wallet.account(), // the account object that is connecting
+        CONTRACT_NAME,
+        {
+          viewMethods: ["get_pot_info"],
+          changeMethods: ["withdraw_reserve"],
+        }
+      );
+      let res = await contract.get_pot_info();
+      for(let i=0; i<res.length; i++){
+        for(let j=0; j<res[i].length; j++){
+          res[i][j].big_amount = new BigNumber(res[i][j].amount).dividedBy(10**DECIMALS[j]);
+          res[i][j].big_qualified_amount = new BigNumber(res[i][j].qualified_amount).dividedBy(10**DECIMALS[j]);
+        }
+      }
+      setPotInfo(res)
     }
+
     fetchData();
-  }, [])
+  }, [wallet])
+
+  const coins = StableCoins.filter((coin) => coin.upcoming == false);
 
   return (
     <VStack 
@@ -45,25 +59,30 @@ const PotReward: FunctionComponent = (props) => {
       textColor={'black'}
     >
       <TableContainer>
-        <Table variant='simple' colorScheme='yellow' textColor={'white'}>
+        <Table variant='simple' colorScheme='yellow' textColor={'white'} w='100%'>
           <TableCaption>Monthly Reward</TableCaption>
           <Thead>
             <Tr>
               <Th>Wallet</Th>
-              <Th>Qulified UST Amount</Th>
-              <Th>Qulified LUNA Amount</Th>
-              <Th>UST Amount</Th>
-              <Th>LUNA Amount</Th>
+              {coins.map((coin, index) => (
+                <>
+                  <Th>{coin.name} Amount</Th>
+                  <Th>Qualified {coin.name} Amount</Th>
+                </>
+              ))}
             </Tr>
           </Thead>
           <Tbody>
             {potInfo?.map((item, index) => (
               <Tr>
-              <Td>{item.wallet}</Td>
-              <Td>{floorNormalize(item.qualified_ust_amount)}</Td>
-              <Td>{floorNormalize(item.qualified_luna_amount)}</Td>
-              <Td>{floorNormalize(item.ust_amount)}</Td>
-              <Td>{floorNormalize(item.luna_amount)}</Td>
+              <Td>{item[0].account}</Td>
+              {item.map((coin: any) => (
+                <>
+                  {console.log(coin)}
+                  <Td>{coin.big_amount.toFormat()}</Td>
+                  <Td>{coin.big_qualified_amount.toFormat()}</Td>
+                </>
+              ))}
             </Tr>
             ))}
           </Tbody>

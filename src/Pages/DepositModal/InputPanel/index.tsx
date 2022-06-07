@@ -65,7 +65,7 @@ const InputPanel: FunctionComponent<Props> = (props) => {
           cursor={'pointer'}
           onClick={() => maxBalance()}
         >
-          {`MAX balance  ${balance.toFixed()} ${state.coinType}`}
+          {`MAX balance  ${balance.toFormat()} ${state.coinType}`}
         </Text>
       </Flex>
     </VStack>

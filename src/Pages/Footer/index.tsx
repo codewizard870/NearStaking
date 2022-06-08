@@ -42,14 +42,16 @@ const Footer: FunctionComponent = (props) => {
     >
       <HStack spacing={'5px'}>
         <Image src={GreenLamp} w={'10px'}/>
-        <Text
-          ml={'5px'}
-          fontSize={'9px'}
-          fontWeight={'860'}
-          lineHeight={'10px'}
-        >
-          LATEST BLOCK:&nbsp;&nbsp;&nbsp;{blockHeight}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        </Text>
+        <Link href={`https://explorer.testnet.near.org/blocks/${blockHeight}`} target='_blank' rel="noreferrer">
+          <Text
+            ml={'5px'}
+            fontSize={'9px'}
+            fontWeight={'860'}
+            lineHeight={'10px'}
+          >
+            LATEST BLOCK:&nbsp;&nbsp;&nbsp;{blockHeight}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          </Text>
+        </Link>
         <Link href='/terms'>
           <Text
             fontSize={'9px'}

@@ -11,7 +11,8 @@ const Qualifying: FunctionComponent = (props) => {
   function calcTime(offset: number) {
     let d = new Date();
     let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-    let nd = new Date(utc + (3600000 * offset));
+    // let nd = new Date(utc + (3600000 * offset));
+    let nd = new Date(utc);
 
     let minute = nd.getMinutes();
     if (minute >= 1 && minute <= 10) {
@@ -32,7 +33,6 @@ console.log(minute)
     //   setActive(false);
     //   dispatch({ type: ActionKind.setQualified, payload: false });
     // }
-
   }
   useEffect(() => {
     calcTime(-4)

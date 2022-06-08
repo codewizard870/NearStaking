@@ -47,11 +47,6 @@ const Layout = () => {
       errorMessage = urlParams.get("errorMessage");
     }
 
-    if (transactionHashes == null)
-      return;
-
-    dispatch({ type: ActionKind.setTxhash, payload: transactionHashes });
-
     const near = await nearAPI.connect(
       Object.assign(
         { deps: { keyStore: new nearAPI.keyStores.BrowserLocalStorageKeyStore() } },
@@ -66,6 +61,11 @@ const Layout = () => {
     dispatch({ type: ActionKind.setNear, payload: near });
     dispatch({ type: ActionKind.setConnected, payload: true });
     dispatch({ type: ActionKind.setWallet, payload: wallet });
+
+    if (transactionHashes == null)
+    return;
+
+    dispatch({ type: ActionKind.setTxhash, payload: transactionHashes });
 
     if (errorCode != null) {
       toast(errorMessage, errorOption);
@@ -135,8 +135,9 @@ const Layout = () => {
   useEffect(() => {
     setTimeout(() => {
       checkTransaction()
-    }, 1000);
-  }, [])
+    }, 500);
+  }, []);
+  
   return (
     <Flex
       background={'black'}

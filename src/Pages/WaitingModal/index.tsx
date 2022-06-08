@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Stack, Flex, HStack, Button, Text, Divider, Image } from '@chakra-ui/react'
+import { Stack, Flex, HStack, Button, Text, Divider, Image, Link } from '@chakra-ui/react'
 import { Deposit, MsgExecuteContract, WasmAPI, Coin } from '@terra-money/terra.js'
 import {
   Modal,
@@ -64,14 +64,16 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
           >
             Tx Hash
           </Text>
-          <Text
-            fontSize={'13px'}
-            fontWeight={'400'}
-            lineHeight={'14px'}
-            color={'#CEC0C0'}
-          >
-            {shortenAddress(txhash)}
-          </Text>
+          <Link href={`https://explorer.testnet.near.org/transactions/${txhash}`} target="_blank" rel="noreferrer">"
+            <Text
+              fontSize={'13px'}
+              fontWeight={'400'}
+              lineHeight={'14px'}
+              color={'#CEC0C0'}
+            >
+              {shortenAddress(txhash)}
+            </Text>
+          </Link>
         </HStack>
         <ModalCloseButton color={'#CEBFBF'} />
       </ModalContent>

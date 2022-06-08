@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
+import * as nearAPI from "near-api-js";
 
 import Title from './Title'
 import Overview from './Overview';

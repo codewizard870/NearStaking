@@ -31,11 +31,11 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
         minW={{ sm: '80%', md: '469px', lg: '469px' }}
         h={'314px'}
         px={{ sm: '10px', md: '45px', lg: '45px' }}
-        pt={{ base: '10px', lg: '59px'}}
-        pb={{base: '10px', lg:'39px'}}
+        pt={{ base: '10px', lg: '59px' }}
+        pb={{ base: '10px', lg: '39px' }}
         alignItems={'center'}
       >
-        <Image src={Neart} h='60px' />
+        <Image src={Neart} h='60px' animation="fadein 3s infinite"/>
         <Text
           mt={'30px'}
           fontSize={'20px'}
@@ -64,7 +64,12 @@ const WaitingModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
           >
             Tx Hash
           </Text>
-          <Link href={`https://explorer.testnet.near.org/transactions/${txhash}`} target="_blank" rel="noreferrer">"
+          <Link
+            href={`https://explorer.testnet.near.org/transactions/${txhash}`}
+            target="_blank"
+            rel="noreferrer"
+            _focus={{ boxShadow: 'none' }}
+          >
             <Text
               fontSize={'13px'}
               fontWeight={'400'}

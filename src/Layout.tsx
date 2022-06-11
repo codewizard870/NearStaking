@@ -34,6 +34,9 @@ const Layout = () => {
   const { isOpen: isOpenWaiting, onOpen: onOpenWaiting, onClose: onCloseWaiting } = useDisclosure();
   const { isOpen: isOpenFailed, onOpen: onOpenFailed, onClose: onCloseFailed } = useDisclosure();
 
+  setTimeout(()=>
+onOpenWaiting()
+  , 300);
   const { state, dispatch } = useStore();
   const wallet = useWallet();
   const near = useNear();

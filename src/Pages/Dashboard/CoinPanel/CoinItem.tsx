@@ -30,6 +30,10 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
   const tvl_coin = last < 0 ? new BigNumber(0) : new BigNumber(history[last].amount[coinId] + history[last].reward[coinId]).dividedBy(10 ** DECIMALS[coinId]);
   const tvl_usd = last < 0 ? new BigNumber(0) : tvl_coin.multipliedBy(price[coinId]);
 
+  let amount = new BigNumber(state.userInfos[coinId].amount);
+  amount = amount.plus(new BigNumber(state.userInfos[coinId].reward_amount));
+  amount = amount.dividedBy(10 ** DECIMALS[coinId]);
+  const disable = amount.eq(0) ? true : false;
   return (
     <>
       <GridItem w={'100%'} h={'100px'}>
@@ -133,7 +137,9 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
             background={'#212121'}
             rounded={'25px'}
             border={'solid 1px #CEBFBF'}
+            _hover={disable ? { background: 'none' } : {background: 'gray.300'}}
             onClick={() => {
+              if (disable) return;
               if (state.connected)
                 OpenWithdrawModal(state, dispatch, name)
               else if (state.openConnectWalletModal != undefined)

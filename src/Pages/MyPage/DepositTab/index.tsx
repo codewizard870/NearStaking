@@ -20,6 +20,7 @@ const DepositTab: FunctionComponent<Props> = ({depositTab, setDepositTab}) => {
       height={'60px'}
       mt='59px'
       mb='31px'
+      id="mypage_deposit"
     >
       <Tab id='all' depositTab={depositTab} setDepositTab={setDepositTab}>ALL</Tab>
       <Tab id='stable' depositTab={depositTab} setDepositTab={setDepositTab}>STABLE</Tab>

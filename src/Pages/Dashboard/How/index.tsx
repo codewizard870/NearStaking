@@ -12,7 +12,7 @@ import Value from './Value';
 const How: FunctionComponent = (props) => {
   const [denom, setDenom] = useState('USDC');
   const [year, setYear] = useState(10);
-  const [amount, setAmount] = useState('100');
+  const [amount, setAmount] = useState('125,000');
 
   const { state, dispatch } = useStore();
   const coinId = getCoinId(denom as COINTYPE);

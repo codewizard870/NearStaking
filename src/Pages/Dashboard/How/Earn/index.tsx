@@ -82,7 +82,11 @@ const Earn: FunctionComponent<Props> = ({denom, setDenom, year, setYear, amount,
         fontSize='20px'
         fontWeight='800'
         p='0px'
-        onChange={(e) => setAmount(e.target.value)}
+        onChange={(e) => {
+          const re = /,/g;
+          let value = re[Symbol.replace](e.target.value, '');
+          setAmount(parseInt(value).toLocaleString())
+        }}
         _focus={{ border: 'none' }}
         h='20px'
         mt='27px !important'

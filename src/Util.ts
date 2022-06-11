@@ -73,7 +73,6 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
 
     price[i] = res.data[`${coins[i].id}`]["usd"];
   }
-  dispatch({ type: ActionKind.setPrice, payload: price });
   
   const contract: any = new nearAPI.Contract(
     wallet.account(), // the account object that is connecting
@@ -93,7 +92,16 @@ console.log(status)
     if (status.apr !== undefined)
       dispatch({ type: ActionKind.setApr, payload: status.apr });
 
-    status.user_info.push(userInfo); //NEARt
+    //---------NEARt--------------???
+    let nearT_Info = {
+      amount: status.farm_info.amount,
+      deposit_time: "0",
+      reward_amount: "0",
+      account: ""
+    }
+    status.user_info.push(nearT_Info);
+    price[getCoinId("NEARt")] = status.farm_price / 100;
+    //------------------------------------
     if (status.user_info !== undefined)
       dispatch({ type: ActionKind.setUserInfos, payload: status.user_info });
 
@@ -112,6 +120,8 @@ console.log(status)
     if (status.pot_info != undefined)
       dispatch({ type: ActionKind.setPotInfo, payload: status.pot_info });
   }
+
+  dispatch({ type: ActionKind.setPrice, payload: price });
 
   dispatch({ type: ActionKind.setLoading, payload: false });
 }

@@ -156,7 +156,7 @@ const ConnectWallet: FunctionComponent = () => {
               onClick={() => { onOpenInfomation() }}
             >
               {(bank && !state.loading) &&
-                <MdOutlineAccountBalanceWallet size={25} color={'#F9D85E'} />
+                <Image src={Wallet} width={'20px'} color={'#F9D85E'} />
               }
               {(!bank || state.loading) &&
                 <Spinner color={'#F9D85E'} />

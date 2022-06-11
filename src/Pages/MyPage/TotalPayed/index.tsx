@@ -76,7 +76,7 @@ const TotalPayed: FunctionComponent = (props) => {
       >
         USD $<AnimationNumber value={total.toNumber()} />
       </Text>
-      <HStack mt={'31px'} spacing={'20px'} align={'baseline'}>
+      <HStack mt={'31px'} spacing={'10px'} align={'baseline'}>
         <Text
           fontSize={'20px'}
           fontWeight={'860'}
@@ -109,32 +109,34 @@ const TotalPayed: FunctionComponent = (props) => {
           DAYS
         </Text>
       </HStack>
-      <Button
-        w={'100%'}
-        mt={'65px'}
-        h={'45px'}
-        background={'#493C3C'}
-        rounded={'25px'}
-        onClick={() => {
-          if (state.connected && state.openDepositModal)
-            state.openDepositModal()
-          else if (!state.connected && state.openConnectWalletModal)
-            state.openConnectWalletModal()
-        }}
-      >
-        <Text
-          fontSize={'13px'}
-          fontWeight={'860'}
-          lineHeight={'15px'}
+      <Link href="#mypage_deposit" width='100%'>
+        <Button
+          w={'100%'}
+          mt={'65px'}
+          h={'45px'}
+          background={'#493C3C'}
+          rounded={'25px'}
+          onClick={() => {
+            // if (state.connected && state.openDepositModal)
+            //   state.openDepositModal()
+            // else if (!state.connected && state.openConnectWalletModal)
+            //   state.openConnectWalletModal()
+          }}
         >
-          {!state.connected &&
-            "Connect Wallet"
-          }
-          {state.connected &&
-            "SAVE MORE"
-          }
-        </Text>
-      </Button>
+          <Text
+            fontSize={'13px'}
+            fontWeight={'860'}
+            lineHeight={'15px'}
+          >
+            {/* {!state.connected &&
+              "Connect Wallet"
+            }
+            {state.connected && */}
+              SAVE MORE
+            {/* } */}
+          </Text>
+        </Button>
+      </Link>
     </Flex>
   );
 }

@@ -1,13 +1,14 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Tooltip, Button } from '@chakra-ui/react'
-import { MdInfoOutline } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import Warning from '../../../../assets/Warning.svg'
-import { OpenDepositModal, useStore } from '../../../../store';
+import { ActionKind, OpenDepositModal, useStore } from '../../../../store';
 
 const CurrentPrice: FunctionComponent = (props) => {
-  const {state, dispatch} = useStore();
-  const price = state.farmPrice/100;
+  const { state, dispatch } = useStore();
+  const price = state.farmPrice / 100;
+  const navigate = useNavigate();
 
   return (
     <Flex w={'100%'} direction="column">
@@ -17,15 +18,15 @@ const CurrentPrice: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'24px'}
         >
-          CURRENT NearT PRICE 
+          CURRENT NearT PRICE
         </Text>
-        <Tooltip 
-          label="The price is recalculated once a day" 
-          background={'#C4C4C4'} hasArrow 
-          placement='top-start' 
+        <Tooltip
+          label="The price is recalculated once a day"
+          background={'#C4C4C4'} hasArrow
+          placement='top-start'
           color={'black'}
-        > 
-          <Image src={Warning} w={'13px'}/>
+        >
+          <Image src={Warning} w={'13px'} />
         </Tooltip>
       </HStack>
       <HStack w={'100%'} align={'baseline'}>
@@ -44,23 +45,30 @@ const CurrentPrice: FunctionComponent = (props) => {
           USD
         </Text>
       </HStack>
-      <Button 
-        w={'350px'} 
-        mt={'40px'} 
-        h={'45px'} 
-        background={'#493C3C'} 
-        rounded={'25px'}
-        onClick = {() => OpenDepositModal(state, dispatch, "USDC")}
+      <Link
+        href="mypage#mypage_deposit"
       >
-        <Text
-          fontSize={'13px'}
-          fontWeight={'860'}
-          lineHeight={'15px'}
+        <Button
+          w={'350px'}
+          mt={'40px'}
+          h={'45px'}
+          background={'#493C3C'}
+          rounded={'25px'}
+          // onClick={() => {
+          //   navigate("/mypage#mypage_deposit");
+          //   dispatch({ type: ActionKind.setTab, payload: 'mypage' });
+          // }}
         >
-          STAKE NOW & GET FREE NearT 
-        </Text>
-      </Button>
+          <Text
+            fontSize={'13px'}
+            fontWeight={'860'}
+            lineHeight={'15px'}
+          >
+            STAKE NOW & GET FREE NearT
+          </Text>
+        </Button>
+      </Link>
     </Flex>
-);
+  );
 }
 export default CurrentPrice;

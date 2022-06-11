@@ -21,22 +21,24 @@ const HowMuch: FunctionComponent = (props) => {
           <Image src={Warning} w={'13px'}/>
         </a>
       </HStack>
-      <Button 
-        w={'350px'} 
-        mt={'40px'} 
-        h={'45px'} 
-        background={'#493C3C'} 
-        rounded={'25px'}
-        onClick = {() => OpenDepositModal(state, dispatch, "USDC")}
-      >
-        <Text
-          fontSize={'13px'}
-          fontWeight={'860'}
-          lineHeight={'15px'}
+      <Link href="/mypage#mypage_deposit">
+        <Button 
+          w={'350px'} 
+          mt={'40px'} 
+          h={'45px'} 
+          background={'#493C3C'} 
+          rounded={'25px'}
+          // onClick = {() => OpenDepositModal(state, dispatch, "USDC")}
         >
-          STAKE NOW & GET FREE NearT 
-        </Text>
-      </Button>
+          <Text
+            fontSize={'13px'}
+            fontWeight={'860'}
+            lineHeight={'15px'}
+          >
+            STAKE NOW & GET FREE NearT 
+          </Text>
+        </Button>
+      </Link>
     </Flex>
 );
 }

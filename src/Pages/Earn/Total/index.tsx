@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button, Tooltip } from '@chakra-ui/react'
+import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button, Tooltip, Link } from '@chakra-ui/react'
 import {BigNumber} from 'bignumber.js';
 
 import { StableCoins, DECIMALS } from '../../../constants';
@@ -77,27 +77,30 @@ const Total: FunctionComponent = (props) => {
         spacing={'24px'}
         justify={'end'}
       >
+        <Link href="#earn_deposit">
         <Button w={'200px'} h={'45px'} background={'#493C3C'} rounded={'25px'}>
           <Text
             fontSize={'13px'}
             fontWeight={'860'}
             lineHeight={'15px'}
-            onClick={() => {
-              if(state.connected)
-                OpenDepositModal(state, dispatch, 'USDC')
-              else if(state.openConnectWalletModal != undefined)
-                state.openConnectWalletModal();
-            }}    
+            // onClick={() => {
+            //   if(state.connected)
+            //     OpenDepositModal(state, dispatch, 'USDC')
+            //   else if(state.openConnectWalletModal != undefined)
+            //     state.openConnectWalletModal();
+            // }}    
           >
-            {state.connected &&
+            Save More
+            {/* {state.connected &&
               "Deposit"
             }
             {!state.connected &&
               "Connect Wallet"
-            }
+            } */}
           </Text>
         </Button>
-        <Button 
+        </Link>
+        {/* <Button 
           w={'200px'} 
           h={'45px'} 
           background={'#212121'} 
@@ -123,7 +126,7 @@ const Total: FunctionComponent = (props) => {
               "Connect Wallet"
             }
           </Text>
-        </Button>
+        </Button> */}
       </HStack>
     </VStack>
 

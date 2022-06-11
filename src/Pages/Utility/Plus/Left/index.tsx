@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Center, Divider, Button } from '@chakra-ui/react'
+import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Link, Divider, Button } from '@chakra-ui/react'
 import {BigNumber} from 'bignumber.js';
 
 import AnimationNumber from '../../../Components/AnimationNumber';
@@ -28,10 +28,10 @@ const Left: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'24px'}
         >
-          TERRA TREASURY REWARDS PLUS PROGRAM 
+          NEAR TREASURY REWARDS PLUS PROGRAM 
         </Text>
         <a href="link: https://app.gitbook.com/s/kngrjQ3XHOHWXNeVNLmt/tt-protocol/rewards" target={"_blank"} rel="noreferrer">
-        <MdInfoOutline />
+          <MdInfoOutline />
         </a>
       </HStack>
       <HStack w={'100%'} align={'baseline'} mt={'88px'}>
@@ -67,22 +67,24 @@ const Left: FunctionComponent = (props) => {
            USD
         </Text>
       </HStack>
-      <Button 
-        w={'350px'} 
-        mt={'29px'} 
-        h={'45px'} 
-        background={'#493C3C'} 
-        rounded={'25px'}
-        onClick = {() => OpenDepositModal(state, dispatch, "USDC")}
-      >
-        <Text
-          fontSize={'13px'}
-          fontWeight={'860'}
-          lineHeight={'15px'}
+      <Link href="/mypage#mypage_deposit">
+        <Button 
+          w={'350px'} 
+          mt={'29px'} 
+          h={'45px'} 
+          background={'#493C3C'} 
+          rounded={'25px'}
+          // onClick = {() => OpenDepositModal(state, dispatch, "USDC")}
         >
-          STAKE NOW
-        </Text>
-      </Button>
+          <Text
+            fontSize={'13px'}
+            fontWeight={'860'}
+            lineHeight={'15px'}
+          >
+            STAKE NOW
+          </Text>
+        </Button>
+      </Link>
     </Flex>
 );
 }

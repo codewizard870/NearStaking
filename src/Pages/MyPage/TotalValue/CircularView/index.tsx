@@ -13,12 +13,19 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   const { state, dispatch } = useStore();
   const sum = total;
 
-  const percent1 = sum.isEqualTo(0) ? 75: total.dividedBy(sum).multipliedBy(100).toNumber();
+  const percent1 = sum.isEqualTo(0) ? 75: 96;
   const percent2 = sum.isEqualTo(0) ? 75: stable.dividedBy(sum).multipliedBy(100).toNumber();
   const percent3 = sum.isEqualTo(0) ? 75: volatile.dividedBy(sum).multipliedBy(100).toNumber();
 
   return (
-    <Flex align={'center'} minWidth={'220px'} h={'220px'} justify='center' transform={'rotate(-90deg)'} mr={'36px'}>
+    <Flex 
+      align={'center'} 
+      minWidth={'220px'} 
+      h={'220px'} 
+      justify='center' 
+      transform={'rotate(-90deg)'} mr={'36px'}
+      animation='spin 0.3s linear'
+    >
       <CircularProgress
         position={'absolute'}
         value={percent1}

@@ -22,7 +22,7 @@ export const TOKEN_ADDRESSES_MAINNET = [
   "ft.alenzertest.testnet",
 ];
 export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_ADDRESSES_MAINNET;
-export const DECIMALS= [6, 6, 18, 18, 8, 18, 24];
+export const DECIMALS= [6, 6, 18, 18, 8, 18, 24, 24];
 
 export const REQUEST_ENDPOINT = "https://seashell-app-cmf7v.ondigitalocean.app/";
 
@@ -31,7 +31,7 @@ export const aprInfo = [1487, 1487, 1487, 1487, 987, 987, 987];
 export const balanceInfo: BigNumber[] = [
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0),
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
-export const priceInfo = [1, 1, 1, 1, 1, 1, 1];
+export const priceInfo = [1, 1, 1, 1, 1, 1, 1, 0.25];
 export const totalRewards = [0, 0, 0, 0, 0, 0, 0];
 
 export const farmInfo = {

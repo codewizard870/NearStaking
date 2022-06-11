@@ -43,7 +43,7 @@ const MyPage: FunctionComponent = (props) => {
         <TotalValue />
         <TotalPayed />
       </Stack>
-      <DepositTab depositTab={depositTab} setDepositTab={setDepositTab} />
+      <DepositTab depositTab={depositTab} setDepositTab={setDepositTab}/>
       <Flex flexWrap={'wrap'} justify='space-between'>
         {coinList.map((item) => (
           <CoinPanel

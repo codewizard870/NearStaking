@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { VStack, Flex, useDisclosure, useEventListenerMap } from '@chakra-ui/react'
 
@@ -10,12 +10,13 @@ import Utility from './Pages/Utility'
 import CommunityFarm from './Pages/CommunityFarm';
 import PotReward from './Pages/PotReward';
 import Terms from './Pages/Terms';
+import { useStore, ActionKind } from './store';
 
 declare let document: any;
 
 function App() {
   const [loading, setLoading] = useState(false);
-
+  const { state, dispatch } = useStore();
   // var FontFaceObserver = require('fontfaceobserver');
   // var font = new FontFaceObserver('SF-Pro-Text');
   // font.load().then(function () {
@@ -27,16 +28,27 @@ function App() {
   // console.log(res)
 
   // document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
-    // setTimeout(() => {
-      // setLoading(false)
-    // }, 3000)
+  // setTimeout(() => {
+  // setLoading(false)
+  // }, 3000)
   // };
+
+
+  let path = window.location.pathname;
+  console.log(path)
+  useEffect(() => {
+    const checkPath = () => {
+      const new_path = path.replace("/", "");
+      dispatch({ type: ActionKind.setTab, payload: new_path });
+    }
+    checkPath();
+  }, [path]);
 
   return (
     <>
-      <Flex 
-        w='100%' 
-        h='100%' 
+      <Flex
+        w='100%'
+        h='100%'
         display={loading ? 'none' : 'flex'}
       >
         <BrowserRouter>
@@ -55,12 +67,12 @@ function App() {
           </Routes>
         </BrowserRouter>
       </Flex>
-      <Flex 
-        w='100%' 
-        h='100vh' 
-        justify='center' 
-        align='center' 
-        bg='black' 
+      <Flex
+        w='100%'
+        h='100vh'
+        justify='center'
+        align='center'
+        bg='black'
         position='absolute'
         display={loading ? 'flex' : 'none'}
         top='0px'

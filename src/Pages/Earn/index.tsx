@@ -18,7 +18,8 @@ const MyPage: FunctionComponent = (props) => {
     >
       <Title />
       <Total />
-      <Flex flexWrap={'wrap'} justify='space-between' mt='29px'>
+      <Expected />
+      <Flex flexWrap={'wrap'} justify='space-between' mt='29px' id="earn_deposit">
         {StableCoins.map((item) => (
           <CoinPanel 
             name = {item.name as COINTYPE}
@@ -30,7 +31,6 @@ const MyPage: FunctionComponent = (props) => {
           />
         ))}
       </Flex>
-      <Expected />
     </Flex>
   );
 }

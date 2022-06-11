@@ -18,11 +18,17 @@ import WaitingModal from './Pages/WaitingModal';
 import FailedModal from './Pages/FailedModal';
 import { fetchData } from './Util';
 
+import AOS from 'aos'
+import 'aos/dist/aos.css' // You can also use <link> for styles
+
 declare let window: any;
 const nearConfig = getConfig("testnet");
 
 const Layout = () => {
-
+  useEffect(() => {
+    AOS.init({ duration: 300 })
+  }, [])
+  
   const { isOpen: isOpenDeposit, onOpen: onOpenDeposit, onClose: onCloseDeposit } = useDisclosure();
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw } = useDisclosure();
   const { isOpen: isOpenWaiting, onOpen: onOpenWaiting, onClose: onCloseWaiting } = useDisclosure();
@@ -36,6 +42,7 @@ const Layout = () => {
   const initialize = () => {
     window.localStorage.removeItem('action');
   }
+
   const checkTransaction = async () => {
     let transactionHashes, errorCode, errorMessage;
     if (typeof window != 'undefined') {

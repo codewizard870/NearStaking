@@ -64,7 +64,7 @@ const LockedChart: FunctionComponent<Props> = () => {
                 try {
                   const i = tooltip.dataPoints[0].dataIndex;
                   const item = data[i];
-                  div1.innerHTML = `${getDateString(item.time)}`;
+                  div1.innerHTML = `${getDateString(item.time/1000)}`;
                   div2.innerHTML = `${item.totalUSD.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFormat()}`;
 
                   let style="border-radius: 50%; background-color: #493C3C; width: 20px; height: 20px; position: absolute; ";
@@ -116,7 +116,7 @@ const LockedChart: FunctionComponent<Props> = () => {
         datasets: [
           {
             data: data.map(({ totalUSD }) =>
-            totalUSD.toNumber(),
+              totalUSD.toNumber(),
             ),
             borderColor: "#F9D85E",
             borderWidth: 2,

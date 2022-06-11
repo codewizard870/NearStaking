@@ -32,7 +32,7 @@ const CircularView: FunctionComponent = (props) => {
   }
 
   return (
-    <Flex transform={'rotate(90deg)'}>
+    <Flex transform={'rotate(90deg)'} animation='spin 0.3s linear'>
       <CircularProgress
         value={percent}
         size={'172px'}
@@ -40,6 +40,7 @@ const CircularView: FunctionComponent = (props) => {
         color={'#F9D85E'}
         trackColor={'black'}
         thickness='14'
+        aria-busy={false}
       >
       </CircularProgress>
     </Flex>

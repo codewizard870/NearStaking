@@ -25,6 +25,8 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
   let coinId = getCoinId(name);
   let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount).dividedBy(10 ** DECIMALS[coinId]);
   let usd = amount.multipliedBy(state.price[coinId]);
+
+  const disable = usd.eq(0) ? true : false;
   return (
     <VStack
       minW={{ base: '100%', lg: '48%' }}
@@ -37,7 +39,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
     >
       <Stack
         direction='row'
-        w='100%' align='center' justify={'space-between'}
+        w='100%' align='flex-start' justify={'space-between'}
       >
         <HStack spacing={'12px'} w='100%'>
           <Image src={'./' + avatar} w={'33px'} />
@@ -57,7 +59,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
             </Text>
           </Flex>
         </HStack>
-        <HStack ml='126px' spacing='30px' w='100%'>
+        <HStack ml='126px' spacing='30px' w='100%' h='100%' align='baseline'>
           <VStack align='baseline' spacing='0px'>
             <HStack>
               <Text
@@ -154,7 +156,6 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
                 fontSize={'13px'}
                 fontWeight={'860'}
                 lineHeight={'15px'}
-
               >
                 {state.connected &&
                   "Deposit"
@@ -171,7 +172,9 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               border={'solid 1px'}
               borderColor={'#CEBFBF'}
               rounded={'25px'}
+              _hover={disable ? { background: 'none', color: '#CEBFBF' } : {background: 'gray.300'}}
               onClick={() => {
+                if (disable) return;
                 if(state.connected)
                   OpenWithdrawModal(state, dispatch, name)
                 else if(state.openConnectWalletModal != undefined)

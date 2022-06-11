@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Stack, VStack, Flex, HStack, Button, Text, Divider, Image, Checkbox } from '@chakra-ui/react'
+import { Stack, VStack, Flex, HStack, Button, Text, Divider, Link, Checkbox } from '@chakra-ui/react'
 import * as nearAPI from "near-api-js"
 import axios from 'axios';
 import {
@@ -12,7 +12,7 @@ import { toast } from 'react-toastify'
 import { MdWarningAmber, MdInfoOutline } from 'react-icons/md'
 
 import BigNumber from 'bignumber.js';
-import {CONTRACT_NAME} from '../../../config'
+import { CONTRACT_NAME } from '../../../config'
 import { useStore, useWallet, ActionKind } from '../../../store';
 import { fetchData, sleep, getCoinId } from '../../../Util';
 import { successOption, errorOption, REQUEST_ENDPOINT, DECIMALS } from '../../../constants';
@@ -55,39 +55,6 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
     window.localStorage.setItem("coinType", coinType);
     window.localStorage.setItem("amount", val.toFixed());
     await contract.withdraw_reserve(withdraw_msg, 300000000000000, 1);
-
-
-    // onClose();
-    // onCloseParent();
-    // if (state.openWaitingModal)
-    //   state.openWaitingModal();
-
-    // var formData = new FormData()
-    // let account = wallet.getAccountId();
-    // formData.append('account', account);
-    // formData.append('coinType', coinType)
-    // formData.append('amount', val.toString())
-    // console.log("post withdraw")
-    // await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, { timeout: 60 * 60 * 1000 })
-    //   .then((res) => {
-    //     toast("Withdraw success", successOption)
-    //     if (state.closeWaitingModal)
-    //       state.closeWaitingModal();
-    //     fetchData(state, dispatch)
-    //   })
-    //   .catch(function (error) {
-    //     if (error.response) {
-    //       toast(error.response.data.data.message, errorOption)
-    //     } else if (error.request) {
-    //       toast(error.request, errorOption);
-    //       fetchData(state, dispatch)
-    //     } else {
-    //       toast(error.message, errorOption);
-    //     }
-    //     if (state.closeWaitingModal)
-    //       state.closeWaitingModal();
-    //   });
-
   }
 
   return (
@@ -134,16 +101,24 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
             Are you really sure you want to withdraw?
             You may lose your valuable share of the Community Farming Event and your eligibility for the Rewards+ Program.
           </Text>
-          <HStack color={'#F9D85E'}>
-            <Text
-              fontSize={'13px'}
-              fontWeight={'700'}
-              lineHeight={'13px'}
-            >
-              Learn more about your benefits
-            </Text>
-            <MdInfoOutline />
-          </HStack>
+          <Link
+            href="https://gitbook.com"
+            target="_blank"
+            _focus={{ boxshadow: 'none' }}
+          >
+            <HStack color={'#F9D85E'}>
+
+              <Text
+                fontSize={'13px'}
+                fontWeight={'700'}
+                lineHeight={'13px'}
+              >
+                Learn more about your benefits
+              </Text>
+              <MdInfoOutline />
+
+            </HStack>
+          </Link>
         </VStack>
         <Divider mt={'47px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
         <Stack mt={'34px'}

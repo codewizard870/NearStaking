@@ -34,9 +34,9 @@ const Layout = () => {
   const { isOpen: isOpenWaiting, onOpen: onOpenWaiting, onClose: onCloseWaiting } = useDisclosure();
   const { isOpen: isOpenFailed, onOpen: onOpenFailed, onClose: onCloseFailed } = useDisclosure();
 
-  setTimeout(()=>
-onOpenWaiting()
-  , 300);
+  // setTimeout(()=>
+  //   onOpenFailed()
+  // , 300);
   const { state, dispatch } = useStore();
   const wallet = useWallet();
   const near = useNear();
@@ -65,7 +65,6 @@ onOpenWaiting()
 
     const wallet = new nearAPI.WalletAccount(near, null);
     let signed = wallet.isSignedIn();
-
     if (!signed) return;
 
     dispatch({ type: ActionKind.setNear, payload: near });
@@ -73,12 +72,13 @@ onOpenWaiting()
     dispatch({ type: ActionKind.setWallet, payload: wallet });
 
     if (transactionHashes == null)
-    return;
+      return;
 
     dispatch({ type: ActionKind.setTxhash, payload: transactionHashes });
 
     if (errorCode != null) {
-      toast(errorMessage, errorOption);
+      // toast(errorMessage, errorOption);
+      dispatch({ type: ActionKind.setErrorcode, payload: errorCode });
       onOpenFailed();
       initialize();
       return;

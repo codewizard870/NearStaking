@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from 'react';
-import { Stack, Flex, HStack, Button, Text, Divider, Image } from '@chakra-ui/react'
-import { Deposit, MsgExecuteContract, WasmAPI, Coin } from '@terra-money/terra.js'
+import { Stack, Flex, HStack, Button, Text, Divider, Link } from '@chakra-ui/react'
 import {
   Modal,
   ModalOverlay,
@@ -9,7 +8,6 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 
-import Neart from '../../assets/Neart.svg';
 import { shortenAddress } from '../../Util';
 import { useStore } from '../../store';
 
@@ -20,6 +18,10 @@ interface Props {
 const FailedModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
   const { state, dispatch } = useStore();
   const txhash = state.txhash;
+
+  const re = /%20/g;
+  const errorCode = re[Symbol.replace](state.errorCode, ' ');
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -59,8 +61,15 @@ const FailedModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
         >
           Transaction failed<br /><br />
           The transaction requested has failed due to the following reason:<br /><br />
-          “...................................”<br /><br /><br />
-          For assistance, please report your Tx hash to the official Near Treasury Telegram Support Channel: https://t.me/neartreasury
+          “{errorCode}”
+          <br /><br /><br />
+          For assistance, please report your Tx hash to the official Near Treasury Telegram Support Channel: <br />
+          <Link
+            href="https://t.me/neartreasury"
+            _focus={{ boxShadow: 'none' }}
+          >
+            https://t.me/neartreasury
+          </Link>
         </Text>
         <Divider mt={'20px'} orientation='horizontal' variant={'dashed'} color={'#CEC0C0'} />
         <HStack mt={'20px'} w={'100%'} justify={'space-between'}>
@@ -72,14 +81,20 @@ const FailedModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
           >
             Tx Hash
           </Text>
-          <Text
-            fontSize={'13px'}
-            fontWeight={'400'}
-            lineHeight={'14px'}
-            color={'#CEC0C0'}
+          <Link
+            href={`hhttps://explorer.testnet.near.org/transactions/${txhash}`}
+            target="_blank"
+            _focus={{ boxShadow: 'none' }}
           >
-            {shortenAddress(txhash)}
-          </Text>
+            <Text
+              fontSize={'13px'}
+              fontWeight={'400'}
+              lineHeight={'14px'}
+              color={'#CEC0C0'}
+            >
+              {shortenAddress(txhash)}
+            </Text>
+          </Link>
         </HStack>
         <Button
           w='80%'

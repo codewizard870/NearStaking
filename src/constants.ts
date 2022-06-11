@@ -70,25 +70,27 @@ export const amountHistory = [
 ];
 
 export const successOption: any = {
-  position: "top-right",
+  position: "bottom-right",
   type: "success",
   autoClose: 5000,
   hideProgressBar: false,
   closeOnClick: true,
-  pauseOnHover: true,
+  // pauseOnHover: true,
   draggable: true,
   progress: undefined,
+  style: {fontFamily: 'SF-Pro', color: "#F9D85E"}
 };
 
 export const errorOption: any = {
-  position: "top-right",
+  position: "bottom-right",
   type: "error",
   autoClose: 5000,
   hideProgressBar: false,
   closeOnClick: true,
-  pauseOnHover: true,
+  // pauseOnHover: true,
   draggable: true,
   progress: undefined,
+  style: {fontFamily: 'SF-Pro', color: "#F9D85E"}
 };
 
 export const StableCoins=[

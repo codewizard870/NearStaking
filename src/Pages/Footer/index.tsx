@@ -63,13 +63,13 @@ const Footer: FunctionComponent = (props) => {
         </Link>
       </HStack>
       <HStack spacing={'50px'}>
-        <a href='https://twitter.com' target='_blank' rel="noreferrer">
+        <a href='https://twitter.com/NEARTreasury' target='_blank' rel="noreferrer">
           <Image src={Twitter} w={'15px'} />
         </a>
-        <a href='https://web.telegram.org/k/' target='_blank' rel="noreferrer">
+        <a href='https://t.me/neartreasury' target='_blank' rel="noreferrer">
         <Image src={Subtract} w={'15px'} />
         </a>
-        <a href='https://medium.com' target='_blank' rel="noreferrer">
+        <a href='https://medium.com/@neartreasury' target='_blank' rel="noreferrer">
           <Image src={Medium} w={'15px'} />
         </a>
         <a href='https://www.gitbook.com' target='_blank' rel="noreferrer">

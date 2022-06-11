@@ -19,7 +19,7 @@ ReactDOM.hydrate(
     <StoreProvider>
       <ChakraProvider theme={theme}>
         <App />
-        <ToastContainer/>
+        <ToastContainer />
       </ChakraProvider>
     </StoreProvider>
   </React.StrictMode>,

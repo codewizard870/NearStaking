@@ -37,10 +37,11 @@ export interface AppContextInterface {
   farmPrice: number,
   farmInfo: any,
   farmStartTime: number,
+  potInfo: any,
   totalRewards: number[],
   txhash: string | undefined,
   qualified: boolean,
-  potInfo: any,
+  errorCode: string,
 }
 
 const initialState: AppContextInterface = {
@@ -69,9 +70,10 @@ const initialState: AppContextInterface = {
   farmInfo: farmInfo,
   farmStartTime: Date.now() / 1000,
   totalRewards: totalRewards,
+  potInfo: potInfos,
   txhash: undefined,
   qualified: false,
-  potInfo: potInfos,
+  errorCode: "",
 }
 
 export enum ActionKind{
@@ -99,10 +101,11 @@ export enum ActionKind{
   setFarmPrice,
   setFarmInfo,
   setFarmStartTime,
+  setPotInfo,
   setTotalRewards,
   setTxhash,
   setQualified,
-  setPotInfo
+  setErrorcode,
 }
 
 const StoreContext = createContext<{ state: AppContextInterface; dispatch: React.Dispatch<any>; }>
@@ -161,14 +164,16 @@ export const reducer = (state: AppContextInterface,  action: Action ) => {
       return {...state, farmInfo: action.payload}
     case ActionKind.setFarmStartTime:
       return {...state, farmStartTime: action.payload}
+    case ActionKind.setPotInfo:
+      return {...state, potInfo: action.payload}
     case ActionKind.setTotalRewards:
       return {...state, totalRewards: action.payload}
     case ActionKind.setTxhash:
       return {...state, txhash: action.payload}
     case ActionKind.setQualified:
       return {...state, qualified: action.payload}
-    case ActionKind.setPotInfo:
-      return {...state, potInfo: action.payload}
+    case ActionKind.setErrorcode:
+      return {...state, errorcode: action.payload}
     default:
       return state
   }

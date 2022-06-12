@@ -23,7 +23,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
 
   return (
     <VStack align={'baseline'} w={'230px'} spacing={'4px'}>
-      <HStack spacing={'10px'}>
+      <HStack spacing={'10px'} align='baseline'>
         <Image src={PinkPanel} w={'15px'} />
         <Text
           fontSize={'20px'}
@@ -38,7 +38,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
           color={'black'} hasArrow
           placement='top-start'
         >
-          <Image src={Warning} />
+            <Image src={Warning} />
         </Tooltip>
       </HStack>
       <Text
@@ -50,7 +50,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
         $&nbsp;<AnimationNumber value={total.toNumber()} />
       </Text>
       {/* --------------------------------- */}
-      <HStack spacing={'10px'}>
+      <HStack spacing={'10px'} align='baseline'>
         <Image src={BlackPanel} w={'15px'} />
         <Text
           fontSize={'20px'}
@@ -77,7 +77,7 @@ const Seperator: FunctionComponent<Props> = ({total, stable, volatile}) => {
         $&nbsp;<AnimationNumber value={stable.toNumber()} />
       </Text>
       {/* --------------------------------- */}
-      <HStack spacing={'10px'}>
+      <HStack spacing={'10px'} align='baseline'>
         <Image src={YellowPanel} w={'15px'} />
         <Text
           fontSize={'20px'}

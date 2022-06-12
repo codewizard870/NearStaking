@@ -18,112 +18,16 @@ import WaitingModal from './Pages/WaitingModal';
 import FailedModal from './Pages/FailedModal';
 import { fetchData } from './Util';
 
-import AOS from 'aos'
-import 'aos/dist/aos.css' // You can also use <link> for styles
-
 declare let window: any;
 const nearConfig = getConfig("testnet");
 
 const Layout = () => {
-  useEffect(() => {
-    AOS.init({ duration: 300 })
-  }, [])
-  
+  const { state, dispatch } = useStore();
   const { isOpen: isOpenDeposit, onOpen: onOpenDeposit, onClose: onCloseDeposit } = useDisclosure();
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw } = useDisclosure();
   const { isOpen: isOpenWaiting, onOpen: onOpenWaiting, onClose: onCloseWaiting } = useDisclosure();
   const { isOpen: isOpenFailed, onOpen: onOpenFailed, onClose: onCloseFailed } = useDisclosure();
-
-  // setTimeout(()=>
-  //   onOpenFailed()
-  // , 300);
-  const { state, dispatch } = useStore();
-  const wallet = useWallet();
-  const near = useNear();
-  const [force, setForce] = useState(false);
-
-  const initialize = () => {
-    window.localStorage.removeItem('action');
-  }
-
-  const checkTransaction = async () => {
-    let transactionHashes, errorCode, errorMessage;
-    if (typeof window != 'undefined') {
-      let queryString, urlParams;
-      queryString = window.location.search;
-      urlParams = new URLSearchParams(queryString);
-      transactionHashes = urlParams.get('transactionHashes');
-      errorCode = urlParams.get('errorCode');
-      errorMessage = urlParams.get("errorMessage");
-    }
-
-    const near = await nearAPI.connect(
-      Object.assign(
-        { deps: { keyStore: new nearAPI.keyStores.BrowserLocalStorageKeyStore() } },
-        nearConfig)
-    );
-
-    const wallet = new nearAPI.WalletAccount(near, null);
-    let signed = wallet.isSignedIn();
-    if (!signed) return;
-
-    dispatch({ type: ActionKind.setNear, payload: near });
-    dispatch({ type: ActionKind.setConnected, payload: true });
-    dispatch({ type: ActionKind.setWallet, payload: wallet });
-
-    if (transactionHashes == null)
-      return;
-
-    dispatch({ type: ActionKind.setTxhash, payload: transactionHashes });
-
-    if (errorCode != null) {
-      // toast(errorMessage, errorOption);
-      dispatch({ type: ActionKind.setErrorcode, payload: errorCode });
-      onOpenFailed();
-      initialize();
-      return;
-    }
-
-    let action = window.localStorage.getItem("action");
-    if (action == "deposit") {
-      toast("deposit success", successOption);
-    }
-    else if (action == 'withdraw') {
-      onOpenWaiting();
-
-      let coinType = window.localStorage.getItem('coinType');
-      let amount = window.localStorage.getItem('amount');
-
-      var formData = new FormData()
-      let account = wallet.getAccountId();
-      formData.append('account', account);
-      formData.append('coinType', coinType)
-      formData.append('amount', amount)
-
-      await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, { timeout: 60 * 60 * 1000 })
-        .then((res) => {
-          toast("Withdraw success", successOption)
-
-          onCloseWaiting();
-          setForce(!force);
-        })
-        .catch(function (error) {
-          if (error.response) {
-            toast(error.response.data.data.message, errorOption)
-          } else if (error.request) {
-            toast(error.request, errorOption);
-            fetchData(state, dispatch)
-          } else {
-            toast(error.message, errorOption);
-          }
-
-          onCloseWaiting();
-        });
-    }
-
-    initialize();
-  }
-
+  
   useEffect(() => {
     dispatch({ type: ActionKind.setOpenDepositModal, payload: onOpenDeposit });
     dispatch({ type: ActionKind.setOpenWithdrawModal, payload: onOpenWithdraw });
@@ -132,17 +36,97 @@ const Layout = () => {
     dispatch({ type: ActionKind.setOpenFailedModal, payload: onOpenFailed });
   }, [dispatch, onOpenDeposit, onOpenWithdraw, onOpenWaiting, onCloseWaiting, onOpenFailed])
 
+  // setTimeout(()=>
+  //   onOpenFailed()
+  // , 300);
+
   useEffect(() => {
-    const fetchAll = async () => {
-      fetchData(state, dispatch)
+    const initialize = () => {
+      window.localStorage.removeItem('action');
     }
-    // if (checkNetwork(wallet, state))
-    if (near && wallet)
-      fetchAll()
+  
+    const checkTransaction = async () => {
+      let transactionHashes, errorCode, errorMessage;
+      if (typeof window != 'undefined') {
+        let queryString, urlParams;
+        queryString = window.location.search;
+        urlParams = new URLSearchParams(queryString);
+        transactionHashes = urlParams.get('transactionHashes');
+        errorCode = urlParams.get('errorCode');
+        errorMessage = urlParams.get("errorMessage");
+      }
 
-  }, [wallet, near, force])
+      const near = await nearAPI.connect(
+        Object.assign(
+          { deps: { keyStore: new nearAPI.keyStores.BrowserLocalStorageKeyStore() } },
+          nearConfig)
+      );
 
-  useEffect(() => {
+      const wallet = new nearAPI.WalletAccount(near, null);
+      let signed = wallet.isSignedIn();
+      if (!signed) return;
+
+      dispatch({ type: ActionKind.setNear, payload: near });
+      dispatch({ type: ActionKind.setConnected, payload: true });
+      dispatch({ type: ActionKind.setWallet, payload: wallet });
+
+      if (transactionHashes == null)
+        return;
+
+      dispatch({ type: ActionKind.setTxhash, payload: transactionHashes });
+
+      if (errorCode != null) {
+        // toast(errorMessage, errorOption);
+        dispatch({ type: ActionKind.setErrorcode, payload: errorCode });
+        onOpenFailed();
+        initialize();
+        return;
+      }
+
+      let action = window.localStorage.getItem("action");
+      if (action == "deposit") {
+        toast("deposit success", successOption);
+      }
+      else if (action == 'withdraw') {
+        onOpenWaiting();
+
+        let coinType = window.localStorage.getItem('coinType');
+        let amount = window.localStorage.getItem('amount');
+
+        var formData = new FormData()
+        let account = wallet.getAccountId();
+        formData.append('account', account);
+        formData.append('coinType', coinType)
+        formData.append('amount', amount)
+
+        await axios.post(REQUEST_ENDPOINT + 'withdraw', formData, { timeout: 60 * 60 * 1000 })
+          .then((res) => {
+            toast("Withdraw success", successOption)
+
+            onCloseWaiting();
+            // setForce(!force);
+            dispatch({type: ActionKind.setRefresh, payload: !state.refresh})
+            // fetchData(state, dispatch)
+          })
+          .catch(function (error) {
+            if (error.response) {
+              // toast(error.response.data.data.message, errorOption)
+              dispatch({ type: ActionKind.setErrorcode, payload: error.response.data.data.message });
+              onOpenFailed();
+            } else if (error.request) {
+              toast(error.request, errorOption);
+              dispatch({type: ActionKind.setRefresh, payload: !state.refresh})
+              // fetchData(state, dispatch)
+            } else {
+              toast(error.message, errorOption);
+            }
+
+            onCloseWaiting();
+          });
+      }
+
+      initialize();
+    }
     setTimeout(() => {
       checkTransaction()
     }, 500);

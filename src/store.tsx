@@ -42,6 +42,7 @@ export interface AppContextInterface {
   txhash: string | undefined,
   qualified: boolean,
   errorCode: string,
+  refresh: boolean,
 }
 
 const initialState: AppContextInterface = {
@@ -74,6 +75,7 @@ const initialState: AppContextInterface = {
   txhash: undefined,
   qualified: false,
   errorCode: "",
+  refresh: false,
 }
 
 export enum ActionKind{
@@ -106,6 +108,7 @@ export enum ActionKind{
   setTxhash,
   setQualified,
   setErrorcode,
+  setRefresh,
 }
 
 const StoreContext = createContext<{ state: AppContextInterface; dispatch: React.Dispatch<any>; }>
@@ -174,6 +177,8 @@ export const reducer = (state: AppContextInterface,  action: Action ) => {
       return {...state, qualified: action.payload}
     case ActionKind.setErrorcode:
       return {...state, errorcode: action.payload}
+    case ActionKind.setRefresh:
+      return {...state, refresh: action.payload}
     default:
       return state
   }

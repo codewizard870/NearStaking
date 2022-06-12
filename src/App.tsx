@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { VStack, Flex, useDisclosure, useEventListenerMap } from '@chakra-ui/react'
+import { Image, Flex, useDisclosure, useEventListenerMap } from '@chakra-ui/react'
 
 import Layout from './Layout';
 import Dashboard from './Pages/Dashboard'
@@ -10,32 +10,47 @@ import Utility from './Pages/Utility'
 import CommunityFarm from './Pages/CommunityFarm';
 import PotReward from './Pages/PotReward';
 import Terms from './Pages/Terms';
-import { useStore, ActionKind } from './store';
+import { fetchData } from './Util';
+import { useStore, ActionKind, useWallet, useNear } from './store';
+import Neart from "./assets/Neart.svg";
 
 declare let document: any;
 
 function App() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [fontLoading, setFontLoading] = useState(true);
+
   const { state, dispatch } = useStore();
-  // var FontFaceObserver = require('fontfaceobserver');
-  // var font = new FontFaceObserver('SF-Pro-Text');
-  // font.load().then(function () {
-  //   console.log('My Family has loaded');
-  //   let time = new Date();
-  //   console.log(time.toLocaleTimeString());
-  // });
+
+  const wallet = useWallet();
+  const near = useNear();
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      await fetchData(state, dispatch)
+      setLoading(false);
+    }
+    // if (checkNetwork(wallet, state))
+    if (near && wallet)
+      fetchAll()
+
+  }, [wallet, near, state.refresh])
+
+  var FontFaceObserver = require('fontfaceobserver');
+  var font = new FontFaceObserver('SF UI Text');
+  font.load().then(function () {
+
+  });
   //   let res = document.fonts.check('SF-Pro-Text')
   // console.log(res)
 
-  // document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
-  // setTimeout(() => {
-  // setLoading(false)
-  // }, 3000)
-  // };
-
+  document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
+    // setTimeout(() => {
+    setFontLoading(false)
+    // }, 1000)
+  };
 
   let path = window.location.pathname;
-  console.log(path)
   useEffect(() => {
     const checkPath = () => {
       const new_path = path.replace("/", "");
@@ -49,7 +64,7 @@ function App() {
       <Flex
         w='100%'
         h='100%'
-        display={loading ? 'none' : 'flex'}
+        display={loading || fontLoading ? 'none' : 'flex'}
       >
         <BrowserRouter>
           <Routes>
@@ -74,13 +89,14 @@ function App() {
         align='center'
         bg='black'
         position='absolute'
-        display={loading ? 'flex' : 'none'}
+        display={loading || fontLoading ? 'flex' : 'none'}
         top='0px'
         zIndex='99999999'
       >
-        <video width="100%" autoPlay muted>
+        {/* <video width="100%" autoPlay muted>
           <source src="./PRE LOADING WEB.mp4" type="video/mp4" />
-        </video>
+        </video> */}
+        <Image src={Neart} h='120px' animation="fadein 2s infinite"/>
       </Flex>
     </>
   );

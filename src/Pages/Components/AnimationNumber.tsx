@@ -27,12 +27,15 @@ const AnimationNumber: FunctionComponent<Props> = ({ value }) => {
   const tmpValue = value > Number.MAX_VALUE ? Number.MAX_VALUE : value;
   const bigValue = new BigNumber(value);
   const rest = getRest(value) < 10 ? ".0" + getRest(value).toString() : "." + getRest(value).toString();
-  
+
   return (
     <span>
-      {loading && <CountUp start={prev} end={Math.floor(tmpValue)} separator=',' />}
-      {loading && getRest(value) > 0 ? `${rest}` : "" }
+      {loading && (prev == value ? <span>{tmpValue}</span> : <CountUp start={prev} end={Math.floor(tmpValue)} separator=',' />)}
+      {loading && getRest(value) > 0 ? `${rest}` : ""}
       {!loading && bigValue.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFormat()}
+      {/* {loading && <CountUp start={prev} end={Math.floor(tmpValue)} separator=',' />}
+      {loading && getRest(value) > 0 ? `${rest}` : ""}
+      {!loading && bigValue.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFormat()} */}
     </span>
   )
 }

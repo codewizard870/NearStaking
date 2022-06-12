@@ -45,9 +45,9 @@ function App() {
   // console.log(res)
 
   document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
-    // setTimeout(() => {
+    setTimeout(() => {
     setFontLoading(false)
-    // }, 1000)
+    }, 2000)
   };
 
   let path = window.location.pathname;
@@ -64,7 +64,7 @@ function App() {
       <Flex
         w='100%'
         h='100%'
-        display={loading || fontLoading ? 'none' : 'flex'}
+        display={fontLoading ? 'none' : 'flex'}
       >
         <BrowserRouter>
           <Routes>
@@ -89,14 +89,14 @@ function App() {
         align='center'
         bg='black'
         position='absolute'
-        display={loading || fontLoading ? 'flex' : 'none'}
+        display={fontLoading ? 'flex' : 'none'}
         top='0px'
         zIndex='99999999'
       >
         {/* <video width="100%" autoPlay muted>
           <source src="./PRE LOADING WEB.mp4" type="video/mp4" />
         </video> */}
-        <Image src={Neart} h='120px' animation="fadein 2s infinite"/>
+        <Image src={Neart} h='120px' animation="fadein 2s infinite" />
       </Flex>
     </>
   );

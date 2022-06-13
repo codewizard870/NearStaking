@@ -17,7 +17,9 @@ const How: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
   const coinId = getCoinId(denom as COINTYPE);
 
-  const _amount = parseFloat(amount) * state.price[coinId];
+  const re = /,/g;
+  let value = re[Symbol.replace](amount, '');
+  const _amount = parseFloat(value) * state.price[coinId];
   const apr = state.apr[coinId]/100;
 
   let total = _amount;

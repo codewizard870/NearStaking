@@ -78,7 +78,6 @@ export const successOption: any = {
   // pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  style: {fontFamily: 'SF-Pro', color: "#F9D85E"}
 };
 
 export const errorOption: any = {
@@ -90,7 +89,6 @@ export const errorOption: any = {
   // pauseOnHover: true,
   draggable: true,
   progress: undefined,
-  style: {fontFamily: 'SF-Pro', color: "#F9D85E"}
 };
 
 export const StableCoins=[

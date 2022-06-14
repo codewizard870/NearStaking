@@ -18,8 +18,7 @@ import Neart from "./assets/Neart.svg";
 declare let document: any;
 
 function App() {
-  const [loading, setLoading] = useState(true);
-  const [fontLoading, setFontLoading] = useState(false);
+  const [fontLoading, setFontLoading] = useState(true);
 
   const { state, dispatch } = useStore();
 
@@ -29,7 +28,6 @@ function App() {
   useEffect(() => {
     const fetchAll = async () => {
       await fetchData(state, dispatch)
-      setLoading(false);
     }
     // if (checkNetwork(wallet, state))
     if (near && wallet)
@@ -46,9 +44,10 @@ function App() {
   // console.log(res)
 
   document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
+console.log(fontFaceSetEvent)
     setTimeout(() => {
-    setFontLoading(false)
-    }, 2000)
+      setFontLoading(false)
+      }, 2000)
   };
 
   let path = window.location.pathname;

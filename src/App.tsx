@@ -10,6 +10,7 @@ import Utility from './Pages/Utility'
 import CommunityFarm from './Pages/CommunityFarm';
 import PotReward from './Pages/PotReward';
 import Terms from './Pages/Terms';
+import Disclaimer from './Pages/Disclaimer';
 import { fetchData } from './Util';
 import { useStore, ActionKind, useWallet, useNear } from './store';
 import Neart from "./assets/Neart.svg";
@@ -18,7 +19,7 @@ declare let document: any;
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [fontLoading, setFontLoading] = useState(true);
+  const [fontLoading, setFontLoading] = useState(false);
 
   const { state, dispatch } = useStore();
 
@@ -77,6 +78,7 @@ function App() {
               <Route path="farm" element={<CommunityFarm />} />
               <Route path="pot" element={<PotReward />} />
               <Route path='terms' element={<Terms />} />
+              <Route path='disclaimer' element={<Disclaimer />} />
               <Route path="*" element={"404"} />
             </Route>
           </Routes>

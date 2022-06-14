@@ -24,7 +24,7 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
       h={'220px'} 
       justify='center' 
       transform={'rotate(-90deg)'} mr={'36px'}
-      animation='spin 0.3s linear'
+      animation='spin1 0.3s linear'
     >
       <CircularProgress
         position={'absolute'}

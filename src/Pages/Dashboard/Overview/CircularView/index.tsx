@@ -1,9 +1,9 @@
 import React, { FunctionComponent } from 'react';
 import { HStack, Stack, Flex, Text, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 
 import { StableCoins, DECIMALS } from '../../../../constants';
-import { useStore, usePrice} from '../../../../store';
+import { useStore, usePrice } from '../../../../store';
 
 const CircularView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
@@ -14,7 +14,7 @@ const CircularView: FunctionComponent = (props) => {
 
   let stable = new BigNumber(0);
   let volatile = new BigNumber(0);
-  let percent = 0;
+  let percent = 40;
 
   if (last > 0) {
     let coins = StableCoins.filter((coin) => !coin.upcoming);
@@ -27,8 +27,11 @@ const CircularView: FunctionComponent = (props) => {
       else
         volatile = volatile.plus(usd);
     }
-    let percent_big = stable.dividedBy(stable.plus(volatile)).multipliedBy(100);
-    percent = percent_big.toNumber();
+    const sum = stable.plus(volatile);
+    if (!sum.eq(0)) {
+      let percent_big = stable.dividedBy(sum).multipliedBy(100);
+      percent = percent_big.toNumber();
+    }
   }
 
   return (

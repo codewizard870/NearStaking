@@ -59,8 +59,14 @@ code {
 
 @keyframes spin { 
   0% { 
-    -webkit-transform: rotate(0deg); 
-    transform:rotate(0deg); 
+    -webkit-transform: rotate(-180deg); 
+    transform:rotate(-180deg); 
+  } 
+}
+@keyframes spin1 { 
+  0% { 
+    -webkit-transform: rotate(180deg); 
+    transform:rotate(180deg); 
   } 
 }
 

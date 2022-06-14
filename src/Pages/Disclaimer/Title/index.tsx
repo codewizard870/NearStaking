@@ -1,8 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { HStack, Flex, Text, Image, Link } from '@chakra-ui/react'
 
-import ExternalLink from "./../../../assets/ExternalLink.svg"
-
 const Title: FunctionComponent = (props) => {
   return (
     <Flex ml={'13px'} w={'100%'} justify={'left'}  align={'baseline'} direction='column'>
@@ -10,14 +8,15 @@ const Title: FunctionComponent = (props) => {
         fontSize={'40px'}
         fontWeight={'800'}
       >
-        Terms of Service
+        DISCLAIMER NEAR TREASURY
+
       </Text>
-      <Text
+      {/* <Text
         fontSize='13px'
         fontWeight='800'
       >
         Updated: 20 May 22
-      </Text>
+      </Text> */}
     </Flex>
   );
 }

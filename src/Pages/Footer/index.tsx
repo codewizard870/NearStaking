@@ -61,6 +61,15 @@ const Footer: FunctionComponent = (props) => {
             TERMS
           </Text>
         </Link>
+        <Link href='/disclaimer'>
+          <Text
+            fontSize={'9px'}
+            fontWeight={'860'}
+            lineHeight={'10px'}
+          >
+            DISCLAIMER
+          </Text>
+        </Link>
       </HStack>
       <HStack spacing={'50px'}>
         <a href='https://twitter.com/NEARTreasury' target='_blank' rel="noreferrer">

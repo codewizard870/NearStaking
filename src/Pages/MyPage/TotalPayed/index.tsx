@@ -48,7 +48,7 @@ const TotalPayed: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'20px'}
         >
-          TOTAL PAIED INTEREST
+          TOTAL PAID INTEREST
         </Text>
       </Tooltip>
       <HStack mt={'6px'} spacing={'10px'} align={'baseline'}>

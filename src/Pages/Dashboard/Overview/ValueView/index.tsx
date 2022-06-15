@@ -38,7 +38,7 @@ const ValueView: FunctionComponent = (props) => {
         <HStack spacing={'10px'} alignItems={'center'}>
           <Image src={YellowPanel} w={'15px'} />
           <Tooltip
-            label="Total deposited Stable Coins & compounded interest"
+            label="Total deposited Stable Assets & compounded interest"
             background={'#C4C4C4'}
             color={'black'} hasArrow
             placement='top-start'

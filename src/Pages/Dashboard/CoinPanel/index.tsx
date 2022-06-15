@@ -50,7 +50,7 @@ const CoinPanel: FunctionComponent = (props) => {
         <GridItem w='100%' h='45px'>
           <Flex w={'100%'} h={'100%'} align={'center'} justify={'center'}>
             <Tooltip
-              label="The APY is stable & fixed by the team"
+              label="Annualized interest rate"
               background={'#C4C4C4'} hasArrow
               placement='top-start'
               color={'black'}

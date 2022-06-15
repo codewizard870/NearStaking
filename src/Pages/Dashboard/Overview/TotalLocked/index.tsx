@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { HStack, Stack, Flex, Text, Image, Link } from '@chakra-ui/react'
+import { HStack, Stack, Flex, Text, Tooltip } from '@chakra-ui/react'
 import BigNumber from 'bignumber.js';
 import { useStore, usePrice } from '../../../../store';
 import { floor, floorNormalize } from '../../../../Util';
@@ -16,6 +16,12 @@ const TotalLocked: FunctionComponent = (props) => {
   
   return (
     <>
+      <Tooltip 
+        label="TVL of the Near Treasury protocol" 
+        background={'#C4C4C4'} hasArrow 
+        placement='top-start' 
+        color={'black'}
+      > 
       <Text
         fontSize={'20px'}
         fontWeight={'800'}
@@ -23,6 +29,7 @@ const TotalLocked: FunctionComponent = (props) => {
       >
         TOTAL VALUE LOCKED
       </Text>
+      </Tooltip>
       <HStack spacing={'10px'} alignItems={'baseline'} mt='5px'>
         <Text
           fontSize={'35px'}

@@ -44,7 +44,6 @@ function App() {
   // console.log(res)
 
   document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
-console.log(fontFaceSetEvent)
     setTimeout(() => {
       setFontLoading(false)
       }, 2000)

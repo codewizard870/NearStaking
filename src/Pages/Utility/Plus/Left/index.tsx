@@ -43,7 +43,7 @@ const Left: FunctionComponent = (props) => {
           YOUR QUALIFIED DEPOSIT VALUE
         </Text>
         <Tooltip 
-          label="All of your qualified deposits" 
+          label="The total of your qualified deposits" 
           background={'#C4C4C4'} hasArrow 
           placement='top-start' 
           color={'black'}

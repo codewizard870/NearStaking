@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button, Tooltip } from '@chakra-ui/react'
 import { Grid, GridItem } from '@chakra-ui/react'
 
-import {BigNumber} from 'bignumber.js';
+import { BigNumber } from 'bignumber.js';
 import { getCoinId } from '../../../Util';
 import { StableCoins, DECIMALS } from '../../../constants';
 import Warning from './../../../assets/Warning.svg'
@@ -27,6 +27,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
   let usd = amount.multipliedBy(state.price[coinId]);
 
   const disable = usd.eq(0) ? true : false;
+
   return (
     <VStack
       minW={{ base: '100%', lg: '48%' }}
@@ -68,12 +69,15 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               >
                 Saving Balance
               </Text>
-              <Tooltip 
-                label=" Total of your deposits including earnings" 
-                background={'#C4C4C4'} hasArrow 
-                placement='top-start' 
+              <Tooltip
+                label={
+                  stable ? "The total of your deposits including accumulated earnings" : 
+                    "The total of your deposits including accumulated earnings (calculated in USD)" 
+                }
+                background={'#C4C4C4'} hasArrow
+                placement='top-start'
                 color={'black'}
-              > 
+              >
                 <Image src={Warning} w={'13px'} />
               </Tooltip>
             </HStack>
@@ -83,14 +87,14 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
                   fontSize='13px'
                   fontWeight={'400'}
                 >
-                  <AnimationNumber value = {amount.toNumber()} />
+                  <AnimationNumber value={amount.toNumber()} />
                   &nbsp;{name}
                 </Text>
                 <Text
                   fontSize='13px'
                   fontWeight={'400'}
                 >
-                  $ <AnimationNumber value = {usd.toNumber()} />
+                  $ <AnimationNumber value={usd.toNumber()} />
                   &nbsp;USD Value
                 </Text>
               </>
@@ -100,7 +104,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
                 fontSize='13px'
                 fontWeight={'400'}
               >
-                $ <AnimationNumber value = {usd.toNumber()} />
+                $ <AnimationNumber value={usd.toNumber()} />
               </Text>
             }
           </VStack>
@@ -112,12 +116,12 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               >
                 APY
               </Text>
-              <Tooltip 
-                label="Current annualized interest rate" 
-                background={'#C4C4C4'} hasArrow 
-                placement='top-start' 
+              <Tooltip
+                label="Annualized interest rate"
+                background={'#C4C4C4'} hasArrow
+                placement='top-start'
                 color={'black'}
-              > 
+              >
                 <Image src={Warning} w={'13px'} />
               </Tooltip>
             </HStack>
@@ -125,7 +129,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               fontSize='13px'
               fontWeight={'400'}
             >
-              <AnimationNumber value={apr} />%
+              {upcoming ? "X.XX" : <AnimationNumber value={apr} />}%
             </Text>
           </VStack>
         </HStack>
@@ -146,9 +150,9 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               background={'#493C3C'}
               rounded={'25px'}
               onClick={() => {
-                if(state.connected)
+                if (state.connected)
                   OpenDepositModal(state, dispatch, name)
-                else if(state.openConnectWalletModal != undefined)
+                else if (state.openConnectWalletModal != undefined)
                   state.openConnectWalletModal();
               }}
             >
@@ -172,12 +176,12 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               border={'solid 1px'}
               borderColor={'#CEBFBF'}
               rounded={'25px'}
-              _hover={disable ? { background: 'none', color: '#CEBFBF' } : {background: 'gray.300'}}
+              _hover={disable ? { background: 'none', color: '#CEBFBF' } : { background: 'gray.300' }}
               onClick={() => {
                 if (disable) return;
-                if(state.connected)
+                if (state.connected)
                   OpenWithdrawModal(state, dispatch, name)
-                else if(state.openConnectWalletModal != undefined)
+                else if (state.openConnectWalletModal != undefined)
                   state.openConnectWalletModal();
               }}
             >

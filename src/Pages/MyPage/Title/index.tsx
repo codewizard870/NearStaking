@@ -12,7 +12,7 @@ const Title: FunctionComponent = (props) => {
       >
         MY PAGE
       </Text>
-      <Link href={'https://gitbook.com'}>
+      <Link href={'https://near-treasury.gitbook.io/near-treasury-tm/near-treasury-tm/home'}>
         <HStack spacing={'3px'}  pb={'15px'} >
           <Image src={ExternalLink} h={'16px'} ml='13px'/>
           </HStack>

@@ -102,7 +102,7 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
             You may lose your valuable share of the Community Farming Event and your eligibility for the Rewards+ Program.
           </Text>
           <Link
-            href="https://gitbook.com"
+            href="https://near-treasury.gitbook.io/near-treasury-tm/near-treasury-tm/home"
             target="_blank"
             _focus={{ boxshadow: 'none' }}
           >

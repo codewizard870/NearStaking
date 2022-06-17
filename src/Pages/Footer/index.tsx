@@ -40,7 +40,7 @@ const Footer: FunctionComponent = (props) => {
       justify={'space-between'}
       align={'center'}
     >
-      <HStack spacing={'5px'}>
+      <HStack spacing={'15px'}>
         <Image src={GreenLamp} w={'10px'}/>
         <Link href={`https://explorer.testnet.near.org/blocks/${blockHeight}`} target='_blank' rel="noreferrer">
           <Text
@@ -81,7 +81,7 @@ const Footer: FunctionComponent = (props) => {
         <a href='https://medium.com/@neartreasury' target='_blank' rel="noreferrer">
           <Image src={Medium} w={'15px'} />
         </a>
-        <a href='https://www.gitbook.com' target='_blank' rel="noreferrer">
+        <a href='https://near-treasury.gitbook.io/near-treasury-tm/near-treasury-tm/home' target='_blank' rel="noreferrer">
           <Text
             fontSize={'9px'}
             fontWeight={'860'}

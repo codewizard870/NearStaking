@@ -30,7 +30,7 @@ const Left: FunctionComponent = (props) => {
         >
           NEAR TREASURY REWARDS PLUS PROGRAM 
         </Text>
-        <a href="link: https://app.gitbook.com/s/kngrjQ3XHOHWXNeVNLmt/tt-protocol/rewards" target={"_blank"} rel="noreferrer">
+        <a href="https://near-treasury.gitbook.io/near-treasury-tm/nt-protocol-overview/rewards-plus-program" target={"_blank"} rel="noreferrer">
           <MdInfoOutline />
         </a>
       </HStack>

@@ -25,7 +25,7 @@ const Total: FunctionComponent<Props> = ({total}) => {
             TOTAL VALUE
           </Text>
           <Tooltip
-            label="Total value of All deposits and payed interest"
+            label="Total value of All deposits and paid interest"
             background={'#C4C4C4'}
             color={'black'} hasArrow
             placement='top-start'

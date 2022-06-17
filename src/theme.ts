@@ -8,6 +8,13 @@ const breakpoints = createBreakpoints({ sm: '20em', md: '52em', lg: '64em', xl: 
 const theme = extendTheme(
   { 
     breakpoints,
+    // components: {
+    //   Link: {
+    //     baseStyle: {
+    //       boxShadow: "none !important"
+    //     },
+    //   },
+    // },
     styles: {
       global: {
         button: {
@@ -20,6 +27,11 @@ const theme = extendTheme(
           }
         },
         div: {
+          _focus: {
+            boxShadow: 'none !important',
+          }
+        },
+        a: {
           _focus: {
             boxShadow: 'none !important',
           }

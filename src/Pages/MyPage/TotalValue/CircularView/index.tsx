@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { HStack, Stack, Flex, Text, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 import { BigNumber } from 'bignumber.js';
 import { useBalance, useStore, usePrice } from '../../../../store';
-import {DoughnutChart, ChartItem} from "./DoughnutGraph";
+import { DoughnutChart, ChartItem } from "./DoughnutGraph";
 
 interface Props {
   total: BigNumber,
@@ -13,40 +13,41 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   const { state, dispatch } = useStore();
   const sum = total;
 
-  const percent1 = sum.isEqualTo(0) ? 75: 90;
-  const percent2 = sum.isEqualTo(0) ? 75: stable.dividedBy(sum).multipliedBy(100).toNumber();
-  const percent3 = sum.isEqualTo(0) ? 75: 100-percent2;
+  const percent1 = sum.isEqualTo(0) ? 75 : 90;
+  const percent2 = sum.isEqualTo(0) ? 75 : stable.dividedBy(sum).multipliedBy(100).toNumber();
+  const percent3 = sum.isEqualTo(0) ? 75 : 100 - percent2;
 
   const data: ChartItem[] = [
     {
-      label: "www",
-      color: ["#493C3C", "#F72585"],
+      label: "1",
+      color: ["#493C3C", "#F72585" ],
       value: percent1,
-      total: 100,
+      total: 100 - percent1,
     },
     {
-      label: "www",
-      color: ["#493C3C", "#000000"],
+      label: "2",
+      color: ["#493C3C", "#000000" ],
       value: percent2,
-      total: 100,
+      total: 100 - percent2,
     },
     {
-      label: "www",
-      color: ["#493C3C", "#F9D85E"],
+      label: "3",
+      color: ["#493C3C", "#F9D85E" ],
       value: percent3,
-      total: 100,
+      total: 100 - percent3,
     },
   ];
   return (
-    <Flex 
-      align={'center'} 
+    <Flex
+      align={'center'}
       minWidth={'220px'}
-      w="220px" 
-      h={'220px'} 
-      justify='center' 
-      // transform={'rotate(90deg)'} mr={'36px'}
-      // animation='spin1 0.3s linear'
-      // position="relative"
+      w="220px"
+      h={'220px'}
+      justify='center'
+      transform={'scaleY(-1)'} 
+      mr={'36px'}
+    // animation='spin1 0.3s linear'
+    // position="relative"
     >
       {/* <CircularProgress
         position={'absolute'}
@@ -75,9 +76,9 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
         trackColor={'#493C3C'}
         thickness='15px'
       /> */}
-      <DoughnutChart 
+      <DoughnutChart
         data={data}
-        // onFocus={null}
+      // onFocus={null}
       />
     </Flex>
   );

@@ -34,7 +34,7 @@ const CircularView: FunctionComponent = (props) => {
       percent = percent_big.toNumber();
     }
   }
-
+console.log(percent)
   return (
     <Flex 
     // transform={'rotate(90deg)'} animation='spin 0.3s linear'

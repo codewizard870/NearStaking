@@ -14,14 +14,14 @@ export interface DoughnutChartProps {
 }
 
 export class DoughnutChart extends Component<DoughnutChartProps> {
-    private canvasRef = createRef<HTMLCanvasElement>();
+    private canvasRef2 = createRef<HTMLCanvasElement>();
     private chart!: Chart;
     private dataSet: any;
     private radiusValues: any;
     private cutoutValues: any;
 
     render() {
-        return <canvas ref={this.canvasRef} />;
+        return <canvas ref={this.canvasRef2} />;
     }
 
     componentWillUnmount() {
@@ -34,7 +34,6 @@ export class DoughnutChart extends Component<DoughnutChartProps> {
 
     componentDidUpdate(prevProps: Readonly<DoughnutChartProps>) {
         if (this.props !== prevProps) {
-            console.log(this.props.data);
             if (this.props.data.length > 2) {
                 this.chart.data.labels = this.props.data.map(
                     ({ label }) => label
@@ -53,12 +52,12 @@ export class DoughnutChart extends Component<DoughnutChartProps> {
                             borderWidth: 0,
                             hoverOffset: 2,
                             borderRadius: 15,
-                            spacing: -15,
+                            spacing: -5,
                             radius: radiusValues[i],
                             cutout: cutoutValues[i],
                             margin: "5px",
-                            borderJoinStyle: "round",
-                            rotation: 180,
+                            // borderJoinStyle: "round",
+                            rotation: 270,
                         };
                     }
                 );
@@ -78,7 +77,7 @@ export class DoughnutChart extends Component<DoughnutChartProps> {
 
         this.dataSet = [];
         if (this.props.data.length > 2) {
-            this.chart = new Chart(this.canvasRef.current!, {
+            this.chart = new Chart(this.canvasRef2.current!, {
                 type: "doughnut",
                 options: {
                     animation: { animateRotate: false },

@@ -2,6 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { HStack, Stack, Flex, Text, CircularProgress, CircularProgressLabel } from '@chakra-ui/react'
 import { BigNumber } from 'bignumber.js';
 
+import {DoughnutChart} from "./DoughnutChart";
 import { StableCoins, DECIMALS } from '../../../../constants';
 import { useStore, usePrice } from '../../../../store';
 
@@ -35,8 +36,10 @@ const CircularView: FunctionComponent = (props) => {
   }
 
   return (
-    <Flex transform={'rotate(90deg)'} animation='spin 0.3s linear'>
-      <CircularProgress
+    <Flex 
+    // transform={'rotate(90deg)'} animation='spin 0.3s linear'
+    >
+      {/* <CircularProgress
         value={percent}
         size={'172px'}
         capIsRound={true}
@@ -45,7 +48,21 @@ const CircularView: FunctionComponent = (props) => {
         thickness='14'
         aria-busy={false}
       >
-      </CircularProgress>
+      </CircularProgress> */}
+      <DoughnutChart 
+        descriptors = {[
+          {
+            label: "www",
+            color: "black",
+            value: percent,
+          },
+          {
+            label: "www",
+            color: "#F9D85E",
+            value: 100-percent,
+          }
+        ]}
+      />
     </Flex>
   );
 }

@@ -19,8 +19,8 @@ declare let document: any;
 
 function App() {
   const [fontLoading, setFontLoading] = useState(true);
-
   const { state, dispatch } = useStore();
+  const [s1, setCount] = useState(0);
 
   const wallet = useWallet();
   const near = useNear();
@@ -35,19 +35,37 @@ function App() {
 
   }, [wallet, near, state.refresh])
 
-  var FontFaceObserver = require('fontfaceobserver');
-  var font = new FontFaceObserver('SF UI Text');
-  font.load().then(function () {
+  useEffect(() => {
+    console.log("state : " + s1.toString());
+  }, [s1]);
 
-  });
-  //   let res = document.fonts.check('SF-Pro-Text')
-  // console.log(res)
+  useEffect(() => {
+    const loadFonts = async () => {
+      var FontFaceObserver = require('fontfaceobserver');
+      var font_400 = new FontFaceObserver('SF UI Text',{
+        weight: 400
+      });
+      let res = await font_400.load();
 
-  document.fonts.onloadingdone = function (fontFaceSetEvent: any) {
-    setTimeout(() => {
-      setFontLoading(false)
+      var font_700 = new FontFaceObserver('SF UI Text',{
+        weight: 700
+      });
+      res = await font_700.load();
+
+      var font_900 = new FontFaceObserver('SF UI Text',{
+        weight: 900
+      });
+      res = await font_900.load();
+    }
+    loadFonts();
+
+    document.fonts.onloadingdone = async function (fontFaceSetEvent: any) {
+      setTimeout(() => {
+        setFontLoading(false);
       }, 2000)
-  };
+    };
+
+  }, []);
 
   let path = window.location.pathname;
   useEffect(() => {
@@ -64,6 +82,9 @@ function App() {
         w='100%'
         h='100%'
         display={fontLoading ? 'none' : 'flex'}
+        fontFamily={'SF UI Text'}
+        fontStyle={'normal'}
+        letterSpacing={'-0.06em'}
       >
         <BrowserRouter>
           <Routes>

@@ -139,9 +139,6 @@ const Layout = () => {
       w={'100%'}
     >
       <VStack
-        fontFamily={'SF UI Text'}
-        fontStyle={'normal'}
-        letterSpacing={'-0.06em'}
         spacing={'10px'}
         color={'white'}
         maxWidth={'1440px'}

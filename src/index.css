@@ -48,8 +48,8 @@ code {
 }
 @keyframes spin1 { 
   0% { 
-    -webkit-transform: rotate(180deg); 
-    transform:rotate(180deg); 
+    -webkit-transform: rotate(-270deg); 
+    transform:rotate(-270deg); 
   } 
 }
 

@@ -22,7 +22,7 @@ export const TOKEN_ADDRESSES_MAINNET = [
   "ft.alenzertest.testnet",
 ];
 export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_ADDRESSES_MAINNET;
-export const DECIMALS= [6, 6, 18, 18, 8, 18, 24, 24];
+// export const DECIMALS= [6, 6, 18, 18, 8, 18, 24, 24];
 
 export const REQUEST_ENDPOINT = "https://seashell-app-cmf7v.ondigitalocean.app/";
 
@@ -98,8 +98,7 @@ export const StableCoins=[
     description: 'USD Coin',
     avatar: 'Usdc.svg',
     apr: 23.97,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320,
+    decimals: 6,
     stable: true,
     upcoming: false
   },
@@ -109,8 +108,7 @@ export const StableCoins=[
     description: 'USD Tether',
     avatar: 'Usdt.svg',
     apr: 23.97,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 6,
     stable: true,
     upcoming: false
   },
@@ -120,8 +118,7 @@ export const StableCoins=[
     description: 'Dai',
     avatar: 'Dai.svg',
     apr: 23.97,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 18,
     stable: true,
     upcoming: false
   },
@@ -131,8 +128,7 @@ export const StableCoins=[
     description: 'USD NEAR',
     avatar: 'Usn.svg',
     apr: 23.97,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 18,
     stable: true,
     upcoming: false
   },
@@ -142,8 +138,7 @@ export const StableCoins=[
     description: 'Wrapped Bitcoin',
     avatar: 'Wbtc.svg',
     apr: 9.15,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 8,
     stable: false,
     upcoming: false
   },
@@ -153,8 +148,7 @@ export const StableCoins=[
     description: 'Ethereum',
     avatar: 'Eth.png',
     apr: 9.15,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 18,
     stable: false,
     upcoming: false
   },
@@ -164,8 +158,7 @@ export const StableCoins=[
     description: 'Wrapped Near',
     avatar: 'Wnear.svg',
     apr: 14.61,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 24,
     stable: false,
     upcoming: false
   },
@@ -174,8 +167,7 @@ export const StableCoins=[
     description: 'Near Treasury (Cooming Soon)',
     avatar: 'Neart.svg',
     apr: 0,
-    tvl_coin: 47243320,
-    tvl_usd: 47243320, 
+    decimals: 24,
     stable: false,
     upcoming: true
   }

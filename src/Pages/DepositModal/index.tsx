@@ -15,7 +15,7 @@ import SliderWish from './SliderWish';
 import Info from './Info';
 import { useStore, useWallet } from '../../store';
 import { getCoinId } from '../../Util';
-import { TOKEN_ADDRESS, DECIMALS } from '../../constants';
+import { TOKEN_ADDRESS, StableCoins } from '../../constants';
 import { CONTRACT_NAME } from '../../config';
 
 interface Props {
@@ -42,7 +42,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
       }
     );
 
-    const decimal = DECIMALS[getCoinId(coinType)];
+    const decimal = StableCoins[getCoinId(coinType)].decimals;
     let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
 
     let pool_msg = {

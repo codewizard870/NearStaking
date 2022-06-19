@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button, Tooltip, Link } from '@chakra-ui/react'
 import {BigNumber} from 'bignumber.js';
 
-import { StableCoins, DECIMALS } from '../../../constants';
+import { StableCoins } from '../../../constants';
 import Warning from "./../../../assets/Warning.svg"
 import { 
   OpenDepositModal, 
@@ -20,7 +20,7 @@ const Total: FunctionComponent = (props) => {
 
   for (let i = 0; i < coins.length; i++) {
     let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
-    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** coins[i].decimals);
 
     total = total.plus(amount);
   }

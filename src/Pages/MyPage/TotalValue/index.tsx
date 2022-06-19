@@ -4,7 +4,7 @@ import { BigNumber } from 'bignumber.js'
 
 import { useStore } from '../../../store';
 import { getCoinId } from '../../../Util';
-import { StableCoins, DECIMALS } from '../../../constants';
+import { StableCoins } from '../../../constants';
 import CircularView from './CircularView';
 import Total from './Total';
 import Seperator from './Seperator';
@@ -19,7 +19,7 @@ const TotalValue: FunctionComponent = (props) => {
 
   for (let i = 0; i < coins.length; i++) {
     let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
-    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** coins[i].decimals);
 
     total = total.plus(amount);
     if(coins[i].stable)

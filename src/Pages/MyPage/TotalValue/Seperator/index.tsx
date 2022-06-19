@@ -8,7 +8,7 @@ import PinkPanel from './../../../../assets/PinkPanel.svg'
 import BluePanel from './../../../../assets/BluePanel.svg'
 
 import AnimationNumber from '../../../Components/AnimationNumber';
-import { StableCoins, DECIMALS } from '../../../../constants';
+import { StableCoins } from '../../../../constants';
 import { BigNumber } from 'bignumber.js';
 import { useBalance, useStore, usePrice } from '../../../../store';
 import { floor, floorNormalize, getCoinId } from '../../../../Util';

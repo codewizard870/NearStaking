@@ -1,8 +1,9 @@
 import React, { createContext, useContext, useReducer } from 'react'
 import { BigNumber } from "bignumber.js"
 
+
 import { getCoinId,  } from './Util'
-import { amountHistory, userInfo, farmInfo, potInfos, balanceInfo, aprInfo, priceInfo, userInfos, DECIMALS, totalRewards } from './constants'
+import { StableCoins, amountHistory, userInfo, farmInfo, potInfos, balanceInfo, aprInfo, priceInfo, userInfos, totalRewards } from './constants'
 
 export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR' | 'NEARt';
 export type WALLETTYPE = 'near' | 'sender';
@@ -220,7 +221,7 @@ export const useDeposited = () => {
   const {state, dispatch} = useStore();
   let amount = new BigNumber(state.userInfos[getCoinId(state.coinType)].amount);
   amount = amount.plus(new BigNumber(state.userInfos[getCoinId(state.coinType)].reward_amount));
-  amount = amount.dividedBy(10**DECIMALS[getCoinId(state.coinType)]);
+  amount = amount.dividedBy(10 ** StableCoins[getCoinId(state.coinType)].decimals);
   return amount;
 }
 
@@ -240,11 +241,6 @@ export const useBalance = () => {
   const {state, dispatch} = useStore();
   const balance = state.balance[getCoinId(state.coinType)];
   return balance;
-}
-export const useDecimal = () => {
-  const {state, dispatch} = useStore();
-  const decimal = DECIMALS[getCoinId(state.coinType)];
-  return decimal;
 }
 
 export const OpenDepositModal = (state:AppContextInterface , dispatch: React.Dispatch<any>, type: COINTYPE) => {

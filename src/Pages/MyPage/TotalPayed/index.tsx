@@ -3,7 +3,7 @@ import { VStack, HStack, Stack, Flex, Text, Image, Link, Center, Tooltip, Button
 import { BigNumber } from 'bignumber.js';
 
 import Warning from "./../../../assets/Warning.svg";
-import { StableCoins, DECIMALS } from '../../../constants';
+import { StableCoins } from '../../../constants';
 import AnimationNumber from '../../Components/AnimationNumber';
 import { OpenDepositModal, useStore, usePrice } from '../../../store';
 import { floorNormalize, floor } from '../../../Util';
@@ -17,7 +17,7 @@ const TotalPayed: FunctionComponent = (props) => {
   let depositTime_max = 0;
   for (let i = 0; i < coins.length; i++) {
     let amount = new BigNumber(state.userInfos[i].reward_amount);
-    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** coins[i].decimals);
     total = total.plus(amount);
 
     if (depositTime_max == 0 || depositTime_max < state.userInfos[i].deposit_time)

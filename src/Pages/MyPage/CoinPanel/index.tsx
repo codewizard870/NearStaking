@@ -4,7 +4,7 @@ import { Grid, GridItem } from '@chakra-ui/react'
 
 import { BigNumber } from 'bignumber.js';
 import { getCoinId } from '../../../Util';
-import { StableCoins, DECIMALS } from '../../../constants';
+import { StableCoins } from '../../../constants';
 import Warning from './../../../assets/Warning.svg'
 import AnimationNumber from '../../Components/AnimationNumber';
 import { OpenDepositModal, OpenWithdrawModal, useStore } from '../../../store';
@@ -23,7 +23,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
   const { state, dispatch } = useStore();
 
   let coinId = getCoinId(name);
-  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount).dividedBy(10 ** DECIMALS[coinId]);
+  let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount).dividedBy(10 ** StableCoins[coinId].decimals);
   let usd = amount.multipliedBy(state.price[coinId]);
 
   const disable = usd.eq(0) ? true : false;

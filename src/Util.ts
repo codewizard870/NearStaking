@@ -5,8 +5,8 @@ import * as nearAPI from "near-api-js"
 
 import { toast } from 'react-toastify';
 import axios from 'axios';
-import { COINTYPE, useNear, useDecimal } from './store';
-import { successOption, errorOption, StableCoins, TOKEN_ADDRESS, DECIMALS, balanceInfo, priceInfo, userInfo } from './constants';
+import { COINTYPE } from './store';
+import { successOption, errorOption, StableCoins, TOKEN_ADDRESS, balanceInfo, priceInfo, userInfo } from './constants';
 import { CONTRACT_NAME } from './config';
 
 export function shortenAddress(address: string | undefined) {
@@ -28,7 +28,7 @@ function calcUSD(amountHistory: any, price: number[]) {
 
     for(let j=0; j<coins.length; j++){
       let usd = new BigNumber(amountHistory[i].amount[j] + amountHistory[i].reward[j]);
-      usd = usd.multipliedBy(price[j]).dividedBy(10**DECIMALS[j]);
+      usd = usd.multipliedBy(price[j]).dividedBy(10**coins[j].decimals);
       totalUSD = totalUSD.plus(usd);
     }
     amountHistory[i].totalUSD = totalUSD;
@@ -54,7 +54,7 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
     );
     let res = await token.ft_balance_of({ account_id: wallet.getAccountId() })
 
-    const decimal = DECIMALS[i];
+    const decimal = coins[i].decimals;
     balance[i] = new BigNumber(res).dividedBy(10 ** decimal);
   }
 
@@ -73,7 +73,7 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
 
     price[i] = res.data[`${coins[i].id}`]["usd"];
   }
-  
+
   const contract: any = new nearAPI.Contract(
     wallet.account(), // the account object that is connecting
     CONTRACT_NAME,

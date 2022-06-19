@@ -5,7 +5,7 @@ import {BigNumber} from 'bignumber.js';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import { MdInfoOutline } from 'react-icons/md';
 import Warning from '../../../../assets/Warning.svg'
-import { StableCoins, DECIMALS } from '../../../../constants';
+import { StableCoins } from '../../../../constants';
 import { OpenDepositModal, useStore, usePrice } from '../../../../store';
 
 const Left: FunctionComponent = (props) => {
@@ -16,7 +16,7 @@ const Left: FunctionComponent = (props) => {
 
   for (let i = 0; i < coins.length; i++) {
     let amount = new BigNumber(state.potInfo[i].qualified_amount);
-    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** coins[i].decimals);
     total = total.plus(amount);
   }
 

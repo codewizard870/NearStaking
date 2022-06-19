@@ -3,7 +3,7 @@ import { Flex } from '@chakra-ui/react'
 import { Dispatch, SetStateAction } from "react";
 import {BigNumber} from 'bignumber.js'
 
-import { DECIMALS, StableCoins } from '../../../../constants';
+import { StableCoins } from '../../../../constants';
 import { useStore } from '../../../../store';
 import { getCoinId } from '../../../../Util';
 import Tab from './Tab';
@@ -31,7 +31,7 @@ const DateTimeTab: FunctionComponent<Props> = ({setInterest}) => {
 
   for (let i = 0; i < coins.length; i++) {
     let amount = new BigNumber(state.userInfos[i].amount + state.userInfos[i].reward_amount);
-    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** DECIMALS[i]);
+    amount = amount.multipliedBy(state.price[i]).dividedBy(10 ** coins[i].decimals);
 
     if(coins[i].stable)
       stable = stable.plus(amount);

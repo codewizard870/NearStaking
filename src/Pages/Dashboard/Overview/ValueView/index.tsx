@@ -7,7 +7,7 @@ import YellowPanel from '../../../../assets/YellowPanel.svg'
 import { useStore, usePrice } from '../../../../store';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import { floor, floorNormalize } from '../../../../Util';
-import { StableCoins, DECIMALS } from '../../../../constants';
+import { StableCoins } from '../../../../constants';
 
 const ValueView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
@@ -23,7 +23,7 @@ const ValueView: FunctionComponent = (props) => {
     let coins = StableCoins.filter((coin) => !coin.upcoming);
     for (let j = 0; j < coins.length; j++) {
       let usd = new BigNumber(history[last].amount[j] + history[last].reward[j]);
-      usd = usd.multipliedBy(price[j]).dividedBy(10 ** DECIMALS[j]);
+      usd = usd.multipliedBy(price[j]).dividedBy(10 ** StableCoins[j].decimals);
 
       if (coins[j].stable)
         stable = stable.plus(usd);

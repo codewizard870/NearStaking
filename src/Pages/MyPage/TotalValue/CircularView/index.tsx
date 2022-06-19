@@ -40,46 +40,47 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   //     total: 100 - percent3,
   //   },
   // ];
-
-
   useEffect(() => {
-    function animateValue(percent: number[]) {
-      var current = [0, 0, 0];
-      var increment = [0, 0, 0];
-      var count = 0;
-      const step = 200;
+    setPercent([percent1, percent2, percent3]);
+  }, [percent1, percent2, percent3] );
+  // useEffect(() => {
+  //   function animateValue(percent: number[]) {
+  //     var current = [0, 0, 0];
+  //     var increment = [0, 0, 0];
+  //     var count = 0;
+  //     const step = 200;
 
-      for (let i = 0; i<percent.length; i++)
-        increment[i] = percent[i]/step;
+  //     for (let i = 0; i<percent.length; i++)
+  //       increment[i] = percent[i]/step;
 
-      let timeOut = 100;
-      if(running){
-        clearInterval(running);
-        setRunning(null);
-        setPercent([0, 0, 0]);
-        timeOut = 1000;
-      }
+  //     let timeOut = 100;
+  //     if(running){
+  //       clearInterval(running);
+  //       setRunning(null);
+  //       setPercent([0, 0, 0]);
+  //       timeOut = 1000;
+  //     }
 
-      setTimeout(() => {
-        var timer = setInterval(function () {
-          for (let i = 0; i<percent.length; i++)
-            current[i] += increment[i];
+  //     setTimeout(() => {
+  //       var timer = setInterval(function () {
+  //         for (let i = 0; i<percent.length; i++)
+  //           current[i] += increment[i];
   
-          setPercent([...current]);
-          count++;
+  //         setPercent([...current]);
+  //         count++;
   
-          if (count >= step) {
-            clearInterval(timer);
-          }
-        }, 10);
+  //         if (count >= step) {
+  //           clearInterval(timer);
+  //         }
+  //       }, 10);
   
-        setRunning(timer);
-      }, timeOut)
-    }
+  //       setRunning(timer);
+  //     }, timeOut)
+  //   }
 
-    animateValue([percent1, percent2, percent3])
-    // setPercent([percent1, percent2, percent3]);
-  }, [percent1, percent2, percent3]);
+  //   animateValue([percent1, percent2, percent3])
+  //   // setPercent([percent1, percent2, percent3]);
+  // }, [percent1, percent2, percent3]);
 
   return (
     <Flex
@@ -89,7 +90,8 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
       h={'220px'}
       justify='center'
       mr={'36px'}
-    // animation='spin1 0.3s linear'
+      transform={'rotate(-90deg)'} 
+      animation='spin1 0.3s linear'
     // position="relative"
     // transform={'scaleY(-1)'} 
     >

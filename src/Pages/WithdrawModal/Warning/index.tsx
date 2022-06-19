@@ -15,7 +15,7 @@ import BigNumber from 'bignumber.js';
 import { CONTRACT_NAME } from '../../../config'
 import { useStore, useWallet, ActionKind } from '../../../store';
 import { fetchData, sleep, getCoinId } from '../../../Util';
-import { successOption, errorOption, REQUEST_ENDPOINT, DECIMALS } from '../../../constants';
+import { successOption, errorOption, REQUEST_ENDPOINT, StableCoins } from '../../../constants';
 import CustomCheckbox from './CustomCheckbox';
 
 interface Props {
@@ -43,7 +43,7 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
       }
     );
 
-    const decimal = DECIMALS[getCoinId(state.coinType)];
+    const decimal = StableCoins[getCoinId(state.coinType)].decimals;
     let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
 
     let withdraw_msg = {

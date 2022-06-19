@@ -9,8 +9,8 @@ import {
   useStore,
   COINTYPE,
 } from '../../../store';
-import { DECIMALS } from '../../../constants';
 import AnimationNumber from '../../Components/AnimationNumber';
+import { StableCoins } from '../../../constants';
 import { floor, floorNormalize, getCoinId } from '../../../Util';
 
 interface Props {
@@ -27,12 +27,12 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
   const coinId = getCoinId(name)
   const price = state.price;
 
-  const tvl_coin = last < 0 ? new BigNumber(0) : new BigNumber(history[last].amount[coinId] + history[last].reward[coinId]).dividedBy(10 ** DECIMALS[coinId]);
+  const tvl_coin = last < 0 ? new BigNumber(0) : new BigNumber(history[last].amount[coinId] + history[last].reward[coinId]).dividedBy(10 ** StableCoins[coinId].decimals);
   const tvl_usd = last < 0 ? new BigNumber(0) : tvl_coin.multipliedBy(price[coinId]);
 
   let amount = new BigNumber(state.userInfos[coinId].amount);
   amount = amount.plus(new BigNumber(state.userInfos[coinId].reward_amount));
-  amount = amount.dividedBy(10 ** DECIMALS[coinId]);
+  amount = amount.dividedBy(10 ** StableCoins[coinId].decimals);
   const disable = amount.eq(0) ? true : false;
   return (
     <>

@@ -3,7 +3,7 @@ import { HStack, Stack, Flex, Text, CircularProgress, CircularProgressLabel } fr
 import { BigNumber } from 'bignumber.js';
 
 import { DoughnutChart } from "./DoughnutChart";
-import { StableCoins, DECIMALS } from '../../../../constants';
+import { StableCoins } from '../../../../constants';
 import { useStore, usePrice } from '../../../../store';
 
 const CircularView: FunctionComponent = (props) => {
@@ -38,7 +38,7 @@ const CircularView: FunctionComponent = (props) => {
       let coins = StableCoins.filter((coin) => !coin.upcoming);
       for (let j = 0; j < coins.length; j++) {
         let usd = new BigNumber(history[last].amount[j] + history[last].reward[j]);
-        usd = usd.multipliedBy(price[j]).dividedBy(10 ** DECIMALS[j]);
+        usd = usd.multipliedBy(price[j]).dividedBy(10 ** StableCoins[j].decimals);
 
         if (coins[j].stable)
           stable = stable.plus(usd);

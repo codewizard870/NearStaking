@@ -29,7 +29,7 @@ const ProjectedPrice: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'36px'}
         >
-          <AnimationNumber value={1.25} />
+          <AnimationNumber value={0.9771} />
         </Text>
         <Text
           fontSize={'25px'}

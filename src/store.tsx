@@ -3,7 +3,7 @@ import { BigNumber } from "bignumber.js"
 
 
 import { getCoinId,  } from './Util'
-import { StableCoins, amountHistory, userInfo, farmInfo, potInfos, balanceInfo, aprInfo, priceInfo, userInfos, totalRewards } from './constants'
+import { StableCoins, amountHistory, userInfo, farmInfo, potInfos, balanceInfo, priceInfo, userInfos, totalRewards } from './constants'
 
 export type COINTYPE = 'USDC' | 'USDT' | 'DAI' | 'USN' | 'wBTC' | 'ETH' | 'wNEAR' | 'NEARt';
 export type WALLETTYPE = 'near' | 'sender';
@@ -32,7 +32,6 @@ export interface AppContextInterface {
   coinType: COINTYPE,
   isPending: boolean,
   amountHistory: any[],
-  apr: number[],
   price: number[],
   userInfos: any,
   farmPrice: number,
@@ -65,10 +64,9 @@ const initialState: AppContextInterface = {
   coinType: 'USDC',
   isPending: false,
   amountHistory: amountHistory,
-  apr: aprInfo,
   price: priceInfo,
   userInfos: userInfos,
-  farmPrice: 25,
+  farmPrice: 18,
   farmInfo: farmInfo,
   farmStartTime: Date.now() / 1000,
   totalRewards: totalRewards,
@@ -156,8 +154,6 @@ export const reducer = (state: AppContextInterface,  action: Action ) => {
       return {...state, isPending: action.payload}
     case ActionKind.setAmountHistory:
       return {...state, amountHistory: action.payload }
-    case ActionKind.setApr:
-      return {...state, apr: action.payload}
     case ActionKind.setPrice:
       return {...state, price: action.payload}
     case ActionKind.setUserInfos:
@@ -223,12 +219,6 @@ export const useDeposited = () => {
   amount = amount.plus(new BigNumber(state.userInfos[getCoinId(state.coinType)].reward_amount));
   amount = amount.dividedBy(10 ** StableCoins[getCoinId(state.coinType)].decimals);
   return amount;
-}
-
-export const useApr = () => {
-  const {state, dispatch} = useStore();
-  const apr = state.apr[getCoinId(state.coinType)];
-  return apr;
 }
 
 export const usePrice = () => {

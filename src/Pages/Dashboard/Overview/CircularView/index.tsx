@@ -8,7 +8,7 @@ import { useStore, usePrice } from '../../../../store';
 
 const CircularView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const [percent, setPercent] = useState(0);
+  const [percent, setPercent] = useState(40);
   const history = state.amountHistory;
   const price = state.price;
   const last = history.length - 1;

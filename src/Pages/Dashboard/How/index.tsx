@@ -4,6 +4,7 @@ import {
   COINTYPE,
   usePrice, useStore
 } from '../../../store';
+import { StableCoins } from '../../../constants';
 import { floor, getCoinId } from '../../../Util';
 import EarnChart from './EarnChart';
 import Earn from './Earn';
@@ -20,7 +21,7 @@ const How: FunctionComponent = (props) => {
   const re = /,/g;
   let value = re[Symbol.replace](amount, '');
   const _amount = parseFloat(value) * state.price[coinId];
-  const apr = state.apr[coinId]/100;
+  const apr = StableCoins[coinId].apr;
 
   let total = _amount;
   for (let i = 0; i < year; i++) {
@@ -28,7 +29,7 @@ const How: FunctionComponent = (props) => {
   }
   const interest = total - _amount;
 
-  const otherApr = 8;
+  const otherApr = apr * 0.7;
   const data: any = [];
   let prev = _amount;
   let otherPrev = _amount;

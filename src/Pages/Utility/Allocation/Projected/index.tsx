@@ -26,7 +26,7 @@ const Projected: FunctionComponent = (props) => {
   const farmInfo = state.farmInfo;
   const cur_amount = farmInfo.amount;
 
-  const expected = Math.floor((dayReward.toNumber() * remain + cur_amount) *  1.25);
+  const expected = Math.floor((dayReward.toNumber() * remain + cur_amount) *  0.9771);
 
   return (
     <VStack w={'100%'} color={'#CEBFBF'} spacing={'20px'}>

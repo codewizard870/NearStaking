@@ -27,7 +27,6 @@ export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_A
 export const REQUEST_ENDPOINT = "https://seashell-app-cmf7v.ondigitalocean.app/";
 
 
-export const aprInfo = [1487, 1487, 1487, 1487, 987, 987, 987];
 export const balanceInfo: BigNumber[] = [
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0),
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
@@ -97,7 +96,7 @@ export const StableCoins=[
     id: 'usd-coin',
     description: 'USD Coin',
     avatar: 'Usdc.svg',
-    apr: 23.97,
+    apr: 21.4985,
     decimals: 6,
     stable: true,
     upcoming: false
@@ -107,7 +106,7 @@ export const StableCoins=[
     id: 'tether',
     description: 'USD Tether',
     avatar: 'Usdt.svg',
-    apr: 23.97,
+    apr: 21.4985,
     decimals: 6,
     stable: true,
     upcoming: false
@@ -117,7 +116,7 @@ export const StableCoins=[
     id: 'dai',
     description: 'Dai',
     avatar: 'Dai.svg',
-    apr: 23.97,
+    apr: 21.4985,
     decimals: 18,
     stable: true,
     upcoming: false
@@ -127,7 +126,7 @@ export const StableCoins=[
     id: 'usn',
     description: 'USD NEAR',
     avatar: 'Usn.svg',
-    apr: 23.97,
+    apr: 21.4985,
     decimals: 18,
     stable: true,
     upcoming: false
@@ -137,7 +136,7 @@ export const StableCoins=[
     id: 'wrapped-bitcoin',
     description: 'Wrapped Bitcoin',
     avatar: 'Wbtc.svg',
-    apr: 9.15,
+    apr: 8.76,
     decimals: 8,
     stable: false,
     upcoming: false
@@ -147,7 +146,7 @@ export const StableCoins=[
     id: 'ethereum',
     description: 'Ethereum',
     avatar: 'Eth.png',
-    apr: 9.15,
+    apr: 8.76,
     decimals: 18,
     stable: false,
     upcoming: false
@@ -157,7 +156,7 @@ export const StableCoins=[
     id: 'wrapped-near',
     description: 'Wrapped Near',
     avatar: 'Wnear.svg',
-    apr: 14.61,
+    apr: 13.651,
     decimals: 24,
     stable: false,
     upcoming: false

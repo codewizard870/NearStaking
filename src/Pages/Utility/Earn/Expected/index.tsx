@@ -14,7 +14,7 @@ const Expected: FunctionComponent<Props> = ({ amount }) => {
   let remain = 60 - Math.floor((Date.now() - state.farmStartTime) / 1000 / 60 / 60 / 24);
   remain = remain > 0 ? remain : 60;
   const expected = Math.floor(dayReward * remain);
-  const expectedUSD = Math.floor(expected * 1.25);
+  const expectedUSD = Math.floor(expected * 0.9771);
 
   return (
     <Flex w={'100%'} h={'100%'} direction="column" align={'baseline'} justify='center'>

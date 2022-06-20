@@ -95,8 +95,8 @@ console.log(status)
     //---------NEARt--------------???
     let nearT_Info = {
       amount: status.farm_info.amount,
-      deposit_time: "0",
-      reward_amount: "0",
+      deposit_time: 0,
+      reward_amount: 0,
       account: ""
     }
     status.user_info.push(nearT_Info);

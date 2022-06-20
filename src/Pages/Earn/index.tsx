@@ -26,7 +26,7 @@ const MyPage: FunctionComponent = (props) => {
             description = {item.description}
             stable = {item.stable}
             avatar = {item.avatar}
-            apr = {item.apr}
+            apy = {item.apy}
             upcoming = {item.upcoming}
           />
         ))}

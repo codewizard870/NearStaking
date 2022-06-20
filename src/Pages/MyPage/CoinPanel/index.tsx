@@ -15,17 +15,16 @@ interface Props {
   description: string,
   stable: boolean,
   avatar: string,
-  apr: number,
+  apy: number,
   upcoming: boolean
 }
 
-const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, upcoming, stable }) => {
+const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apy, upcoming, stable }) => {
   const { state, dispatch } = useStore();
 
   let coinId = getCoinId(name);
   let amount = new BigNumber(state.userInfos[coinId].amount + state.userInfos[coinId].reward_amount).dividedBy(10 ** StableCoins[coinId].decimals);
   let usd = amount.multipliedBy(state.price[coinId]);
-
   const disable = usd.eq(0) ? true : false;
 
   return (
@@ -129,7 +128,7 @@ const CoinPanel: FunctionComponent<Props> = ({ name, description, avatar, apr, u
               fontSize='13px'
               fontWeight={'400'}
             >
-              {upcoming ? "X.XX" : <AnimationNumber value={apr} />}%
+              {upcoming ? "X.XX" : <AnimationNumber value={apy} />}%
             </Text>
           </VStack>
         </HStack>

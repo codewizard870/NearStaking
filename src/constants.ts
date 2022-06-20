@@ -30,7 +30,7 @@ export const REQUEST_ENDPOINT = "https://seashell-app-cmf7v.ondigitalocean.app/"
 export const balanceInfo: BigNumber[] = [
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0),
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0)];
-export const priceInfo = [1, 1, 1, 1, 1, 1, 1, 0.25];
+export const priceInfo = [1, 1, 1, 1, 1, 1, 1, 0.18];
 export const totalRewards = [0, 0, 0, 0, 0, 0, 0];
 
 export const farmInfo = {
@@ -174,7 +174,7 @@ export const StableCoins=[
     avatar: 'Neart.svg',
     apy: 0,
     apr: 0,
-    decimals: 24,
+    decimals: 6,
     stable: false,
     upcoming: true
   }

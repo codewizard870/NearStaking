@@ -20,7 +20,6 @@ declare let document: any;
 function App() {
   const [fontLoading, setFontLoading] = useState(true);
   const { state, dispatch } = useStore();
-  const [s1, setCount] = useState(0);
 
   const wallet = useWallet();
   const near = useNear();
@@ -34,10 +33,6 @@ function App() {
       fetchAll()
 
   }, [wallet, near, state.refresh])
-
-  useEffect(() => {
-    console.log("state : " + s1.toString());
-  }, [s1]);
 
   useEffect(() => {
     const loadFonts = async () => {

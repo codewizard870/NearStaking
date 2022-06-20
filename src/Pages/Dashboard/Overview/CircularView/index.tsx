@@ -8,7 +8,7 @@ import { useStore, usePrice } from '../../../../store';
 
 const CircularView: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const [percent, setPercent] = useState(40);
+  const [percent, setPercent] = useState(75);
   const history = state.amountHistory;
   const price = state.price;
   const last = history.length - 1;
@@ -48,14 +48,14 @@ const CircularView: FunctionComponent = (props) => {
       const sum = stable.plus(volatile);
       if (!sum.eq(0)) {
         let percent_big = stable.dividedBy(sum).multipliedBy(100);
-        setPercent(percent_big.toNumber());
+        setPercent(percent_big.toNumber()*0.95);
         // animateValue(0, percent_big.toNumber(), 1000);
       }
     } 
   }, [history]);
   return (
     <Flex
-      transform={'rotate(90deg)'} 
+      transform={'rotate(-90deg)'} 
       animation='spin 0.3s linear'
     >
       <CircularProgress

@@ -16,14 +16,14 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   const [running, setRunning] = useState<any>(null);
   const sum = total;
 
-  const rate=  0.96;
-  // const percent1 = sum.isEqualTo(0) ? 75 : 100 * rate;
-  // const percent2 = sum.isEqualTo(0) ? 75 : stable.dividedBy(sum).multipliedBy(100).toNumber() * 0.95;
-  // const percent3 = sum.isEqualTo(0) ? 75 : volatile.dividedBy(sum).multipliedBy(100).toNumber() * 0.94;
+  const rate=  0.965;
+  const percent1 = sum.isEqualTo(0) ? 75 : 100 * rate;
+  const percent2 = sum.isEqualTo(0) ? 75 : stable.dividedBy(sum).multipliedBy(100).toNumber() * 0.96;
+  const percent3 = sum.isEqualTo(0) ? 75 : volatile.dividedBy(sum).multipliedBy(100).toNumber() * 0.935;
 
-  const percent1 = 96.5;
-  const percent2 = 96;
-  const percent3 = 93.5;
+  // const percent1 = 96.5;
+  // const percent2 = 96;
+  // const percent3 = 93.5;
   // const data: ChartItem[] = [
   //   {
   //     label: "1",
@@ -90,9 +90,9 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   return (
     <Flex
       align={'center'}
-      minWidth={'300px'}
-      w="300px"
-      h={'300px'}
+      minWidth={'220px'}
+      w="220px"
+      h={'220px'}
       justify='center'
       mr={'36px'}
       transform={'rotate(-90deg)'} 
@@ -103,29 +103,29 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
       <CircularProgress
         position={'absolute'}
         value={percent[0]}
-        size={'300px'}
+        size={'220px'}
         capIsRound={true}
         color={'#F72585'}
         trackColor={'#493C3C'}
-        thickness='8'
+        thickness='8px'
       />
       <CircularProgress
         position={'absolute'}
         value={percent[1]}
-        size={'225px'}
+        size={'165px'}
         capIsRound={true}
         color={'#000000'}
         trackColor={'#493C3C'}
-        thickness='10'
+        thickness='11px'
       />
       <CircularProgress
         position={'absolute'}
         value={percent[2]}
-        size={'150px'}
+        size={'107px'}
         capIsRound={true}
         color={'#F9D85E'}
         trackColor={'#493C3C'}
-        thickness='16'
+        thickness='17px'
       />
       {/* <DoughnutChart
         data={data}

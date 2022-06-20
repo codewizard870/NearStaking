@@ -67,6 +67,7 @@ const FailedModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
           <Link
             href="https://t.me/neartreasury"
             _focus={{ boxShadow: 'none' }}
+            target="_blank"
           >
             https://t.me/neartreasury
           </Link>

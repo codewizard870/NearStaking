@@ -3,6 +3,7 @@ import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Center, Divider, But
 import { BigNumber } from 'bignumber.js'
 
 import { StableCoins } from '../../../../constants';
+import { getCoinParam } from '../../../../Util';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import Warning from '../../../../assets/Warning.svg'
 import { useStore, } from '../../../../store';
@@ -24,11 +25,11 @@ const Projected: FunctionComponent = (props) => {
   const remain = 60 - Math.floor((Date.now() - state.farmStartTime) / 1000 / 60 / 60 / 24);
 
   const farmInfo = state.farmInfo;
-  const cur_amount = farmInfo.amount;
+  const coinParam = getCoinParam("NEARt");
+  const decimals = coinParam?.decimals?? 1;
+  const cur_amount = new BigNumber(farmInfo.amount).dividedBy(10 ** decimals);
 
-  const expected = Math.floor(dayReward.toNumber() * remain + cur_amount) ;
-
-
+  const expected = dayReward.toNumber() * remain + cur_amount.toNumber();
 
   return (
     <VStack w={'100%'} color={'#CEBFBF'} spacing={'12px'}>

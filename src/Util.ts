@@ -89,8 +89,8 @@ console.log(status)
     if (status.amount_history !== undefined)
       dispatch({ type: ActionKind.setAmountHistory, payload: calcUSD(status.amount_history, price) });
 
-    if (status.apr !== undefined)
-      dispatch({ type: ActionKind.setApr, payload: status.apr });
+    // if (status.apr !== undefined)
+    //   dispatch({ type: ActionKind.setApr, payload: status.apr });
 
     //---------NEARt--------------???
     let nearT_Info = {

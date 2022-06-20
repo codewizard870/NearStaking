@@ -16,10 +16,14 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   const [running, setRunning] = useState<any>(null);
   const sum = total;
 
-  const percent1 = sum.isEqualTo(0) ? 75 : 96;
-  const percent2 = sum.isEqualTo(0) ? 75 : stable.dividedBy(sum).multipliedBy(100).toNumber();
-  const percent3 = sum.isEqualTo(0) ? 75 : 100 - percent2;
+  const rate=  0.96;
+  // const percent1 = sum.isEqualTo(0) ? 75 : 100 * rate;
+  // const percent2 = sum.isEqualTo(0) ? 75 : stable.dividedBy(sum).multipliedBy(100).toNumber() * 0.95;
+  // const percent3 = sum.isEqualTo(0) ? 75 : volatile.dividedBy(sum).multipliedBy(100).toNumber() * 0.94;
 
+  const percent1 = 96.5;
+  const percent2 = 96;
+  const percent3 = 93.5;
   // const data: ChartItem[] = [
   //   {
   //     label: "1",
@@ -41,6 +45,7 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   //   },
   // ];
   useEffect(() => {
+
     setPercent([percent1, percent2, percent3]);
   }, [percent1, percent2, percent3] );
   // useEffect(() => {
@@ -85,9 +90,9 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
   return (
     <Flex
       align={'center'}
-      minWidth={'220px'}
-      w="220px"
-      h={'220px'}
+      minWidth={'300px'}
+      w="300px"
+      h={'300px'}
       justify='center'
       mr={'36px'}
       transform={'rotate(-90deg)'} 
@@ -98,29 +103,29 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
       <CircularProgress
         position={'absolute'}
         value={percent[0]}
-        size={'220px'}
+        size={'300px'}
         capIsRound={true}
         color={'#F72585'}
         trackColor={'#493C3C'}
-        thickness='8px'
+        thickness='8'
       />
       <CircularProgress
         position={'absolute'}
         value={percent[1]}
-        size={'165px'}
+        size={'225px'}
         capIsRound={true}
         color={'#000000'}
         trackColor={'#493C3C'}
-      // thickness='12px'
+        thickness='10'
       />
       <CircularProgress
         position={'absolute'}
         value={percent[2]}
-        size={'110px'}
+        size={'150px'}
         capIsRound={true}
         color={'#F9D85E'}
         trackColor={'#493C3C'}
-        thickness='15px'
+        thickness='16'
       />
       {/* <DoughnutChart
         data={data}

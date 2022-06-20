@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Center, Divider, Button } from '@chakra-ui/react'
-
+import {BigNumber} from 'bignumber.js';
+import { getCoinParam } from '../../../../Util';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import Warning from '../../../../assets/Warning.svg'
 import { OpenDepositModal, useStore } from '../../../../store';
@@ -8,9 +9,13 @@ import { OpenDepositModal, useStore } from '../../../../store';
 const YourAllocation: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
   const farmInfo = state.farmInfo;
+  const coinParam = getCoinParam("NEARt");
+  const decimals = coinParam?.decimals?? 1;
+  const amount = new BigNumber(farmInfo.amount).dividedBy(10 ** decimals);
   const farmPrice = state.farmPrice;
 
-  const value = Math.floor(farmInfo.amount * farmPrice / 100);
+  const value = amount.toNumber() * farmPrice / 100;
+  
   return (
     <VStack w={'100%'} spacing={'20px'}>
       <HStack w={'100%'}>

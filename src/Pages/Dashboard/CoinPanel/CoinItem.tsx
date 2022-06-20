@@ -17,9 +17,9 @@ interface Props {
   name: COINTYPE,
   description: string,
   avatar: string,
-  apr: number,
+  apy: number,
 }
-const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) => {
+const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apy }) => {
   const { state, dispatch } = useStore();
 
   const history = state.amountHistory;
@@ -74,7 +74,7 @@ const CoinItem: FunctionComponent<Props> = ({ name, description, avatar, apr }) 
             fontWeight={'400'}
             lineHeight={'15.6px'}
           >
-            <AnimationNumber value={apr} />%
+            <AnimationNumber value={apy} />%
           </Text>
         </Flex>
       </GridItem>

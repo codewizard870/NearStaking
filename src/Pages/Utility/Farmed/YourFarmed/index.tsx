@@ -1,13 +1,17 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Image, Tooltip, Center, Divider, Button } from '@chakra-ui/react'
+import {BigNumber} from "bignumber.js";
 import Warning from '../../../../assets/Warning.svg'
 import AnimationNumber from '../../../Components/AnimationNumber';
+import { getCoinParam } from '../../../../Util';
 import { OpenDepositModal, useStore } from '../../../../store';
 
 const YourFarmed: FunctionComponent = (props) => {
   const {state, dispatch} = useStore();
   const farmInfo = state.farmInfo;
-  const amount = farmInfo.amount;
+  const coinParam = getCoinParam("NEARt");
+  const decimals = coinParam?.decimals?? 1;
+  const amount = new BigNumber(farmInfo.amount).dividedBy(10 ** decimals);
 
   return (
     <VStack w={'100%'} spacing={'12px'}>
@@ -34,7 +38,7 @@ const YourFarmed: FunctionComponent = (props) => {
           fontWeight={'860'}
           lineHeight={'36px'}
         >
-         <AnimationNumber value={amount} />
+         <AnimationNumber value={amount.toNumber()} />
         </Text>
         <Text
           fontSize={'25px'}

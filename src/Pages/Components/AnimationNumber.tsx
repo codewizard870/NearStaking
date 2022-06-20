@@ -32,7 +32,7 @@ const AnimationNumber: FunctionComponent<Props> = ({ value }) => {
     <span>
       {loading && (prev == value ? <span>{tmpValue}</span> : <CountUp start={prev} end={Math.floor(tmpValue)} separator=',' />)}
       {loading && getRest(value) > 0 ? `${rest}` : ""}
-      {!loading && bigValue.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFormat()}
+      {!loading && bigValue.decimalPlaces(4, BigNumber.ROUND_FLOOR).toFormat()}
       {/* {loading && <CountUp start={prev} end={Math.floor(tmpValue)} separator=',' />}
       {loading && getRest(value) > 0 ? `${rest}` : ""}
       {!loading && bigValue.decimalPlaces(2, BigNumber.ROUND_FLOOR).toFormat()} */}

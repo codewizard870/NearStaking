@@ -2,6 +2,8 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
 import * as nearAPI from "near-api-js"
 
+import {BigNumber} from 'bignumber.js';
+import { getCoinParam } from '../../Util';
 import { CONTRACT_NAME } from '../../config'
 import { useStore, useWallet } from '../../store';
 import {
@@ -33,6 +35,14 @@ const CommunityFarm: FunctionComponent = (props) => {
         }
       );
       let res = await contract.get_farm_info();
+
+      const farmInfo = state.farmInfo;
+      const coinParam = getCoinParam("NEARt");
+      const decimals = coinParam?.decimals?? 1;
+      
+      for(let i=0; i<res.length; i++){
+        res[i].big_amount = new BigNumber(res[i].amount).dividedBy(10 ** decimals);
+      }
       setFarmInfo(res);
     }
     fetchData();
@@ -59,7 +69,7 @@ const CommunityFarm: FunctionComponent = (props) => {
             {farmInfo?.map((item, index) => (
               <Tr>
                 <Td>{item.account}</Td>
-                <Td>{item.amount}</Td>
+                <Td>{item.big_amount.toFixed()}</Td>
               </Tr>
             ))}
           </Tbody>

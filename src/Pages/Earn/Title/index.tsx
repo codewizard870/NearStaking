@@ -12,7 +12,7 @@ const Title: FunctionComponent = (props) => {
       >
         EARN
       </Text>
-      <Link href={'https://near-treasury.gitbook.io/near-treasury-tm/near-treasury-tm/home'}>
+      <Link href={'https://near-treasury.gitbook.io/near-treasury-tm/near-treasury-tm/home'} target="_blank">
         <HStack spacing={'3px'}  pb={'15px'}>
           {/* <Text ml='13px'  color='#CEBFBF'>
             Docs

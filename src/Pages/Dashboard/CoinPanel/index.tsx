@@ -9,7 +9,6 @@ import {
   COINTYPE
 } from '../../../store';
 import { StableCoins } from '../../../constants';
-import { floor, floorNormalize } from '../../../Util';
 import CoinItem from './CoinItem';
 
 const CoinPanel: FunctionComponent = (props) => {
@@ -103,7 +102,7 @@ const CoinPanel: FunctionComponent = (props) => {
             name={item.name as COINTYPE}
             description={item.description}
             avatar={item.avatar}
-            apr={item.apr}
+            apy={item.apy}
           />
         ))}
       </Grid>

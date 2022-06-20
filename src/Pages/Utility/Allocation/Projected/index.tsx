@@ -1,7 +1,7 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, HStack, Stack, Flex, Text, Tooltip, Image, Center, Divider, Button } from '@chakra-ui/react'
 import {BigNumber} from 'bignumber.js'
-
+import { getCoinParam } from '../../../../Util';
 import { StableCoins } from '../../../../constants';
 import AnimationNumber from '../../../Components/AnimationNumber';
 import Warning from '../../../../assets/Warning.svg'
@@ -24,9 +24,11 @@ const Projected: FunctionComponent = (props) => {
   const remain = 60 - Math.floor((Date.now() - state.farmStartTime) / 1000 / 60 / 60 / 24);
 
   const farmInfo = state.farmInfo;
-  const cur_amount = farmInfo.amount;
+  const coinParam = getCoinParam("NEARt");
+  const decimals = coinParam?.decimals?? 1;
+  const cur_amount = new BigNumber(farmInfo.amount).dividedBy(10 ** decimals);
 
-  const expected = Math.floor((dayReward.toNumber() * remain + cur_amount) *  0.9771);
+  const expected = (dayReward.toNumber() * remain + cur_amount.toNumber()) *  0.9771;
 
   return (
     <VStack w={'100%'} color={'#CEBFBF'} spacing={'20px'}>

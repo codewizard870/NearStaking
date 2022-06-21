@@ -21,10 +21,10 @@ const How: FunctionComponent = (props) => {
   const re = /,/g;
   let value = re[Symbol.replace](amount, '');
   const _amount = parseFloat(value);// * state.price[coinId];
-console.log(_amount)  
+  const apr = StableCoins[coinId].apr;
   const apy = StableCoins[coinId].apy;
-console.log(apy)
-  let total = _amount* Math.pow(1 + apy / 100, year);
+
+  let total = _amount * Math.pow(1 + apr / 365 / 100, year * 365);
   const interest = total - _amount;
 
   const otherApy = apy * 0.7;
@@ -34,8 +34,8 @@ console.log(apy)
   for (let i = 1; i <= 10; i++) {
     // const val = floor(prev * (1 + apy / 100)) * (1 + (Math.random() - 0.5) / 10);
     // const otherVal = floor(otherPrev * (1 + otherApy / 100)) * (1 + (Math.random() - 0.5) / 10);
-    const val = floor(prev * (1 + apy / 100));// * (1 + (Math.random() - 0.5) / 10);
-    const otherVal = floor(otherPrev * (1 + otherApy / 100));// * (1 + (Math.random() - 0.5) / 10);
+    const val = floor(prev * (1 + apy / 100));
+    const otherVal = floor(otherPrev * (1 + otherApy / 100));
     data[i - 1] = {
       time: i.toString(),
       value1: val,

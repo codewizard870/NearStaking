@@ -96,7 +96,7 @@ const CircularView: FunctionComponent<Props> = ({ total, stable, volatile }) => 
       justify='center'
       mr={'36px'}
       transform={'rotate(-90deg)'} 
-      animation='spin1 0.3s linear'
+      // animation='spin1 0.3s linear'
     // position="relative"
     // transform={'scaleY(-1)'} 
     >

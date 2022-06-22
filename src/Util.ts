@@ -1,12 +1,12 @@
 import { AppContextInterface, ActionKind } from './store'
-import {BigNumber} from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 
 import * as nearAPI from "near-api-js"
 
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import { COINTYPE } from './store';
-import { successOption, errorOption, StableCoins, TOKEN_ADDRESS, balanceInfo, priceInfo, userInfo } from './constants';
+import { successOption, errorOption, StableCoins, balanceInfo, priceInfo, userInfo } from './constants';
 import { CONTRACT_NAME } from './config';
 
 export function shortenAddress(address: string | undefined) {
@@ -26,9 +26,9 @@ function calcUSD(amountHistory: any, price: number[]) {
   for (let i = 0; i < amountHistory.length; i++) {
     let totalUSD = new BigNumber(0);
 
-    for(let j=0; j<coins.length; j++){
+    for (let j = 0; j < coins.length; j++) {
       let usd = new BigNumber(amountHistory[i].amount[j] + amountHistory[i].reward[j]);
-      usd = usd.multipliedBy(price[j]).dividedBy(10**coins[j].decimals);
+      usd = usd.multipliedBy(price[j]).dividedBy(10 ** coins[j].decimals);
       totalUSD = totalUSD.plus(usd);
     }
     amountHistory[i].totalUSD = totalUSD;
@@ -46,7 +46,7 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
   for (let i = 0; i < coins.length; i++) {
     const token: any = new nearAPI.Contract(
       wallet.account(), // the account object that is connecting
-      TOKEN_ADDRESS[i],
+      coins[i].address! ,
       {
         viewMethods: ["ft_balance_of"],
         changeMethods: [],
@@ -64,7 +64,7 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
   let price = priceInfo;
   let res: any;
 
-  for(let i=0; i<coins.length; i++){
+  for (let i = 0; i < coins.length; i++) {
     try {
       res = await axios.get(
         `https://api.coingecko.com/api/v3/simple/price?ids=${coins[i].id}&vs_currencies=usd`
@@ -84,7 +84,7 @@ export async function fetchData(state: AppContextInterface, dispatch: React.Disp
   );
 
   status = await contract.get_status({ account: wallet.getAccountId() })
-console.log(status)
+  console.log(status)
   if (status) {
     if (status.amount_history !== undefined)
       dispatch({ type: ActionKind.setAmountHistory, payload: calcUSD(status.amount_history, price) });

@@ -1,8 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { VStack, Stack, Text, Divider, HStack, Image, Flex, Button } from '@chakra-ui/react'
 
+import { getCoinId } from '../../../Util';
+import { CONTRACT_NAME } from '../../../config';
 import { MdNorthEast } from 'react-icons/md'
 import { useWallet } from '../../../store';
+import { StableCoins } from '../../../constants';
+import BigNumber from 'bignumber.js';
 
 interface Props {
   action: any,
@@ -21,12 +25,14 @@ const ActionItem: FunctionComponent<Props> = ({ action, receiverId, signerId, bl
       msg = "account " + receiverId;
       break;
     case "Transfer":
+      // const args1 = JSON.parse(atob(action.args.args));
+      const value = new BigNumber(action.args.deposit).dividedBy(10 ** 24);
       if(receiverId == account){
         title = "Received NEAR";
-        msg = "from " + signerId;
+        msg = value.toFixed() + " from " + signerId;
       } else {
         title = "Transfer NEAR";
-        msg = "to " + receiverId;
+        msg = value.toFixed() + " to " + receiverId;
       }
       break;
     case "AddKey":
@@ -34,8 +40,23 @@ const ActionItem: FunctionComponent<Props> = ({ action, receiverId, signerId, bl
       msg = "for " + receiverId;
       break;
     case "FunctionCall":
+      const args = JSON.parse(atob(action.args.args));
+
       title = "Method called";
-      msg = action.args.method_name + " in contract: " + receiverId;
+      if(receiverId == CONTRACT_NAME && action.args.method_name == "withdraw_reserve"){
+        const decimals = StableCoins[getCoinId(args.coin)].decimals;
+        const amount = new BigNumber(args.amount).dividedBy(10**decimals);
+        msg = `Withdraw ${args.coin} ${amount.toFixed()}`
+      }
+      else if(action.args.method_name == "ft_transfer_call" && args.receiver_id == CONTRACT_NAME) {
+        const param = JSON.parse(args.msg)
+        const decimals = StableCoins[getCoinId(param.coin)].decimals;
+        const amount = new BigNumber(args.amount).dividedBy(10**decimals);
+        msg = `Deposit ${param.coin} ${amount.toFixed()}`
+      }
+      else {
+        msg = action.args.method_name + " in contract: " + receiverId;
+      }
   }
   return (
     <>

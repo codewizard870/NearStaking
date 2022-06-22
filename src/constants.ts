@@ -1,31 +1,8 @@
 import { BigNumber } from "bignumber.js"
-import { COINTYPE } from "./store";
 
 export let net = "testnet";
 
-export const TOKEN_ADDRESSES_TESTNET = [
-  "ft.alenzertest.testnet",
-  "other.alenzertest.testnet",
-  "other.alenzertest.testnet",
-  "other.alenzertest.testnet",
-  "other.alenzertest.testnet",
-  "other.alenzertest.testnet",
-  "wrap.testnet",
-];
-export const TOKEN_ADDRESSES_MAINNET = [
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-  "ft.alenzertest.testnet",
-];
-export const TOKEN_ADDRESS = net == 'testnet'? TOKEN_ADDRESSES_TESTNET : TOKEN_ADDRESSES_MAINNET;
-// export const DECIMALS= [6, 6, 18, 18, 8, 18, 24, 24];
-
 export const REQUEST_ENDPOINT = "https://seashell-app-cmf7v.ondigitalocean.app/";
-
 
 export const balanceInfo: BigNumber[] = [
   new BigNumber(0), new BigNumber(0), new BigNumber(0), new BigNumber(0),
@@ -100,7 +77,8 @@ export const StableCoins=[
     apr: 21.4985,
     decimals: 6,
     stable: true,
-    upcoming: false
+    upcoming: false,
+    address: "ft.alenzertest.testnet",
   },
   {
     name: 'USDT',
@@ -111,7 +89,8 @@ export const StableCoins=[
     apr: 21.4985,
     decimals: 6,
     stable: true,
-    upcoming: false
+    upcoming: false,
+    address: "other.alenzertest.testnet",
   },
   {
     name: 'DAI',
@@ -122,7 +101,8 @@ export const StableCoins=[
     apr: 21.4985,
     decimals: 18,
     stable: true,
-    upcoming: false
+    upcoming: false,
+    address: "other.alenzertest.testnet",
   },
   {
     name: 'USN',
@@ -133,7 +113,8 @@ export const StableCoins=[
     apr: 21.4985,
     decimals: 18,
     stable: true,
-    upcoming: false
+    upcoming: false,
+    address: "other.alenzertest.testnet",
   },
   {
     name: 'wBTC',
@@ -144,7 +125,8 @@ export const StableCoins=[
     apr: 8.76,
     decimals: 8,
     stable: false,
-    upcoming: false
+    upcoming: false,
+    address: "other.alenzertest.testnet",
   },
   {
     name: 'ETH',
@@ -155,7 +137,8 @@ export const StableCoins=[
     apr: 8.76,
     decimals: 18,
     stable: false,
-    upcoming: false
+    upcoming: false,
+    address: "other.alenzertest.testnet",
   },
   {
     name: 'wNEAR',
@@ -166,7 +149,8 @@ export const StableCoins=[
     apr: 13.651,
     decimals: 24,
     stable: false,
-    upcoming: false
+    upcoming: false,
+    address: "wrap.testnet",
   },
   {
     name: 'NEARt',

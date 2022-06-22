@@ -15,7 +15,7 @@ import SliderWish from './SliderWish';
 import Info from './Info';
 import { useStore, useWallet } from '../../store';
 import { getCoinId } from '../../Util';
-import { TOKEN_ADDRESS, StableCoins } from '../../constants';
+import { StableCoins } from '../../constants';
 import { CONTRACT_NAME } from '../../config';
 
 interface Props {
@@ -32,7 +32,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
     if (wallet == undefined || parseFloat(amount) <= 0)
       return;
 
-    const tokenAddress = TOKEN_ADDRESS[getCoinId(coinType)];
+    const tokenAddress = StableCoins[getCoinId(coinType)].address!;
     const contract: any = new nearAPI.Contract(
       wallet.account(), // the account object that is connecting
       tokenAddress,

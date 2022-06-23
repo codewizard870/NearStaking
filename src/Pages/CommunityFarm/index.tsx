@@ -1,11 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
-import * as nearAPI from "near-api-js"
-
-import {BigNumber} from 'bignumber.js';
-import { getCoinParam } from '../../Util';
-import { CONTRACT_NAME } from '../../config'
-import { useStore, useWallet } from '../../store';
 import {
   Table,
   Thead,
@@ -16,12 +10,20 @@ import {
   Td,
   TableCaption,
   TableContainer,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import * as nearAPI from "near-api-js"
+
+import {BigNumber} from 'bignumber.js';
+import { getCoinParam } from '../../Util';
+import { CONTRACT_NAME } from '../../config'
+import { useStore, useWallet } from '../../store';
+import { StableCoins } from '../../constants';
 
 const CommunityFarm: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
   const [farmInfo, setFarmInfo] = useState<any[]>();
   const wallet = useWallet();
+  const coins = StableCoins.filter((coin) => coin.upcoming == false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,13 +37,20 @@ const CommunityFarm: FunctionComponent = (props) => {
         }
       );
       let res = await contract.get_farm_info();
-
-      const farmInfo = state.farmInfo;
+console.log(res)
+      for(let i=0; i<res.length; i++){
+        for(let j=0; j<res[i].user_info.length; j++){
+          const userInfo = res[i].user_info[j];
+          const decimals = StableCoins[j].decimals!;
+          userInfo.big_amount = new BigNumber(userInfo.amount + userInfo.reward_amount).dividedBy(10**decimals);
+        }
+      }
+console.log(res);
       const coinParam = getCoinParam("NEARt");
-      const decimals = coinParam?.decimals?? 1;
+      const decimals = coinParam?.decimals!;
       
       for(let i=0; i<res.length; i++){
-        res[i].big_amount = new BigNumber(res[i].amount).dividedBy(10 ** decimals);
+        res[i].farm_info.big_amount = new BigNumber(res[i].farm_info.amount).dividedBy(10 ** decimals);
       }
       setFarmInfo(res);
     }
@@ -61,15 +70,21 @@ const CommunityFarm: FunctionComponent = (props) => {
           <TableCaption>Community Farm</TableCaption>
           <Thead>
             <Tr>
-              <Th>Wallet</Th>
+              <Th>AccountId</Th>
               <Th>Amount</Th>
+              {coins.map((coin, index) => (
+                <Th>{coin.name}</Th>
+              ))}
             </Tr>
           </Thead>
           <Tbody>
             {farmInfo?.map((item, index) => (
               <Tr>
-                <Td>{item.account}</Td>
-                <Td>{item.big_amount.toFixed()}</Td>
+                <Td>{item.farm_info.account}</Td>
+                <Td>{item.farm_info.big_amount.toFixed()}</Td>
+                {item.user_info.map((info: any) => (
+                  <Td>{info.big_amount.toFixed()}</Td>
+                ))}
               </Tr>
             ))}
           </Tbody>

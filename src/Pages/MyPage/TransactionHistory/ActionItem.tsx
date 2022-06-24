@@ -18,8 +18,9 @@ interface Props {
 const ActionItem: FunctionComponent<Props> = ({ action, receiverId, signerId, blockTimestamp, blockHash }) => {
   const account = useWallet().getAccountId();
   let title, msg;
+  let skip = false;
 
-  switch(action.kind){
+  switch (action.kind) {
     case "CreateAccount":
       title = "New account created";
       msg = "account " + receiverId;
@@ -27,7 +28,7 @@ const ActionItem: FunctionComponent<Props> = ({ action, receiverId, signerId, bl
     case "Transfer":
       // const args1 = JSON.parse(atob(action.args.args));
       const value = new BigNumber(action.args.deposit).dividedBy(10 ** 24);
-      if(receiverId == account){
+      if (receiverId == account) {
         title = "Received NEAR";
         msg = value.toFixed() + " from " + signerId;
       } else {
@@ -43,67 +44,76 @@ const ActionItem: FunctionComponent<Props> = ({ action, receiverId, signerId, bl
       const args = JSON.parse(atob(action.args.args));
 
       title = "Transaction type";
-      if(receiverId == CONTRACT_NAME && action.args.method_name == "withdraw_reserve"){
+      if (receiverId == CONTRACT_NAME && action.args.method_name == "withdraw_reserve") {
         const decimals = StableCoins[getCoinId(args.coin)].decimals;
-        const amount = new BigNumber(args.amount).dividedBy(10**decimals);
+        const amount = new BigNumber(args.amount).dividedBy(10 ** decimals);
         msg = `Withdraw ${args.coin} ${amount.toFixed()}`
       }
-      else if(action.args.method_name == "ft_transfer_call" && args.receiver_id == CONTRACT_NAME) {
+      else if (action.args.method_name == "ft_transfer_call" && args.receiver_id == CONTRACT_NAME) {
         const param = JSON.parse(args.msg)
         const decimals = StableCoins[getCoinId(param.coin)].decimals;
-        const amount = new BigNumber(args.amount).dividedBy(10**decimals);
+        const amount = new BigNumber(args.amount).dividedBy(10 ** decimals);
         msg = `Deposit ${param.coin} ${amount.toFixed()}`
       }
       else {
         msg = action.args.method_name + " in contract: " + receiverId;
+        skip = true;
       }
   }
   return (
     <>
-      <Flex
-        w={'100%'}
-        justify={'space-between'}
-        align={'center'}
-      >
-        <VStack align={'baseline'}>
-          <Flex w={'100%'} direction={'column'}>
-            <Text
-              fontSize={'13px'}
-              fontWeight={'860'}
-              lineHeight={'15px'}
-            >
-              {/* {action.kind} */}
-              {title}
-            </Text>
-            <HStack spacing={'10px'} >
-              <VStack align={'baseline'}>
+      {skip && (
+        <></>
+      )}
+      {!skip && (
+        <>
+          <Flex
+            w={'100%'}
+            justify={'space-between'}
+            align={'center'}
+          >
+            <VStack align={'baseline'}>
+              <Flex w={'100%'} direction={'column'}>
                 <Text
                   fontSize={'13px'}
                   fontWeight={'860'}
                   lineHeight={'15px'}
                 >
-                  {/* {JSON.stringify(action.args).substring(0, 100)} */}
-                  {msg}
+                  {/* {action.kind} */}
+                  {title}
                 </Text>
-              </VStack>
-              <a href={`https://explorer.testnet.near.org/blocks/${blockHash}`} target="_blank" rel="noreferrer">
-                <MdNorthEast />
-              </a>
-            </HStack>
+                <HStack spacing={'10px'} >
+                  <VStack align={'baseline'}>
+                    <Text
+                      fontSize={'13px'}
+                      fontWeight={'860'}
+                      lineHeight={'15px'}
+                    >
+                      {/* {JSON.stringify(action.args).substring(0, 100)} */}
+                      {msg}
+                    </Text>
+                  </VStack>
+                  <a href={`https://explorer.testnet.near.org/blocks/${blockHash}`} target="_blank" rel="noreferrer">
+                    <MdNorthEast />
+                  </a>
+                </HStack>
+              </Flex>
+            </VStack>
+            <Text
+              fontSize={'10px'}
+              fontWeight={'860'}
+              lineHeight={'12px'}
+            >
+              {
+                new Date(blockTimestamp).toLocaleString()
+              }
+            </Text>
           </Flex>
-        </VStack>
-        <Text
-          fontSize={'10px'}
-          fontWeight={'860'}
-          lineHeight={'12px'}
-        >
-          {
-            new Date(blockTimestamp).toLocaleString()
-          }
-        </Text>
-      </Flex>
-      <Divider orientation='horizontal' />
+          <Divider orientation='horizontal' />
+        </>
+      )}
     </>
   );
+
 }
 export default ActionItem;

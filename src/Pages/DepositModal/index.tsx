@@ -27,6 +27,7 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
   const wallet = useWallet();
   const { state, dispatch } = useStore();
   const coinType = state.coinType;
+  const active = state.qualified;
 
   const deposit = async () => {
     if (wallet == undefined || parseFloat(amount) <= 0)
@@ -76,7 +77,9 @@ const DepositModal: FunctionComponent<Props> = ({ isOpen, onClose }) => {
           lineHeight={'24px'}
           color={'white'}
           justifyContent={'center'}
+          alignItems="center"
         >
+          <Flex w="8px" h="8px" bg={active? "green" : "red"} rounded="50%" mr="10px"/>
           <Text
             fontSize={'20px'}
             fontWeight={'860'}

@@ -6,38 +6,9 @@ import { ActionKind, OpenDepositModal, useStore } from '../../../../store';
 
 const Qualifying: FunctionComponent = (props) => {
   const { state, dispatch } = useStore();
-  const [active, setActive] = useState(false);
-
-  function calcTime(offset: number) {
-    let d = new Date();
-    let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-    // let nd = new Date(utc + (3600000 * offset));
-    let nd = new Date(utc);
-
-    let minute = nd.getMinutes();
-    if (minute >= 1 && minute <= 10) {
-      setActive(true);
-      dispatch({ type: ActionKind.setQualified, payload: true });
-    }
-    else {
-      setActive(false);
-      dispatch({ type: ActionKind.setQualified, payload: false });
-    }
-console.log(minute)
-    // let day = nd.getDate();
-    // if (day >= 1 && day <= 7) {
-    //   setActive(true);
-    //   dispatch({ type: ActionKind.setQualified, payload: true });
-    // }
-    // else {
-    //   setActive(false);
-    //   dispatch({ type: ActionKind.setQualified, payload: false });
-    // }
-  }
-  useEffect(() => {
-    calcTime(-4)
-  }, [])
-
+  // const [active, setActive] = useState(false);
+  const active = state.qualified;
+  
   return (
     <Flex w={'100%'} direction="column" align={'baseline'}>
       <HStack>

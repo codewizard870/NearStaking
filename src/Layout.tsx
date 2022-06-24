@@ -27,7 +27,7 @@ const Layout = () => {
   const { isOpen: isOpenWithdraw, onOpen: onOpenWithdraw, onClose: onCloseWithdraw } = useDisclosure();
   const { isOpen: isOpenWaiting, onOpen: onOpenWaiting, onClose: onCloseWaiting } = useDisclosure();
   const { isOpen: isOpenFailed, onOpen: onOpenFailed, onClose: onCloseFailed } = useDisclosure();
-  
+
   useEffect(() => {
     dispatch({ type: ActionKind.setOpenDepositModal, payload: onOpenDeposit });
     dispatch({ type: ActionKind.setOpenWithdrawModal, payload: onOpenWithdraw });
@@ -36,15 +36,11 @@ const Layout = () => {
     dispatch({ type: ActionKind.setOpenFailedModal, payload: onOpenFailed });
   }, [dispatch, onOpenDeposit, onOpenWithdraw, onOpenWaiting, onCloseWaiting, onOpenFailed])
 
-  // setTimeout(()=>
-  //   onOpenFailed()
-  // , 300);
-
   useEffect(() => {
     const initialize = () => {
       window.localStorage.removeItem('action');
     }
-  
+
     const checkTransaction = async () => {
       let transactionHashes, errorCode, errorMessage;
       if (typeof window != 'undefined') {
@@ -105,7 +101,7 @@ const Layout = () => {
 
             onCloseWaiting();
             // setForce(!force);
-            dispatch({type: ActionKind.setRefresh, payload: !state.refresh})
+            dispatch({ type: ActionKind.setRefresh, payload: !state.refresh })
             // fetchData(state, dispatch)
           })
           .catch(function (error) {
@@ -115,7 +111,7 @@ const Layout = () => {
               onOpenFailed();
             } else if (error.request) {
               toast(error.request, errorOption);
-              dispatch({type: ActionKind.setRefresh, payload: !state.refresh})
+              dispatch({ type: ActionKind.setRefresh, payload: !state.refresh })
               // fetchData(state, dispatch)
             } else {
               toast(error.message, errorOption);
@@ -131,7 +127,38 @@ const Layout = () => {
       checkTransaction()
     }, 500);
   }, []);
-  
+
+  useEffect(() => {
+    function calcTime() {
+      let d = new Date();
+      let utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+      // let nd = new Date(utc + (3600000 * offset));
+      let nd = new Date(utc);
+
+      let minute = nd.getMinutes();
+      // if (minute >= 1 && minute <= 50) {
+      if(minute % 2 == 0){
+        dispatch({ type: ActionKind.setQualified, payload: true });
+      }
+      else {
+        dispatch({ type: ActionKind.setQualified, payload: false });
+      }
+      console.log(minute)
+      // let day = nd.getDate();
+      // if (day >= 1 && day <= 7) {
+      //   setActive(true);
+      //   dispatch({ type: ActionKind.setQualified, payload: true });
+      // }
+      // else {
+      //   setActive(false);
+      //   dispatch({ type: ActionKind.setQualified, payload: false });
+      // }
+    }
+    const interval = setInterval(() => {
+      calcTime();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
   return (
     <Flex
       background={'black'}

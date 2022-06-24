@@ -42,7 +42,7 @@ const ActionItem: FunctionComponent<Props> = ({ action, receiverId, signerId, bl
     case "FunctionCall":
       const args = JSON.parse(atob(action.args.args));
 
-      title = "Method called";
+      title = "Transaction type";
       if(receiverId == CONTRACT_NAME && action.args.method_name == "withdraw_reserve"){
         const decimals = StableCoins[getCoinId(args.coin)].decimals;
         const amount = new BigNumber(args.amount).dividedBy(10**decimals);

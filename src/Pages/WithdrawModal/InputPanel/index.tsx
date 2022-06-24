@@ -13,7 +13,7 @@ const InputPanel: FunctionComponent<Props> = (props) => {
   const deposited = useDeposited();
   
   const maxBalance = () => {
-    props.setAmount(deposited.toString());
+    props.setAmount(deposited.toFixed());
   }
   return (
     <VStack w={'100%'} spacing={'6px'}>

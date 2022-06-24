@@ -143,7 +143,7 @@ const Layout = () => {
       else {
         dispatch({ type: ActionKind.setQualified, payload: false });
       }
-      console.log(minute)
+      // console.log(minute)
       // let day = nd.getDate();
       // if (day >= 1 && day <= 7) {
       //   setActive(true);

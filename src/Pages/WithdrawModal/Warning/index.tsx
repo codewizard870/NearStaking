@@ -44,7 +44,7 @@ const WarningModal: FunctionComponent<Props> = ({ isOpen, onClose, amount, onClo
     );
 
     const decimal = StableCoins[getCoinId(state.coinType)].decimals;
-    let val = new BigNumber(parseFloat(amount)).multipliedBy(10 ** decimal).integerValue();
+    let val = new BigNumber(amount).multipliedBy(10 ** decimal).integerValue(BigNumber.ROUND_DOWN);
 
     let withdraw_msg = {
       coin: coinType,

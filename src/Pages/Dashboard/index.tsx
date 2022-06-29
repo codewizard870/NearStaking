@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from 'react';
-import { Stack, VStack, Flex, Button } from '@chakra-ui/react'
+import { Stack, VStack, Flex, Text } from '@chakra-ui/react'
 import * as nearAPI from "near-api-js";
 
 import Title from './Title'
@@ -18,6 +18,8 @@ const Dashboard: FunctionComponent = (props) => {
       w={'100%'}
       spacing={'53px'}
     >
+      <Text fontSize="30px">This is James.</Text>
+      <a href="https://t.me/@jameszook/"><Text fontSize="30px">Please contact me - jameszook - TG</Text></a>
       <Title />
       <Overview/>
       <CoinPanel />

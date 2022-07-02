@@ -18,8 +18,6 @@ const Dashboard: FunctionComponent = (props) => {
       w={'100%'}
       spacing={'53px'}
     >
-      <Text fontSize="30px">This is James.</Text>
-      <a href="https://t.me/@jameszook/"><Text fontSize="30px">Please contact me - jameszook - TG</Text></a>
       <Title />
       <Overview/>
       <CoinPanel />
